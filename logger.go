@@ -59,14 +59,18 @@ func initLog(lfName string) {
 			lfName, err.Error())
 	}
 
-	{
-		xLogBuffer = bufio.NewWriter(xLogFile)
-		logWriters = append(logWriters, os.Stderr)
-		logWriters = append(logWriters, xLogBuffer)
-		xLog.SetFlags(log.Ldate | log.Ltime | log.LUTC | log.Lshortfile)
-		xLog.SetOutput(io.MultiWriter(logWriters...))
-	}
+	xLogBuffer = bufio.NewWriter(xLogFile)
+	logWriters = append(logWriters, os.Stderr)
+	logWriters = append(logWriters, xLogBuffer)
+	xLog.SetFlags(log.Ldate | log.Ltime | log.LUTC | log.Lshortfile)
+	xLog.SetOutput(io.MultiWriter(logWriters...))
 
+	logPath, err := filepath.Abs(xLogFile.Name())
+	if nil != err {
+		safeLogPrintf("huh? could not resolve logfilename %s because %s",
+			xLogFile.Name(), err.Error())
+	}
+	xLog.Printf("Logfile set to %s", logPath)
 }
 
 // myFatal is meant to close the program, and close the
@@ -113,8 +117,9 @@ func safeLogPrintf(format string, a ...any) {
 	if nil != xLogBuffer && nil != xLogFile {
 		xLog.Printf(format, a...)
 	} else {
-		_, _ = fmt.Fprintf(os.Stderr, "\n\tSAFELOG TRIGGERED\n")
-		_, _ = fmt.Fprintf(os.Stderr, format, a...)
+		_, _ = fmt.Fprintf(os.Stderr,
+			"\n\tSAFELOG\n"+format+"\n",
+			a...)
 	}
 }
 

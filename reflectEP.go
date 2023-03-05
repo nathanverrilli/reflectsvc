@@ -54,7 +54,6 @@ func decodeReflectRequest(_ context.Context, r *http.Request) (interface{}, erro
 		for key, list := range r.Header {
 			for _, val := range list {
 				buf.WriteString(fmt.Sprintf(format, key, val))
-				// buf.WriteRune('\n')
 			}
 		}
 	}
@@ -62,7 +61,7 @@ func decodeReflectRequest(_ context.Context, r *http.Request) (interface{}, erro
 	n, err := io.Copy(&buf, r.Body)
 	buf.WriteRune('\n')
 	buf.WriteString(time.Now().UTC().Format(time.RFC1123))
-	buf.WriteRune('\n')
+
 	if nil != err {
 		xLog.Printf("NewDecoder read %d bytes but failed because %s", n, err.Error())
 	}
