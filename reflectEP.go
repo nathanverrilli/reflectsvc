@@ -43,14 +43,19 @@ func decodeReflectRequest(_ context.Context, r *http.Request) (interface{}, erro
 	if 0 < len(r.Header) {
 		maxKeyLen := 0
 		maxValLen := 0
-		for key, val := range r.Header {
+		for key, list := range r.Header {
 			maxKeyLen = iMax(maxKeyLen, len(key))
-			maxValLen = iMax(maxValLen, len(val))
+			for _, val := range list {
+				maxValLen = iMax(maxValLen, len(val))
+			}
 		}
 		format := fmt.Sprintf("[%%%ds]==[%%-%ds]\n",
 			maxKeyLen, maxValLen)
-		for key, val := range r.Header {
-			buf.WriteString(fmt.Sprintf(format, key, val))
+		for key, list := range r.Header {
+			for _, val := range list {
+				buf.WriteString(fmt.Sprintf(format, key, val))
+				// buf.WriteRune('\n')
+			}
 		}
 	}
 	buf.WriteRune('\n')
