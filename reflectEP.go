@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"fmt"
+	xj "github.com/basgys/goxml2json"
 	"github.com/go-kit/kit/endpoint"
 	"io"
 	"net/http"
@@ -58,12 +60,31 @@ func decodeReflectRequest(_ context.Context, r *http.Request) (interface{}, erro
 		}
 	}
 	buf.WriteRune('\n')
-	n, err := io.Copy(&buf, r.Body)
+	body, err := io.ReadAll(r.Body)
+	if nil != err {
+		xLog.Printf("huh? io.ReadAll failed on request body because %s", err.Error())
+	}
+	buf.Write(body)
 	buf.WriteRune('\n')
+	{
+		str := "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+		ok := bytes.Compare(body[:len(str)], []byte(str))
+		if 0 == ok {
+			xml := strings.NewReader(string(body[:]))
+			json, err := xj.Convert(xml)
+			if nil != err {
+				xLog.Printf("could not convert xml to json\n***%s\n***\nbecause %s",
+					string(body[:]), err.Error())
+				// myFatal()
+			} else {
+				buf.WriteString("\n -- CONVERSION TO JSON WOULD BE ROUGHLY -- \n")
+				buf.WriteString(json.String())
+				buf.WriteRune('\n')
+			}
+		}
+	}
+
 	buf.WriteString(time.Now().UTC().Format(time.RFC1123))
 
-	if nil != err {
-		xLog.Printf("NewDecoder read %d bytes but failed because %s", n, err.Error())
-	}
 	return reflectRequest{S: buf.String()}, nil
 }
