@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"encoding/xml"
-	"io"
 )
 
 var bufMemAlloc = 2048
@@ -51,15 +50,11 @@ func x2j(xmlBuffer []byte) []byte {
 		xLog.Printf("Unmarshal of %s failed because %s",
 			string(xmlBuffer), err.Error())
 	}
-	b, err := io.ReadAll(xmloutput2jsonoutput(&e))
-	if nil != err {
-		xLog.Printf("io.Readall failed because %s", err.Error())
-		b = nil
-	}
-	return b
+	b := xmlOutput2JsonOutput(&e)
+	return b.Bytes()
 }
 
-func xmloutput2jsonoutput(xmlEvents *Events) (buf bytes.Buffer) {
+func xmlOutput2JsonOutput(xmlEvents *Events) (buf bytes.Buffer) {
 	buf.Reset()
 	buf.Grow(bufMemAlloc)
 	buf.WriteRune('{')
