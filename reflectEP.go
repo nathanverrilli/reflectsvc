@@ -67,10 +67,10 @@ func decodeReflectRequest(_ context.Context, r *http.Request) (interface{}, erro
 	buf.Write(body)
 	buf.WriteRune('\n')
 	{
-		str := "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
-		ok := bytes.Compare(body[:len(str)], []byte(str))
-		if 0 == ok {
-			xml := strings.NewReader(string(body[:]))
+		magic := []byte("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
+		offset := bytes.Index(body, magic)
+		if offset >= 0 {
+			xml := strings.NewReader(string(body[offset:]))
 			json, err := xj.Convert(xml)
 			if nil != err {
 				xLog.Printf("could not convert xml to json\n***%s\n***\nbecause %s",
@@ -81,6 +81,9 @@ func decodeReflectRequest(_ context.Context, r *http.Request) (interface{}, erro
 				buf.WriteString(json.String())
 				buf.WriteRune('\n')
 			}
+			buf.WriteString("\t***better conversion ***\n")
+			buf.Write(x2j(body[offset:]))
+			buf.WriteRune('\n')
 		}
 	}
 

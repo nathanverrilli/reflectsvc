@@ -1,10 +1,12 @@
 package main
 
-/*
 import (
 	"bytes"
 	"encoding/xml"
+	"io"
 )
+
+var bufMemAlloc = 2048
 
 type Events struct {
 	XMLName xml.Name `xml:"events" json:"events,omitempty"`
@@ -41,8 +43,21 @@ type Events struct {
 	} `xml:"event" json:"event,omitempty"`
 }
 
+func x2j(xmlBuffer []byte) []byte {
+	var e Events
 
-var bufMemAlloc = 1024
+	err := xml.Unmarshal(xmlBuffer, &e)
+	if nil != err {
+		xLog.Printf("Unmarshal of %s failed because %s",
+			string(xmlBuffer), err.Error())
+	}
+	b, err := io.ReadAll(xmloutput2jsonoutput(&e))
+	if nil != err {
+		xLog.Printf("io.Readall failed because %s", err.Error())
+		b = nil
+	}
+	return b
+}
 
 func xmloutput2jsonoutput(xmlEvents *Events) (buf bytes.Buffer) {
 	buf.Reset()
@@ -62,4 +77,3 @@ func xmloutput2jsonoutput(xmlEvents *Events) (buf bytes.Buffer) {
 	bufMemAlloc = 1024 * (1 + (buf.Len() % 1024))
 	return buf
 }
-**************/
