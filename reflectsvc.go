@@ -12,7 +12,6 @@ import (
 // ErrEmpty is returned when an input string is empty.
 var ErrEmpty = errors.New("empty string")
 
-// Transports expose the service to the network. In this first example we utilize JSON over HTTP.
 func main() {
 
 	initLog("reflectsvc.log")

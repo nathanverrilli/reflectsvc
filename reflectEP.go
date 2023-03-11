@@ -1,10 +1,8 @@
 package main
 
 import (
-	"bytes"
 	"context"
 	"fmt"
-	xj "github.com/basgys/goxml2json"
 	"github.com/go-kit/kit/endpoint"
 	"io"
 	"net/http"
@@ -66,27 +64,6 @@ func decodeReflectRequest(_ context.Context, r *http.Request) (interface{}, erro
 	}
 	buf.Write(body)
 	buf.WriteRune('\n')
-	{
-		magic := []byte("<?xml version=\"1.0\" encoding=\"utf-8\"?>")
-		offset := bytes.Index(body, magic)
-		if offset >= 0 {
-			xml := strings.NewReader(string(body[offset:]))
-			json, err := xj.Convert(xml)
-			if nil != err {
-				xLog.Printf("could not convert xml to json\n***%s\n***\nbecause %s",
-					string(body[:]), err.Error())
-				// myFatal()
-			} else {
-				buf.WriteString("\n -- CONVERSION TO JSON WOULD BE ROUGHLY -- \n")
-				buf.WriteString(json.String())
-				buf.WriteRune('\n')
-			}
-			buf.WriteString("\t***better conversion ***\n")
-			buf.Write(x2j(body[offset:]))
-			buf.WriteRune('\n')
-		}
-	}
-
 	buf.WriteString(time.Now().UTC().Format(time.RFC1123))
 
 	return reflectRequest{S: buf.String()}, nil

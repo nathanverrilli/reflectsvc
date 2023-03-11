@@ -12,7 +12,7 @@ import (
 // SimpleService provides operations on strings.
 type SimpleService interface {
 	Reverse(string) (string, error)
-	ParsifalUpload(request ParsifalRequest) (string, error)
+	Parsifal(request ParsifalRequest) (string, error)
 	Reflect(string) (string, error)
 }
 
@@ -24,7 +24,7 @@ func (stringService) Reflect(req string) (string, error) {
 	return req, nil
 }
 
-func (stringService) ParsifalUpload(request ParsifalRequest) (string, error) {
+func (stringService) Parsifal(request ParsifalRequest) (string, error) {
 	fn := "parsifal." + time.Now().UTC().Format(misc.DATE_POG) + ".log.txt"
 	f, err := os.OpenFile(fn, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if nil != err {
@@ -36,6 +36,7 @@ func (stringService) ParsifalUpload(request ParsifalRequest) (string, error) {
 	b := bufio.NewWriter(f)
 	defer misc.DeferError(b.Flush)
 	_, _ = fmt.Fprintf(b, "%+v\n", request)
+
 	if FlagDebug {
 		xLog.Printf("%+v\n", request)
 	}
