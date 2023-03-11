@@ -22,7 +22,7 @@ type reflectResponse struct {
 	Err string `json:"err,omitempty"` // errors don't define JSON marshaling
 }
 
-func makeReflectEndpoint(svc StringService) endpoint.Endpoint {
+func makeReflectEndpoint(svc SimpleService) endpoint.Endpoint {
 	return func(_ context.Context, request interface{}) (interface{}, error) {
 		req := request.(reflectRequest)
 		v, err := svc.Reflect(req.S)

@@ -18,7 +18,7 @@ type reverseResponse struct {
 	Err string `json:"err,omitempty"` // errors don't define JSON marshaling
 }
 
-func makeReverseEndpoint(svc StringService) endpoint.Endpoint {
+func makeReverseEndpoint(svc SimpleService) endpoint.Endpoint {
 	return func(_ context.Context, request interface{}) (interface{}, error) {
 		req := request.(reverseRequest)
 		v, err := svc.Reverse(req.S)

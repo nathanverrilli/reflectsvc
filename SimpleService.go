@@ -9,16 +9,14 @@ import (
 	"time"
 )
 
-// StringService provides operations on strings.
-type StringService interface {
-	Uppercase(string) (string, error)
-	Count(string) int
+// SimpleService provides operations on strings.
+type SimpleService interface {
 	Reverse(string) (string, error)
 	ParsifalUpload(request ParsifalRequest) (string, error)
 	Reflect(string) (string, error)
 }
 
-// stringService is a concrete implementation of StringService
+// stringService is a concrete implementation of SimpleService
 type stringService struct{}
 
 func (stringService) Reflect(req string) (string, error) {

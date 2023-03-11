@@ -26,18 +26,6 @@ func main() {
 		decodeReflectRequest,
 		encodeResponse)
 
-	uppercaseHandler := httpTransport.NewServer(
-		makeUppercaseEndpoint(svc),
-		decodeUppercaseRequest,
-		encodeResponse,
-	)
-
-	countHandler := httpTransport.NewServer(
-		makeCountEndpoint(svc),
-		decodeCountRequest,
-		encodeResponse,
-	)
-
 	reverseHandler := httpTransport.NewServer(
 		makeReverseEndpoint(svc),
 		decodeReverseRequest,
@@ -48,8 +36,6 @@ func main() {
 		decodeParsifalRequest,
 		encodeResponse)
 
-	http.Handle("/uppercase", uppercaseHandler)
-	http.Handle("/count", countHandler)
 	http.Handle("/reverse", reverseHandler)
 	http.Handle("/parsifal", parsifalHandler)
 	http.Handle("/reflect", reflectHandler)

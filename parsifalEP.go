@@ -55,7 +55,7 @@ func decodeParsifalRequest(_ context.Context, r *http.Request) (interface{}, err
 	return request, nil
 }
 
-func makeParsifalEndpoint(svc StringService) endpoint.Endpoint {
+func makeParsifalEndpoint(svc SimpleService) endpoint.Endpoint {
 	return func(_ context.Context, request interface{}) (interface{}, error) {
 		req := request.(ParsifalRequest)
 		_, err := svc.ParsifalUpload(req)
