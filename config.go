@@ -22,6 +22,7 @@ func wordSepNormalizeFunc(_ *pflag.FlagSet, name string) pflag.NormalizedName {
 var nFlags *pflag.FlagSet
 
 /* secret flags */
+
 var FlagOrganization string
 
 /* standard flags */
@@ -32,6 +33,7 @@ var FlagVerbose bool
 var FlagDebug bool
 
 /* program specific flags */
+
 var FlagServiceName string
 var FlagPort string
 var FlagCert string
@@ -152,7 +154,7 @@ func initFlags() {
 	if FlagVerbose || FlagDebug {
 		var sb strings.Builder
 		sb.WriteString(fmt.Sprintf("\n%s\n\tCommand Line Headers\n", SEP))
-		for ix, _ := range FlagHeaderKey {
+		for ix := range FlagHeaderKey {
 			sb.WriteString(fmt.Sprintf("[header %3d] %s=%s\n",
 				ix, FlagHeaderKey[ix], FlagHeaderValue[ix]))
 		}
