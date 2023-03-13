@@ -1,1 +1,4 @@
 /parsifal.*.log.txt
+/host.key
+/host.pem
+/host.pub

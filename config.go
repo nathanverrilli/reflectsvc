@@ -9,20 +9,13 @@ import (
 	"runtime/debug"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // wordSepNormalizeFunc all options are lowercase, so
 // ... lowercase they shall be
-func wordSepNormalizeFunc(f *pflag.FlagSet, name string) pflag.NormalizedName {
-	/**********************************************
-	from := []string{"-", "_"}
-	to := "."
-	if nil != f {
-		for _, sep := range from {
-			name = strings.Replace(name, sep, to, -1)
-		}
-	}
-	********************************************/
+func wordSepNormalizeFunc(_ *pflag.FlagSet, name string) pflag.NormalizedName {
+
 	return pflag.NormalizedName(strings.ToLower(name))
 }
 
@@ -39,8 +32,13 @@ var FlagVerbose bool
 var FlagDebug bool
 
 /* program specific flags */
+var FlagServiceName string
 var FlagPort string
-var FlagLogAppend bool
+var FlagCert string
+var FlagKey string
+var FlagDest string
+var FlagHeaderValue []string
+var FlagHeaderKey []string
 
 func initFlags() {
 	var err error
@@ -51,10 +49,10 @@ func initFlags() {
 	nFlags.SetNormalizeFunc(wordSepNormalizeFunc)
 
 	nFlags.BoolVarP(&FlagDebug, "debug", "d",
-		true, "Enable additional informational and operational logging output for debug purposes")
+		false, "Enable additional informational and operational logging output for debug purposes")
 
 	nFlags.BoolVarP(&FlagVerbose, "verbose", "v",
-		true, "Supply additional run messages; use --debug for more information")
+		false, "Supply additional run messages; use --debug for more information")
 
 	nFlags.BoolVarP(&FlagHelp, "help", "h",
 		false, "Display help message and usage information")
@@ -69,8 +67,31 @@ func initFlags() {
 	hideFlags["FlagOrganization"] = "organization"
 
 	// program flags
+
+	nFlags.StringVarP(&FlagDest, "destination", "",
+		"localhost",
+		"destination for xml2Json endpoint. "+
+			"the value 'localhost' is a special value that "+
+			"becomes \"https://localhost:<port>/reflect\" where"+
+			"<port> is the port of this program.")
+
+	nFlags.StringArrayVarP(&FlagHeaderKey, "header-key", "", []string{"AUTHORIZATION"},
+		"Header Key (must be in same order as value)")
+
+	nFlags.StringArrayVarP(&FlagHeaderValue, "header-value", "", []string{"bearer ****DuMmY*ToKeN****="},
+		"Header Value(must be in same order as key)")
+
+	nFlags.StringVarP(&FlagServiceName, "servername", "", "",
+		"Name of service/FQDN \"microservice.example.com\" <<not fully tested>> ")
+
 	nFlags.StringVarP(&FlagPort, "port", "",
 		"9090", "port to listen on")
+
+	nFlags.StringVarP(&FlagKey, "keyfile", "", "",
+		"Key file for HTTPS service")
+
+	nFlags.StringVarP(&FlagCert, "certfile", "", "",
+		"Certificate file for HTTPS service")
 
 	for flagName, optName := range hideFlags {
 		err = nFlags.MarkHidden(optName)
@@ -101,6 +122,17 @@ func initFlags() {
 		// messages only to logfile, not stderr
 	}
 
+	if FlagDest == "localhost" {
+		err = nFlags.Set("destination",
+			"https://localhost:"+FlagPort+"/reflect")
+		if nil != err {
+			logPrintf("Could not reset command line option \"destination\" to \"%s\" because %s",
+				"https://localhost:"+FlagPort+"/reflect", err.Error())
+			myFatal()
+		}
+
+	}
+
 	if FlagDebug && FlagVerbose {
 		xLog.Println("\n\t\t/*** program flags ***/\n" +
 			"\tplease note that the double backslash is " +
@@ -108,6 +140,23 @@ func initFlags() {
 			"display output. The actual string only has one backslash.\n")
 		nFlags.VisitAll(logFlag)
 		xLog.Println("\t\t/*** end program flags ***/")
+	}
+
+	if len(FlagHeaderKey) != len(FlagHeaderValue) {
+		xLog.Printf("count of --header-key values (%d) does not equal count of --header-value (%d)",
+			len(FlagHeaderKey), len(FlagHeaderValue))
+		time.Sleep(time.Second)
+		myFatal()
+	}
+
+	if FlagVerbose || FlagDebug {
+		var sb strings.Builder
+		sb.WriteString(fmt.Sprintf("\n%s\n\tCommand Line Headers\n", SEP))
+		for ix, _ := range FlagHeaderKey {
+			sb.WriteString(fmt.Sprintf("[header %3d] %s=%s\n",
+				ix, FlagHeaderKey[ix], FlagHeaderValue[ix]))
+		}
+		xLog.Println(sb.String())
 	}
 
 	// next simplest
@@ -172,5 +221,4 @@ func UsageMessage() {
 	sb.WriteString(" cpAuthOrg: \n")
 	sb.WriteString(" --\n")
 	sb.WriteString("Useful information goes here\n")
-
 }

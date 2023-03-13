@@ -10,6 +10,7 @@ import (
 	"reflectsvc/misc"
 	"runtime"
 	"strings"
+	"sync"
 )
 
 var xLogFile *os.File
@@ -17,7 +18,11 @@ var xLogBuffer *bufio.Writer
 var xLog log.Logger
 
 // flushLog just flushes the log to disk
+var flmx sync.Mutex
+
 func flushLog() {
+	flmx.Lock()
+	defer flmx.Unlock()
 	if nil != xLogBuffer {
 		err := xLogBuffer.Flush()
 		if nil != err {
@@ -26,13 +31,16 @@ func flushLog() {
 	}
 }
 
+var clmx sync.Mutex
+
 // closeLog shuts the logging service down
 // cleanly, flushing buffers (and thus
 // preserving the most likely error of
 // interest)
 func closeLog() {
+	clmx.Lock()
+	lpmx.Lock()
 	var err01, err02 error
-
 	if nil != xLogBuffer {
 		flushLog()
 		xLogBuffer = nil
@@ -41,10 +49,13 @@ func closeLog() {
 		err01 = xLogFile.Close()
 		xLogFile = nil
 	}
+	lpmx.Unlock()
+	clmx.Unlock()
 	err := misc.ConcatenateErrors(err01, err02)
 	if nil != err {
 		safeLogPrintf(err.Error())
 	}
+
 }
 
 // initLog starts up a logging service to logfile and
@@ -53,9 +64,9 @@ func closeLog() {
 func initLog(lfName string) {
 	var err error
 	var logWriters = make([]io.Writer, 0, 2)
-	xLogFile, err = os.OpenFile(lfName, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	xLogFile, err = os.OpenFile(lfName, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if nil != err {
-		_, _ = fmt.Fprintf(os.Stderr, "error opening log file %s because %s",
+		safeLogPrintf("error opening log file %s because %s",
 			lfName, err.Error())
 	}
 
@@ -67,10 +78,11 @@ func initLog(lfName string) {
 
 	logPath, err := filepath.Abs(xLogFile.Name())
 	if nil != err {
-		safeLogPrintf("huh? could not resolve logfilename %s because %s",
+		logPrintf("huh? could not resolve logfilename %s because %s",
 			xLogFile.Name(), err.Error())
+		myFatal()
 	}
-	xLog.Printf("Logfile set to %s", logPath)
+	logPrintf("Logfile set to %s", logPath)
 }
 
 // myFatal is meant to close the program, and close the
@@ -91,21 +103,29 @@ func myFatal(rcList ...int) {
 
 	// if this is an expected exit, and FlagQuiet is set,
 	// this doesn't need to be logged
-	if !(FlagQuiet && 0 == rc) {
+	if rc != 0 {
 		_, srcFile, srcLine, ok := runtime.Caller(1)
 		if ok {
 			srcFile = filepath.Base(srcFile)
-			safeLogPrintf("\n\t\t/*** myFatal called ***/\n"+
+			logPrintf("\n\t\t/*** myFatal called ***/\n"+
 				"\tfrom file:line %12s:%04d\n"+
 				"\t\t/*** myFatal ended ***/", srcFile, srcLine)
 		} else {
-			safeLogPrintf("\n\t\t/*** myFatal called ***/\n" +
+			logPrintf("\n\t\t/*** myFatal called ***/\n" +
 				"\tbut could not get stack information for caller\n" +
 				"\t\t/*** myFatal ended ***/")
 		}
 	}
 	closeLog()
 	os.Exit(rc)
+}
+
+var lpmx sync.Mutex
+
+func logPrintf(format string, a ...any) {
+	lpmx.Lock()
+	defer lpmx.Unlock()
+	safeLogPrintf(format, a...)
 }
 
 // safeLogPrintf may be called in lieu of xLog.Printf() if there

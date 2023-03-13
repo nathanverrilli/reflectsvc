@@ -5,26 +5,36 @@ import (
 	"fmt"
 	"os"
 	"reflectsvc/misc"
-	"strings"
 	"time"
 )
+
+const SEP = "/* ************************** */"
 
 // SimpleService provides operations on strings.
 type SimpleService interface {
 	Reverse(string) (string, error)
-	Parsifal(request ParsifalRequest) (string, error)
 	Reflect(string) (string, error)
+	xml2Json(request xml2JsonRequest) (string, error)
+	Convert(request ConvertRequest) (string, error)
 }
 
-// stringService is a concrete implementation of SimpleService
-type stringService struct{}
+// simpleService is a concrete implementation of SimpleService
+type simpleService struct{}
 
-func (stringService) Reflect(req string) (string, error) {
-	xLog.Printf("\n  ************* \n%s\n ************** \n", req)
-	return req, nil
+func (simpleService) xml2Json(request xml2JsonRequest) (string, error) {
+	return request.Json(), nil
 }
 
-func (stringService) Parsifal(request ParsifalRequest) (string, error) {
+func (simpleService) Reflect(json string) (string, error) {
+	return json, nil
+}
+
+func (simpleService) Convert(req ConvertRequest) (string, error) {
+	xLog.Printf("\n%s\n%s\n%s\n", SEP, req, SEP)
+	return req.Json(), nil
+}
+
+func (simpleService) Parsifal(request ConvertRequest) (string, error) {
 	fn := "parsifal." + time.Now().UTC().Format(misc.DATE_POG) + ".log.txt"
 	f, err := os.OpenFile(fn, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if nil != err {
@@ -32,19 +42,20 @@ func (stringService) Parsifal(request ParsifalRequest) (string, error) {
 		return "", err
 	}
 	defer misc.DeferError(f.Close)
-
 	b := bufio.NewWriter(f)
 	defer misc.DeferError(b.Flush)
-	_, _ = fmt.Fprintf(b, "%+v\n", request)
+	_, _ = fmt.Fprintf(b, "%+v\n%s\n%s",
+		request, SEP, request.Json())
 
-	if FlagDebug {
-		xLog.Printf("%+v\n", request)
+	if FlagDebug || FlagVerbose {
+		xLog.Print(request.String())
+		xLog.Print(request.Json())
 	}
 
 	return "success", nil
 }
 
-func (stringService) Reverse(s string) (string, error) {
+func (simpleService) Reverse(s string) (string, error) {
 	var r string
 	if "" == s {
 		return "", ErrEmpty
@@ -54,17 +65,4 @@ func (stringService) Reverse(s string) (string, error) {
 	}
 	xLog.Printf("reversed a string %s to %s", s, r)
 	return r, nil
-}
-
-func (stringService) Uppercase(s string) (string, error) {
-	defer misc.DeferError(xLogBuffer.Flush)
-	if s == "" {
-		return "", ErrEmpty
-	}
-	return strings.ToUpper(s), nil
-}
-
-func (stringService) Count(s string) int {
-	defer misc.DeferError(xLogBuffer.Flush)
-	return len(s)
 }

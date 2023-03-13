@@ -10,15 +10,23 @@ import (
 	"reflectsvc/misc"
 )
 
-type ParsifalResponse struct {
+type ConvertResponse struct {
 	Success string `json:"success"`
 	Error   string `json:"error,omitempty"`
 }
 
-type ParsifalRequest XtractaEvents
+type ConvertRequest XtractaEvents
+
+func (pr ConvertRequest) String() string {
+	return XtractaEvents(pr).String()
+}
+
+func (pr ConvertRequest) Json() string {
+	return XtractaEvents(pr).Json()
+}
 
 /*
-	type ParsifalRequest struct {
+	type ConvertRequest struct {
 		ShipmentType       string `json:"Shipment Type"`
 		TransitType        string `json:"Transit Type"`
 		TransitMode        string `json:"Transit Mode"`
@@ -51,12 +59,12 @@ type ParsifalRequest XtractaEvents
 	}
 */
 
-func decodeParsifalRequest(_ context.Context, r *http.Request) (interface{}, error) {
+func decodeConvertRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	defer misc.DeferError(xLogBuffer.Flush)
-	var request ParsifalRequest
+	var request ConvertRequest
 	body, err := io.ReadAll(r.Body)
 	if nil != err {
-		xLog.Printf("io.ReadAll failed on ParsifalRequest because %s", err.Error())
+		xLog.Printf("io.ReadAll failed on ConvertRequest because %s", err.Error())
 		return nil, err
 	}
 	err = xml.Unmarshal(body, &request)
@@ -64,18 +72,19 @@ func decodeParsifalRequest(_ context.Context, r *http.Request) (interface{}, err
 		xLog.Printf("xml.Unmarshal failed because %s", err.Error())
 		return nil, err
 	}
+	// xLog.Print(request.String())
 	return request, nil
 }
 
-func makeParsifalEndpoint(svc SimpleService) endpoint.Endpoint {
+func makeConvertEndpoint(svc SimpleService) endpoint.Endpoint {
 	return func(_ context.Context, request interface{}) (interface{}, error) {
-		req := request.(ParsifalRequest)
-		_, err := svc.Parsifal(req)
+		req := request.(ConvertRequest)
+		_, err := svc.Convert(req)
 		if err != nil {
 			if err != nil {
-				return ParsifalResponse{"FAILURE", err.Error()}, nil
+				return ConvertResponse{"FAILURE", err.Error()}, nil
 			}
 		}
-		return ParsifalResponse{"Success", ""}, nil
+		return ConvertResponse{"Success", ""}, nil
 	}
 }

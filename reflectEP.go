@@ -65,6 +65,5 @@ func decodeReflectRequest(_ context.Context, r *http.Request) (interface{}, erro
 	buf.Write(body)
 	buf.WriteRune('\n')
 	buf.WriteString(time.Now().UTC().Format(time.RFC1123))
-
 	return reflectRequest{S: buf.String()}, nil
 }
