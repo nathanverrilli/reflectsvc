@@ -1,8 +1,10 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"github.com/spf13/pflag"
+	"io"
 	"os"
 	"path/filepath"
 	"reflectsvc/misc"
@@ -10,6 +12,9 @@ import (
 	"strconv"
 	"strings"
 )
+
+//go:embed Resources
+var efs embed.FS
 
 // wordSepNormalizeFunc all options are lowercase, so
 // ... lowercase they shall be
@@ -221,14 +226,31 @@ func initFlags() {
 }
 
 func logFlag(flag *pflag.Flag) {
-	xLog.Printf(" flag \"%s\" has value \"%s\" with default %s",
+	logPrintf(" flag \"%s\" has value \"%s\" with default %s",
 		flag.Name, misc.WinSep(flag.Value.String()), misc.WinSep(flag.DefValue))
 }
 
 // UsageMessage - describe capabilities and extended usage notes
 func UsageMessage() {
 	var sb strings.Builder
-	sb.WriteString(" cpAuthOrg: \n")
-	sb.WriteString(" --\n")
-	sb.WriteString("Useful information goes here\n")
+	sb.WriteString("Useful information goes here ... eventually\n")
+	sb.WriteString("for now, please refer to USAGE.MD in the current directory.")
+	logPrintf(sb.String())
+	fOut, err := os.Create("USAGE.MD")
+	if err != nil {
+		logPrintf("Could not open USAGE.MD to write usage because %s", err.Error())
+		myFatal()
+	}
+	misc.DeferError(fOut.Close)
+	fIn, err := efs.Open("USAGE.MD")
+	if err != nil {
+		logPrintf("Could not open efs:USAGE.MD to read because %s", err.Error())
+		myFatal()
+	}
+	_, err = io.Copy(fOut, fIn)
+	if err != nil {
+		logPrintf("Could not write USAGE.MD because %s", err.Error())
+		myFatal()
+	}
+
 }

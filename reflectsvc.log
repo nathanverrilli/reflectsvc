@@ -1,94 +1,30 @@
-2023/03/14 19:45:30 logger.go:138: Logfile set to H:\Projects\reflectsvc\reflectsvc.log
-2023/03/14 19:45:30 config.go:143: 
+2023/03/14 21:02:59 logger.go:138: Logfile set to H:\Projects\reflectsvc\reflectsvc.log
+2023/03/14 21:02:59 config.go:148: 
 		/*** program flags ***/
 	please note that the double backslash is an artifact to prevent Windows from corrupting the display output. The actual string only has one backslash.
 
-2023/03/14 19:45:30 config.go:224:  flag "certfile" has value "host.crt" with default 
-2023/03/14 19:45:30 config.go:224:  flag "debug" has value "true" with default false
-2023/03/14 19:45:30 config.go:224:  flag "destination" has value "https://localhost:9090/reflect" with default localhost
-2023/03/14 19:45:30 config.go:224:  flag "header-key" has value "[AUTHORIZATION]" with default [AUTHORIZATION]
-2023/03/14 19:45:30 config.go:224:  flag "header-value" has value "[bearer ****DuMmY*ToKeN****=]" with default [bearer ****DuMmY*ToKeN****=]
-2023/03/14 19:45:30 config.go:224:  flag "help" has value "false" with default false
-2023/03/14 19:45:30 config.go:224:  flag "insecure" has value "true" with default false
-2023/03/14 19:45:30 config.go:224:  flag "keyfile" has value "host.key" with default 
-2023/03/14 19:45:30 config.go:224:  flag "organization" has value "P3IDTechnologies" with default P3IDTechnologies
-2023/03/14 19:45:30 config.go:224:  flag "port" has value "9090" with default 9090
-2023/03/14 19:45:30 config.go:224:  flag "quiet" has value "false" with default false
-2023/03/14 19:45:30 config.go:224:  flag "servername" has value "" with default 
-2023/03/14 19:45:30 config.go:224:  flag "verbose" has value "true" with default false
-2023/03/14 19:45:30 config.go:148: 		/*** end program flags ***/
-2023/03/14 19:45:30 logger.go:138: 
+2023/03/14 21:02:59 logger.go:138:  flag "certfile" has value "" with default 
+2023/03/14 21:02:59 logger.go:138:  flag "debug" has value "true" with default false
+2023/03/14 21:02:59 logger.go:138:  flag "destination" has value "https://localhost:9090/reflect" with default localhost
+2023/03/14 21:02:59 logger.go:138:  flag "header-key" has value "[AUTHORIZATION]" with default [AUTHORIZATION]
+2023/03/14 21:02:59 logger.go:138:  flag "header-value" has value "[bearer ****DuMmY*ToKeN****=]" with default [bearer ****DuMmY*ToKeN****=]
+2023/03/14 21:02:59 logger.go:138:  flag "help" has value "true" with default false
+2023/03/14 21:02:59 logger.go:138:  flag "insecure" has value "false" with default false
+2023/03/14 21:02:59 logger.go:138:  flag "keyfile" has value "" with default 
+2023/03/14 21:02:59 logger.go:138:  flag "organization" has value "P3IDTechnologies" with default P3IDTechnologies
+2023/03/14 21:02:59 logger.go:138:  flag "port" has value "9090" with default 9090
+2023/03/14 21:02:59 logger.go:138:  flag "quiet" has value "false" with default false
+2023/03/14 21:02:59 logger.go:138:  flag "servername" has value "" with default 
+2023/03/14 21:02:59 logger.go:138:  flag "verbose" has value "true" with default false
+2023/03/14 21:02:59 config.go:153: 		/*** end program flags ***/
+2023/03/14 21:02:59 logger.go:138: 
 /* ************************** */
 	Command Line Headers
 [header   0] AUTHORIZATION=bearer ****DuMmY*ToKeN****=
-2023/03/14 19:45:31 config.go:192: Verbose mode active (all debug and informative messages) for @MythosSeed
-2023/03/14 19:45:31 config.go:204: 
-***** ___go_https_reflectsvc BuildInfo: *****
-go	go1.20.2
-path	reflectsvc
-mod	reflectsvc	(devel)	
-dep	github.com/go-kit/kit	v0.12.0	h1:e4o3o3IsBfAKQh5Qbbiqyfu97Ku7jrO/JbohvztANh4=
-dep	github.com/go-kit/log	v0.2.1	h1:MRVx0/zhvdseW+Gza6N9rVzU/IVzaeE1SFI4raAhmBU=
-dep	github.com/go-logfmt/logfmt	v0.6.0	h1:wGYYu3uicYdqXVgoYbvnkrPVXkuLM1p1ifugDMEdRi4=
-dep	github.com/spf13/pflag	v1.0.5	h1:iy+VFUOCP1a+8yFto/drg2CJ5u0yRoB7fZw3DKv/JXA=
-build	-buildmode=exe
-build	-compiler=gc
-build	-gcflags="all=-N -l"
-build	CGO_ENABLED=1
-build	CGO_CFLAGS="-O0 -g"
-build	CGO_CPPFLAGS=
-build	CGO_CXXFLAGS=
-build	CGO_LDFLAGS=
-build	GOARCH=amd64
-build	GOOS=windows
-build	GOAMD64=v1
-build	vcs=git
-build	vcs.revision=f0d9b21870ad0fd4144ec4e69a012524459f03dc
-build	vcs.time=2023-03-13T21:40:25Z
-build	vcs.modified=true
-
-********************************************
-2023/03/14 19:45:31 config.go:218: Listening on port 9090
-2023/03/14 19:45:31 reflectsvc.go:58: using HTTPS
-	Certification file is host.crt
-	Key file is host.key
-2023/03/14 19:47:28 logger.go:138: hello from xml2JSon
-	remote endpoint: https://localhost:9090/reflect
-call with these configured headers:
-	[ 0]  [AUTHORIZATION] == [bearer ****DuMmY*ToKeN****=]
-/* ************************** */
-
-{
-	"Status" : "Received",
-	"Shipment Type" : "Auto",
-	"Transit Type" : "Interstate US",
-	"Transit Mode" : "2475",
-	"Storage on Bill" : "no",
-	"Bill Type" : "1458",
-	"Auditor" : "Betty Williams",
-	"Account" : "BNSF RAILWAY COMPANY",
-	"Division" : "",
-	"File Number" : "657-3880",
-	"Last Name" : "Kruse",
-	"First name" : "Robert",
-	"Booking Agent" : "Ward North American",
-	"Load Date" : "02/20/23",
-	"Origin Country" : "US",
-	"Origin State" : "TX",
-	"Origin City" : "Amarillo,",
-	"Destination Country" : "US",
-	"Destination State" : "IL",
-	"Destination City" : "Oak Lawn,",
-	"Billing SP" : "Ward North American",
-	"SP Bill Number" : "103472",
-	"SP Bill Date" : "3/1/2023",
-	"SP Bill Amount" : "$1,540.10",
-	"Currency" : "USD",
-	"Bill received date" : "3/1/2023",
-	"Cost Center" : "",
-	"cost EE number" : "",
-	"Reference" : "",
-	"Client ID#" : "150",
-	"Model CD" : "PAS"
-}
-/* ************************** */
+2023/03/14 21:02:59 logger.go:138: Useful information goes here ... eventually
+for now, please refer to USAGE.MD in the current directory.
+2023/03/14 21:02:59 logger.go:138: Could not open embeddedfs:USAGE.MD to read because open USAGE.MD: file does not exist
+2023/03/14 21:02:59 logger.go:138: 
+		/*** myFatal called ***/
+	from file:line    config.go:0248
+		/*** myFatal ended ***/
