@@ -43,6 +43,7 @@ func main() {
 
 	http.Handle("/reverse", reverseHandler)
 	http.Handle("/parsifal", convertHandler)
+	http.Handle("/convert", convertHandler)
 	http.Handle("/reflect", reflectHandler)
 	http.Handle("/xml2json", xml2JsonHandler)
 

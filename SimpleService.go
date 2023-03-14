@@ -1,11 +1,10 @@
 package main
 
 import (
-	"bufio"
+	"bytes"
 	"fmt"
-	"os"
-	"reflectsvc/misc"
-	"time"
+	"io"
+	"strings"
 )
 
 const SEP = "/* ************************** */"
@@ -21,8 +20,39 @@ type SimpleService interface {
 // simpleService is a concrete implementation of SimpleService
 type simpleService struct{}
 
-func (simpleService) xml2Json(request xml2JsonRequest) (string, error) {
-	return request.Json(), nil
+func (simpleService) xml2Json(req xml2JsonRequest) (string, error) {
+	if FlagDebug {
+		var sb strings.Builder
+		sb.WriteString(fmt.Sprintf("hello from xml2JSon\n\tremote endpoint: %s\n",
+			FlagDest))
+		if len(FlagHeaderKey) > 0 {
+			sb.WriteString("call with these configured headers:\n")
+			for ix := range FlagHeaderKey {
+				sb.WriteString(fmt.Sprintf("\t[%2d]  [%s] == [%s]\n",
+					ix, FlagHeaderKey[ix], FlagHeaderValue[ix]))
+			}
+		}
+		sb.WriteString(fmt.Sprintf("%s\n%s\n%s", SEP, req.Json(), SEP))
+		logPrintf(sb.String())
+	}
+	buf := bytes.NewBufferString(req.Json())
+	rsp, err := x2j_proxy(buf)
+	if nil != err {
+		logPrintf("could not proxy json request to %s\n with data\n%s\n because %s",
+			FlagDest, req.Json(), err.Error())
+		if nil != rsp {
+			logPrintf("response: %v", rsp)
+		}
+		return "", err
+	}
+	rb, err := io.ReadAll(rsp.Body)
+	if nil != err {
+		logPrintf("json request to %s with data\n%s\n"+
+			"\tcould not read response body because %s",
+			FlagDest, req.Json(), err.Error())
+		return "", err
+	}
+	return string(rb), nil
 }
 
 func (simpleService) Reflect(json string) (string, error) {
@@ -30,29 +60,8 @@ func (simpleService) Reflect(json string) (string, error) {
 }
 
 func (simpleService) Convert(req ConvertRequest) (string, error) {
-	xLog.Printf("\n%s\n%s\n%s\n", SEP, req, SEP)
+	xLog.Printf("\n%s\n%s\n%s\n%s\n", SEP, req.String(), req.Json(), SEP)
 	return req.Json(), nil
-}
-
-func (simpleService) Parsifal(request ConvertRequest) (string, error) {
-	fn := "parsifal." + time.Now().UTC().Format(misc.DATE_POG) + ".log.txt"
-	f, err := os.OpenFile(fn, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
-	if nil != err {
-		xLog.Printf("error opening file %s: %s", fn, err.Error())
-		return "", err
-	}
-	defer misc.DeferError(f.Close)
-	b := bufio.NewWriter(f)
-	defer misc.DeferError(b.Flush)
-	_, _ = fmt.Fprintf(b, "%+v\n%s\n%s",
-		request, SEP, request.Json())
-
-	if FlagDebug || FlagVerbose {
-		xLog.Print(request.String())
-		xLog.Print(request.Json())
-	}
-
-	return "success", nil
 }
 
 func (simpleService) Reverse(s string) (string, error) {

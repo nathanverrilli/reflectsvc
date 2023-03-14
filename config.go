@@ -9,7 +9,6 @@ import (
 	"runtime/debug"
 	"strconv"
 	"strings"
-	"time"
 )
 
 // wordSepNormalizeFunc all options are lowercase, so
@@ -39,6 +38,7 @@ var FlagPort string
 var FlagCert string
 var FlagKey string
 var FlagDest string
+var FlagDestInsecure bool
 var FlagHeaderValue []string
 var FlagHeaderKey []string
 
@@ -69,6 +69,11 @@ func initFlags() {
 	hideFlags["FlagOrganization"] = "organization"
 
 	// program flags
+
+	nFlags.BoolVarP(&FlagDestInsecure, "insecure", "", false,
+		"Accesses the remote server without checking the remote "+
+			"certificate's validity. THIS IS FOR TESTING PURPOSES ONLY. DO "+
+			"NOT RUN WITH --insecure IN PRODUCTION.")
 
 	nFlags.StringVarP(&FlagDest, "destination", "",
 		"localhost",
@@ -132,7 +137,6 @@ func initFlags() {
 				"https://localhost:"+FlagPort+"/reflect", err.Error())
 			myFatal()
 		}
-
 	}
 
 	if FlagDebug && FlagVerbose {
@@ -145,9 +149,8 @@ func initFlags() {
 	}
 
 	if len(FlagHeaderKey) != len(FlagHeaderValue) {
-		xLog.Printf("count of --header-key values (%d) does not equal count of --header-value (%d)",
+		logPrintf("count of --header-key values (%d) does not equal count of --header-value (%d)",
 			len(FlagHeaderKey), len(FlagHeaderValue))
-		time.Sleep(time.Second)
 		myFatal()
 	}
 
@@ -158,7 +161,12 @@ func initFlags() {
 			sb.WriteString(fmt.Sprintf("[header %3d] %s=%s\n",
 				ix, FlagHeaderKey[ix], FlagHeaderValue[ix]))
 		}
-		xLog.Println(sb.String())
+		logPrintf(sb.String())
+	}
+
+	if FlagDestInsecure && !FlagDebug {
+		logPrintf("--insecure cannot be used without --debug. DO NOT USE --insecure IN PRODUCTION.")
+		myFatal()
 	}
 
 	// next simplest
@@ -213,7 +221,7 @@ func initFlags() {
 }
 
 func logFlag(flag *pflag.Flag) {
-	xLog.Printf(" flag %s has value %s with default %s",
+	xLog.Printf(" flag \"%s\" has value \"%s\" with default %s",
 		flag.Name, misc.WinSep(flag.Value.String()), misc.WinSep(flag.DefValue))
 }
 
