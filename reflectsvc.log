@@ -52,3 +52,43 @@ build	vcs.modified=true
 2023/03/14 19:45:31 reflectsvc.go:58: using HTTPS
 	Certification file is host.crt
 	Key file is host.key
+2023/03/14 19:47:28 logger.go:138: hello from xml2JSon
+	remote endpoint: https://localhost:9090/reflect
+call with these configured headers:
+	[ 0]  [AUTHORIZATION] == [bearer ****DuMmY*ToKeN****=]
+/* ************************** */
+
+{
+	"Status" : "Received",
+	"Shipment Type" : "Auto",
+	"Transit Type" : "Interstate US",
+	"Transit Mode" : "2475",
+	"Storage on Bill" : "no",
+	"Bill Type" : "1458",
+	"Auditor" : "Betty Williams",
+	"Account" : "BNSF RAILWAY COMPANY",
+	"Division" : "",
+	"File Number" : "657-3880",
+	"Last Name" : "Kruse",
+	"First name" : "Robert",
+	"Booking Agent" : "Ward North American",
+	"Load Date" : "02/20/23",
+	"Origin Country" : "US",
+	"Origin State" : "TX",
+	"Origin City" : "Amarillo,",
+	"Destination Country" : "US",
+	"Destination State" : "IL",
+	"Destination City" : "Oak Lawn,",
+	"Billing SP" : "Ward North American",
+	"SP Bill Number" : "103472",
+	"SP Bill Date" : "3/1/2023",
+	"SP Bill Amount" : "$1,540.10",
+	"Currency" : "USD",
+	"Bill received date" : "3/1/2023",
+	"Cost Center" : "",
+	"cost EE number" : "",
+	"Reference" : "",
+	"Client ID#" : "150",
+	"Model CD" : "PAS"
+}
+/* ************************** */

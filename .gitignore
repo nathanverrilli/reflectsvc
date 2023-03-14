@@ -1,4 +1,5 @@
 /parsifal.*.log.txt
+/reflectsvc.log
 /host.key
 /host.pem
 /host.pub
