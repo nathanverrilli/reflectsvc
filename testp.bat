@@ -1,4 +1,5 @@
 curl --header "Content-Type: application/json" ^
+ --verbose ^
  --data-binary @body.json ^
  --request POST ^
  --insecure ^

@@ -107,7 +107,7 @@ func x2j_encodeResponse(_ context.Context, w http.ResponseWriter, response inter
 
 	if !ok {
 		s := fmt.Sprintf("{\"error\":\"%s\"}", v.Status)
-		w.WriteHeader(500)
+		w.WriteHeader(http.StatusInternalServerError)
 		_, _ = w.Write([]byte(s))
 
 	} else {

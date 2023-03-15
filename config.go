@@ -3,8 +3,8 @@ package main
 import (
 	"embed"
 	"fmt"
+	markdown "github.com/MichaelMure/go-term-markdown"
 	"github.com/spf13/pflag"
-	"io"
 	"os"
 	"path/filepath"
 	"reflectsvc/misc"
@@ -232,26 +232,12 @@ func logFlag(flag *pflag.Flag) {
 
 // UsageMessage - describe capabilities and extended usage notes
 func UsageMessage() {
-	var sb strings.Builder
-	sb.WriteString("Useful information goes here ... eventually\n")
-	sb.WriteString("for now, please refer to USAGE.MD in the current directory.")
-	logPrintf(sb.String())
-	fOut, err := os.Create("USAGE.MD")
-	if err != nil {
-		logPrintf("Could not open USAGE.MD to write usage because %s", err.Error())
+	src, err := efs.ReadFile("Resources/USAGE.MD")
+	if nil != err {
+		logPrintf("Could not open embedded resource USAGE.MD because %s", err.Error())
 		myFatal()
 	}
-	defer misc.DeferError(fOut.Close)
-	fIn, err := efs.Open("Resources/USAGE.MD")
-	if err != nil {
-		logPrintf("Could not open efs:USAGE.MD to read because %s", err.Error())
-		myFatal()
-	}
-	defer misc.DeferError(fIn.Close)
-	_, err = io.Copy(fOut, fIn)
-	if err != nil {
-		logPrintf("Could not write USAGE.MD because %s", err.Error())
-		myFatal()
-	}
-
+	result := markdown.Render(string(src), 80, 5)
+	s2 := string(result)
+	fmt.Println(s2)
 }
