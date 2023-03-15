@@ -12,15 +12,20 @@ const SEP = "/* ************************** */"
 // SimpleService provides operations on strings.
 type SimpleService interface {
 	Reverse(string) (string, error)
-	Reflect(string) (string, error)
-	xml2Json(request xml2JsonRequest) (string, error)
+	Reflect(request reflectRequest) reflectResponse
 	Convert(request ConvertRequest) (string, error)
+	xml2Json(request xml2JsonRequest) x2j_ProxyData
 }
 
 // simpleService is a concrete implementation of SimpleService
 type simpleService struct{}
 
-func (simpleService) xml2Json(req xml2JsonRequest) (string, error) {
+func (simpleService) xml2Json(req xml2JsonRequest) (xjProxy x2j_ProxyData) {
+
+	xjProxy.Code = 500
+	xjProxy.Status = "500 ERROR"
+	xjProxy.Body = nil
+
 	if FlagDebug {
 		var sb strings.Builder
 		sb.WriteString(fmt.Sprintf("hello from xml2JSon\n\tremote endpoint: %s\n",
@@ -43,20 +48,24 @@ func (simpleService) xml2Json(req xml2JsonRequest) (string, error) {
 		if nil != rsp {
 			logPrintf("response: %v", rsp)
 		}
-		return "", err
+		xjProxy.Code = rsp.StatusCode
+		xjProxy.Status = rsp.Status
 	}
-	rb, err := io.ReadAll(rsp.Body)
+	xjProxy.Body, err = io.ReadAll(rsp.Body)
 	if nil != err {
 		logPrintf("json request to %s with data\n%s\n"+
 			"\tcould not read response body because %s",
 			FlagDest, req.Json(), err.Error())
-		return "", err
+		xjProxy.Status = "failure"
+		xjProxy.Code = 501
 	}
-	return string(rb), nil
+	xjProxy.Status = rsp.Status
+	xjProxy.Code = rsp.StatusCode
+	return xjProxy
 }
 
-func (simpleService) Reflect(json string) (string, error) {
-	return json, nil
+func (simpleService) Reflect(request reflectRequest) reflectResponse {
+	return reflectResponse{Body: request.Body}
 }
 
 func (simpleService) Convert(req ConvertRequest) (string, error) {

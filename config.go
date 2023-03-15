@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-//go:embed Resources
+//go:embed all:Resources
 var efs embed.FS
 
 // wordSepNormalizeFunc all options are lowercase, so
@@ -241,12 +241,13 @@ func UsageMessage() {
 		logPrintf("Could not open USAGE.MD to write usage because %s", err.Error())
 		myFatal()
 	}
-	misc.DeferError(fOut.Close)
-	fIn, err := efs.Open("USAGE.MD")
+	defer misc.DeferError(fOut.Close)
+	fIn, err := efs.Open("Resources/USAGE.MD")
 	if err != nil {
 		logPrintf("Could not open efs:USAGE.MD to read because %s", err.Error())
 		myFatal()
 	}
+	defer misc.DeferError(fIn.Close)
 	_, err = io.Copy(fOut, fIn)
 	if err != nil {
 		logPrintf("Could not write USAGE.MD because %s", err.Error())

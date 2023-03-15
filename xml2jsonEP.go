@@ -4,17 +4,26 @@ import (
 	"context"
 	"crypto/tls"
 	"encoding/xml"
+	"fmt"
 	"github.com/go-kit/kit/endpoint"
 	"io"
 	"net/http"
 	"time"
 )
 
-// For each method, we define request and response structs
-type xml2JsonResponse struct {
-	Success string `json:"success"`
-	Error   string `json:"error,omitempty"`
+type x2j_ProxyData struct {
+	Code   int
+	Status string
+	Body   []byte
 }
+
+func (xj x2j_ProxyData) String() string {
+	return fmt.Sprintf("status: [%s] status code: [%d]\n---BodyDataStart---\n%s\n---BodyDataEnd\n",
+		xj.Status, xj.Code, xj.Body)
+}
+
+// For each method, we define request and response structs
+type xml2JsonResponse x2j_ProxyData
 
 type xml2JsonRequest XtractaEvents
 
@@ -29,11 +38,8 @@ func (pr xml2JsonRequest) Json() string {
 func makeXml2JsonEndpoint(svc SimpleService) endpoint.Endpoint {
 	return func(_ context.Context, request interface{}) (interface{}, error) {
 		req := request.(xml2JsonRequest)
-		v, err := svc.xml2Json(req)
-		if err != nil {
-			return xml2JsonResponse{v, err.Error()}, nil
-		}
-		return xml2JsonResponse{v, ""}, nil
+		v := svc.xml2Json(req)
+		return xml2JsonResponse(v), nil
 	}
 }
 
@@ -94,5 +100,19 @@ func x2j_proxy(jsonReader io.Reader) (*http.Response, error) {
 	}
 
 	return httpClient.Do(hReq)
+}
 
+func x2j_encodeResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
+	v, ok := response.(xml2JsonResponse)
+
+	if !ok {
+		s := fmt.Sprintf("{\"error\":\"%s\"}", v.Status)
+		w.WriteHeader(500)
+		_, _ = w.Write([]byte(s))
+
+	} else {
+		w.WriteHeader(v.Code)
+		_, _ = w.Write(v.Body)
+	}
+	return nil
 }

@@ -24,7 +24,7 @@ func main() {
 	reflectHandler := httpTransport.NewServer(
 		makeReflectEndpoint(svc),
 		decodeReflectRequest,
-		encodeResponse)
+		encodeReflectResponse)
 
 	reverseHandler := httpTransport.NewServer(
 		makeReverseEndpoint(svc),
@@ -39,7 +39,7 @@ func main() {
 	xml2JsonHandler := httpTransport.NewServer(
 		makeXml2JsonEndpoint(svc),
 		decodeXml2JsonRequest,
-		encodeResponse)
+		x2j_encodeResponse)
 
 	http.Handle("/reverse", reverseHandler)
 	http.Handle("/parsifal", convertHandler)
