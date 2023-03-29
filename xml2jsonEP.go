@@ -38,7 +38,7 @@ func (pr xml2JsonRequest) Json() string {
 func makeXml2JsonEndpoint(svc SimpleService) endpoint.Endpoint {
 	return func(_ context.Context, request interface{}) (interface{}, error) {
 		req := request.(xml2JsonRequest)
-		v := svc.xml2Json(req)
+		v := svc.Xml2Json(req)
 		return xml2JsonResponse(v), nil
 	}
 }

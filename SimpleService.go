@@ -14,13 +14,13 @@ type SimpleService interface {
 	Reverse(string) (string, error)
 	Reflect(request reflectRequest) reflectResponse
 	Convert(request ConvertRequest) (string, error)
-	xml2Json(request xml2JsonRequest) x2j_ProxyData
+	Xml2Json(request xml2JsonRequest) x2j_ProxyData
 }
 
 // simpleService is a concrete implementation of SimpleService
 type simpleService struct{}
 
-func (simpleService) xml2Json(req xml2JsonRequest) (xjProxy x2j_ProxyData) {
+func (simpleService) Xml2Json(req xml2JsonRequest) (xjProxy x2j_ProxyData) {
 
 	xjProxy.Code = 500
 	xjProxy.Status = "500 ERROR"
@@ -65,6 +65,9 @@ func (simpleService) xml2Json(req xml2JsonRequest) (xjProxy x2j_ProxyData) {
 }
 
 func (simpleService) Reflect(request reflectRequest) reflectResponse {
+	if FlagDebug {
+		xLog.Printf("reflecting request:\n\t/* *** */\n%s\n\t/* *** */\n", string(request.Body))
+	}
 	return reflectResponse{Body: request.Body}
 }
 

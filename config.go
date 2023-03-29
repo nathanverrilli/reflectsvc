@@ -82,7 +82,7 @@ func initFlags() {
 
 	nFlags.StringVarP(&FlagDest, "destination", "",
 		"localhost",
-		"destination for xml2Json endpoint. "+
+		"destination for Xml2Json endpoint. "+
 			"the value 'localhost' is a special value that "+
 			"becomes \"https://localhost:<port>/reflect\" where"+
 			"<port> is the port of this program.")

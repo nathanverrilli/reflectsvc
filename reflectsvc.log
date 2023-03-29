@@ -1,1 +1,70 @@
-2023/03/15 20:33:55 logger.go:138: Logfile set to H:\Projects\reflectsvc\reflectsvc.log
+2023/03/29 03:03:43 logger.go:138: Logfile set to H:\Projects\reflectsvc\reflectsvc.log
+2023/03/29 03:03:43 config.go:148: 
+		/*** program flags ***/
+	please note that the double backslash is an artifact to prevent Windows from corrupting the display output. The actual string only has one backslash.
+
+2023/03/29 03:03:43 logger.go:138:  flag "certfile" has value "host.crt" with default 
+2023/03/29 03:03:43 logger.go:138:  flag "debug" has value "true" with default false
+2023/03/29 03:03:43 logger.go:138:  flag "destination" has value "https://localhost:9090/reflect" with default localhost
+2023/03/29 03:03:43 logger.go:138:  flag "header-key" has value "[AUTHORIZATION]" with default [AUTHORIZATION]
+2023/03/29 03:03:43 logger.go:138:  flag "header-value" has value "[bearer ****DuMmY*ToKeN****=]" with default [bearer ****DuMmY*ToKeN****=]
+2023/03/29 03:03:43 logger.go:138:  flag "help" has value "false" with default false
+2023/03/29 03:03:43 logger.go:138:  flag "insecure" has value "true" with default false
+2023/03/29 03:03:43 logger.go:138:  flag "keyfile" has value "host.key" with default 
+2023/03/29 03:03:43 logger.go:138:  flag "organization" has value "P3IDTechnologies" with default P3IDTechnologies
+2023/03/29 03:03:43 logger.go:138:  flag "port" has value "9090" with default 9090
+2023/03/29 03:03:43 logger.go:138:  flag "quiet" has value "false" with default false
+2023/03/29 03:03:43 logger.go:138:  flag "servername" has value "" with default 
+2023/03/29 03:03:43 logger.go:138:  flag "verbose" has value "true" with default false
+2023/03/29 03:03:43 config.go:153: 		/*** end program flags ***/
+2023/03/29 03:03:43 logger.go:138: 
+/* ************************** */
+	Command Line Headers
+[header   0] AUTHORIZATION=bearer ****DuMmY*ToKeN****=
+2023/03/29 03:03:43 config.go:197: Verbose mode active (all debug and informative messages) for @MythosSeed
+2023/03/29 03:03:43 config.go:209: 
+***** ___go_https_reflectsvc BuildInfo: *****
+go	go1.20.2
+path	reflectsvc
+mod	reflectsvc	(devel)	
+dep	github.com/MichaelMure/go-term-markdown	v0.1.4	h1:Ir3kBXDUtOX7dEv0EaQV8CNPpH+T7AfTh0eniMOtNcs=
+dep	github.com/MichaelMure/go-term-text	v0.3.1	h1:Kw9kZanyZWiCHOYu9v/8pWEgDQ6UVN9/ix2Vd2zzWf0=
+dep	github.com/alecthomas/chroma	v0.10.0	h1:7XDcGkCQopCNKjZHfYrNLraA+M7e0fMiJ/Mfikbfjek=
+dep	github.com/disintegration/imaging	v1.6.2	h1:w1LecBlG2Lnp8B3jk5zSuNqd7b4DXhcjwek1ei82L+c=
+dep	github.com/dlclark/regexp2	v1.8.1	h1:6Lcdwya6GjPUNsBct8Lg/yRPwMhABj269AAzdGSiR+0=
+dep	github.com/eliukblau/pixterm/pkg/ansimage	v0.0.0-20191210081756-9fb6cf8c2f75	h1:vbix8DDQ/rfatfFr/8cf/sJfIL69i4BcZfjrVOxsMqk=
+dep	github.com/fatih/color	v1.15.0	h1:kOqh6YHBtK8aywxGerMG2Eq3H6Qgoqeo13Bk2Mv/nBs=
+dep	github.com/go-kit/kit	v0.12.0	h1:e4o3o3IsBfAKQh5Qbbiqyfu97Ku7jrO/JbohvztANh4=
+dep	github.com/go-kit/log	v0.2.1	h1:MRVx0/zhvdseW+Gza6N9rVzU/IVzaeE1SFI4raAhmBU=
+dep	github.com/go-logfmt/logfmt	v0.6.0	h1:wGYYu3uicYdqXVgoYbvnkrPVXkuLM1p1ifugDMEdRi4=
+dep	github.com/gomarkdown/markdown	v0.0.0-20230313173142-2ced44d5b584	h1:XaUmlCIi5hEY5GPUV6oXc5eytg9+FBH9/9fOKblHWEU=
+dep	github.com/kyokomi/emoji/v2	v2.2.12	h1:sSVA5nH9ebR3Zji1o31wu3yOwD1zKXQA2z0zUyeit60=
+dep	github.com/lucasb-eyer/go-colorful	v1.2.0	h1:1nnpGOrhyZZuNyfu1QjKiUICQ74+3FNCN69Aj6K7nkY=
+dep	github.com/mattn/go-colorable	v0.1.13	h1:fFA4WZxdEF4tXPZVKMLwD8oUnCTTo08duU7wxecdEvA=
+dep	github.com/mattn/go-isatty	v0.0.17	h1:BTarxUcIeDqL27Mc+vyvdWYSL28zpIhv3RoTdsLMPng=
+dep	github.com/mattn/go-runewidth	v0.0.14	h1:+xnbZSEeDbOIg5/mE6JF0w6n9duR1l3/WmbinWVwUuU=
+dep	github.com/rivo/uniseg	v0.4.4	h1:8TfxU8dW6PdqD27gjM8MVNuicgxIjxpm4K7x4jp8sis=
+dep	github.com/spf13/pflag	v1.0.5	h1:iy+VFUOCP1a+8yFto/drg2CJ5u0yRoB7fZw3DKv/JXA=
+dep	golang.org/x/image	v0.6.0	h1:bR8b5okrPI3g/gyZakLZHeWxAR8Dn5CyxXv1hLH5g/4=
+dep	golang.org/x/net	v0.8.0	h1:Zrh2ngAOFYneWTAIAPethzeaQLuHwhuBkuV6ZiRnUaQ=
+dep	golang.org/x/sys	v0.6.0	h1:MVltZSvRTcU2ljQOhs94SXPftV6DCNnZViHeQps87pQ=
+build	-buildmode=exe
+build	-compiler=gc
+build	CGO_ENABLED=1
+build	CGO_CFLAGS=
+build	CGO_CPPFLAGS=
+build	CGO_CXXFLAGS=
+build	CGO_LDFLAGS=
+build	GOARCH=amd64
+build	GOOS=windows
+build	GOAMD64=v1
+build	vcs=git
+build	vcs.revision=6c70b8f9cdc6fc6ef3f39385857e457efe8e8c4c
+build	vcs.time=2023-03-15T20:48:55Z
+build	vcs.modified=true
+
+********************************************
+2023/03/29 03:03:43 config.go:223: Listening on port 9090
+2023/03/29 03:03:43 reflectsvc.go:79: using HTTPS
+	Certification file is host.crt
+	Key file is host.key
