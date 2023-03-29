@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bufio"
 	"embed"
+	"errors"
 	"fmt"
 	markdown "github.com/MichaelMure/go-term-markdown"
 	"github.com/spf13/pflag"
@@ -38,6 +40,8 @@ var FlagDebug bool
 
 /* program specific flags */
 
+var FlagRemapFieldNames string
+var FlagRemapMap map[string]string
 var FlagServiceName string
 var FlagPort string
 var FlagCert string
@@ -74,6 +78,9 @@ func initFlags() {
 	hideFlags["FlagOrganization"] = "organization"
 
 	// program flags
+
+	nFlags.StringVarP(&FlagRemapFieldNames, "fieldNames", "", "",
+		"Filename of conversion mapping, one pair per line, [oldName][newName], escape '[' and ']' by doubling them '[[' and ']]'. Case sensitive.")
 
 	nFlags.BoolVarP(&FlagDestInsecure, "insecure", "", false,
 		"Accesses the remote server without checking the remote "+
@@ -223,6 +230,73 @@ func initFlags() {
 		xLog.Printf("Listening on port %d", portNumber)
 	}
 
+	if misc.IsStringSet(&FlagRemapFieldNames) {
+		FlagRemapMap = loadRemapMap(FlagRemapFieldNames)
+	} else {
+		FlagRemapMap = make(map[string]string, 0)
+	}
+
+}
+
+func loadRemapMap(fn string) map[string]string {
+	remap := make(map[string]string, 64)
+
+	f, err := os.Open(fn)
+	if nil != err {
+		xLog.Printf("Could not open field name conversion file because %s", err.Error())
+		myFatal()
+	}
+	defer misc.DeferError(f.Close)
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+		if "" == line {
+			continue
+		}
+		key, val, err := parseTokens(line)
+		if nil != err {
+			xLog.Printf("Could not parse line because %s", err.Error())
+			continue
+		}
+		if misc.IsStringSet(&key) && misc.IsStringSet(&val) {
+			remap[key] = val
+		}
+	}
+	return remap
+}
+
+func parseTokens(line string) (key string, val string, err error) {
+	var sbKey, sbVal strings.Builder
+	runes := []rune(line)
+	err = errors.New("token remap line has bad format: { " + line + " }")
+
+	if len(runes) <= 0 {
+		return "", "", nil
+	}
+
+	// start a comment, or begin reading key token
+	switch runes[0] {
+	case '[':
+		break
+	case '#': // comment
+		return "", "", nil
+	default:
+		return "", "", err
+	}
+	var ix int
+	for ix = 1; ix < len(runes) && ']' != runes[ix]; ix++ {
+		sbKey.WriteRune(runes[ix])
+	}
+	if ix+2 >= len(runes) || runes[ix] != ']' || runes[ix+1] != '[' {
+		return "", "", err
+	}
+	for ix += 2; ix < len(runes) && ']' != runes[ix]; ix++ {
+		sbVal.WriteRune(runes[ix])
+	}
+	if ']' != runes[ix] || (len(runes)-1) != ix {
+		return "", "", err
+	}
+	return sbKey.String(), sbVal.String(), nil
 }
 
 func logFlag(flag *pflag.Flag) {

@@ -79,4 +79,9 @@ Suppress most log output to `STDERR`.
 regardless of this flag*. This flag ***only***
 affects writes to `STDERR`.
 
+### --destination
+The /xml2json endpoint will send the
+converted JSON information on to the specified destination,
+which must be complete.  'localhost' is a **special** value
+that sends the data to the service's /reflect endpoint.
 

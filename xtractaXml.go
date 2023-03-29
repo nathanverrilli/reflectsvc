@@ -108,6 +108,7 @@ func (x XtractaField) String() string {
 
 func (x XtractaEvents) Json() string {
 	var sb strings.Builder
+
 	var whiteSpace = FlagDebug || FlagVerbose
 	if whiteSpace {
 		sb.WriteRune('\n')
@@ -127,7 +128,14 @@ func (x XtractaEvents) Json() string {
 			sb.WriteRune('\t')
 		}
 		sb.WriteRune('"')
-		sb.WriteString(fld.FieldName)
+		{ // change the field name based on lookup
+			cfn, ok := FlagRemapMap[fld.FieldName]
+			if ok {
+				sb.WriteString(cfn)
+			} else {
+				sb.WriteString(fld.FieldName)
+			}
+		}
 		if whiteSpace {
 			sb.WriteString("\" : \"")
 		} else {

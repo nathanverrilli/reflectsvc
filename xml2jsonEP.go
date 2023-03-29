@@ -57,7 +57,6 @@ func decodeXml2JsonRequest(_ context.Context, r *http.Request) (interface{}, err
 		return nil, err
 	}
 
-	// xLog.Print(req.String())
 	return req, nil
 }
 

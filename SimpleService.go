@@ -15,10 +15,15 @@ type SimpleService interface {
 	Reflect(request reflectRequest) reflectResponse
 	Convert(request ConvertRequest) (string, error)
 	Xml2Json(request xml2JsonRequest) x2j_ProxyData
+	Validate(request validateRequest) validateRequest
 }
 
 // simpleService is a concrete implementation of SimpleService
 type simpleService struct{}
+
+func (simpleService) Validate(v validateRequest) (vr validateRequest) {
+	return v
+}
 
 func (simpleService) Xml2Json(req xml2JsonRequest) (xjProxy x2j_ProxyData) {
 

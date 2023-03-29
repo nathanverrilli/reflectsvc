@@ -19,8 +19,14 @@ func main() {
 	initLog("reflectsvc.log")
 	defer closeLog()
 	initFlags()
+	// setup for specific services
 
 	svc := simpleService{}
+
+	validateHandler := httpTransport.NewServer(
+		makeValidateEndpoint(svc),
+		decodeValidateRequest,
+		encodeResponse)
 
 	reflectHandler := httpTransport.NewServer(
 		makeReflectEndpoint(svc),
@@ -46,7 +52,7 @@ func main() {
 	http.Handle("/parsifal", convertHandler)
 	http.Handle("/convert", convertHandler)
 	http.Handle("/reflect", reflectHandler)
-	http.Handle("/validate", reflectHandler)
+	http.Handle("/validate", validateHandler)
 	http.Handle("/xml2json", xml2JsonHandler)
 
 	service := ":" + FlagPort
@@ -56,10 +62,10 @@ func main() {
 		Handler:                      nil,
 		DisableGeneralOptionsHandler: false,
 		TLSConfig:                    nil,
-		ReadTimeout:                  20 * time.Second,
-		ReadHeaderTimeout:            10 * time.Second,
-		WriteTimeout:                 30 * time.Second,
-		IdleTimeout:                  60 * time.Second,
+		ReadTimeout:                  2 * time.Minute,
+		ReadHeaderTimeout:            2 * time.Minute,
+		WriteTimeout:                 2 * time.Minute,
+		IdleTimeout:                  2 * time.Minute,
 		MaxHeaderBytes:               0,
 		TLSNextProto:                 nil,
 		ConnState:                    nil,
@@ -90,6 +96,5 @@ func main() {
 }
 
 func encodeResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
-	defer flushLog()
 	return json.NewEncoder(w).Encode(response)
 }
