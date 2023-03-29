@@ -1,4 +1,4 @@
-curl --insecure ^
+curl --verbose --insecure ^
  --connect-timeout 750 ^
  --header "Content-Type: application/xml" ^
  --header "Accept: application/json" ^
