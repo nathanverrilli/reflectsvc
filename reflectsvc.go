@@ -26,7 +26,7 @@ func main() {
 	validateHandler := httpTransport.NewServer(
 		makeValidateEndpoint(svc),
 		decodeValidateRequest,
-		encodeResponse)
+		encodeValidateResponse)
 
 	reflectHandler := httpTransport.NewServer(
 		makeReflectEndpoint(svc),

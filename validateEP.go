@@ -22,6 +22,22 @@ func makeValidateEndpoint(svc SimpleService) endpoint.Endpoint {
 	}
 }
 
+func encodeValidateResponse(_ context.Context, writer http.ResponseWriter, request interface{}) error {
+
+	ep, err := json.Marshal(request.(validateRequest))
+	if nil != err {
+		xLog.Printf("failed to marshal JSON data because %s", err.Error())
+		return err
+	}
+	if FlagDebug {
+		xLog.Printf("\n\t/*** *************** ***/n%sn\t/*** *************** ***/n",
+			string(ep))
+	}
+	_, err = writer.Write(ep)
+	return err
+
+}
+
 func decodeValidateRequest(_ context.Context, req *http.Request) (interface{}, error) {
 	contentType, params, err := mime.ParseMediaType(req.Header.Get("Content-Type"))
 	if err != nil || !strings.HasPrefix(contentType, "multipart/") {
