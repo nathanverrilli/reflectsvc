@@ -1,29 +1,24 @@
-2023/03/29 23:50:10 logger.go:138: Logfile set to H:\Projects\reflectsvc\reflectsvc.log
-2023/03/29 23:50:10 config.go:155: 
+2023/03/31 01:59:11 logger.go:138: Logfile set to H:\Projects\reflectsvc\reflectsvc.log
+2023/03/31 01:59:11 config.go:173: 
 		/*** program flags ***/
 	please note that the double backslash is an artifact to prevent Windows from corrupting the display output. The actual string only has one backslash.
 
-2023/03/29 23:50:10 logger.go:138:  flag "certfile" has value "host.crt" with default 
-2023/03/29 23:50:10 logger.go:138:  flag "debug" has value "true" with default false
-2023/03/29 23:50:10 logger.go:138:  flag "destination" has value "https://localhost:9090/reflect" with default localhost
-2023/03/29 23:50:10 logger.go:138:  flag "fieldnames" has value "fldnames.txt" with default 
-2023/03/29 23:50:10 logger.go:138:  flag "header-key" has value "[AUTHORIZATION]" with default [AUTHORIZATION]
-2023/03/29 23:50:10 logger.go:138:  flag "header-value" has value "[bearer ****DuMmY*ToKeN****=]" with default [bearer ****DuMmY*ToKeN****=]
-2023/03/29 23:50:10 logger.go:138:  flag "help" has value "false" with default false
-2023/03/29 23:50:10 logger.go:138:  flag "insecure" has value "true" with default false
-2023/03/29 23:50:10 logger.go:138:  flag "keyfile" has value "host.key" with default 
-2023/03/29 23:50:10 logger.go:138:  flag "organization" has value "P3IDTechnologies" with default P3IDTechnologies
-2023/03/29 23:50:10 logger.go:138:  flag "port" has value "9090" with default 9090
-2023/03/29 23:50:10 logger.go:138:  flag "quiet" has value "false" with default false
-2023/03/29 23:50:10 logger.go:138:  flag "servername" has value "" with default 
-2023/03/29 23:50:10 logger.go:138:  flag "verbose" has value "true" with default false
-2023/03/29 23:50:10 config.go:160: 		/*** end program flags ***/
-2023/03/29 23:50:10 logger.go:138: 
-/* ************************** */
-	Command Line Headers
-[header   0] AUTHORIZATION=bearer ****DuMmY*ToKeN****=
-2023/03/29 23:50:10 config.go:204: Verbose mode active (all debug and informative messages) for @MythosSeed
-2023/03/29 23:50:10 config.go:216: 
+2023/03/31 01:59:11 logger.go:138:  flag "certfile" has value "host.crt" with default 
+2023/03/31 01:59:11 logger.go:138:  flag "debug" has value "true" with default false
+2023/03/31 01:59:11 logger.go:138:  flag "destination" has value "https://localhost:9090/reflect" with default localhost
+2023/03/31 01:59:11 logger.go:138:  flag "fieldnames" has value "fldnames.txt" with default 
+2023/03/31 01:59:11 logger.go:138:  flag "help" has value "false" with default false
+2023/03/31 01:59:11 logger.go:138:  flag "insecure" has value "true" with default false
+2023/03/31 01:59:11 logger.go:138:  flag "keyfile" has value "host.key" with default 
+2023/03/31 01:59:11 logger.go:138:  flag "omitempty" has value "false" with default false
+2023/03/31 01:59:11 logger.go:138:  flag "organization" has value "P3IDTechnologies" with default P3IDTechnologies
+2023/03/31 01:59:11 logger.go:138:  flag "port" has value "9090" with default 9090
+2023/03/31 01:59:11 logger.go:138:  flag "quiet" has value "false" with default false
+2023/03/31 01:59:11 logger.go:138:  flag "servername" has value "" with default 
+2023/03/31 01:59:11 logger.go:138:  flag "verbose" has value "true" with default false
+2023/03/31 01:59:11 config.go:178: 		/*** end program flags ***/
+2023/03/31 01:59:11 config.go:222: Verbose mode active (all debug and informative messages) for @MythosSeed
+2023/03/31 01:59:11 config.go:234: 
 ***** ___1go_https_reflectsvc BuildInfo: *****
 go	go1.20.2
 path	reflectsvc
@@ -51,8 +46,9 @@ dep	golang.org/x/net	v0.8.0	h1:Zrh2ngAOFYneWTAIAPethzeaQLuHwhuBkuV6ZiRnUaQ=
 dep	golang.org/x/sys	v0.6.0	h1:MVltZSvRTcU2ljQOhs94SXPftV6DCNnZViHeQps87pQ=
 build	-buildmode=exe
 build	-compiler=gc
+build	-gcflags="all=-N -l"
 build	CGO_ENABLED=1
-build	CGO_CFLAGS=
+build	CGO_CFLAGS="-O0 -g"
 build	CGO_CPPFLAGS=
 build	CGO_CXXFLAGS=
 build	CGO_LDFLAGS=
@@ -60,12 +56,13 @@ build	GOARCH=amd64
 build	GOOS=windows
 build	GOAMD64=v1
 build	vcs=git
-build	vcs.revision=85e8d0e3706f493e464c3bbe13075a6a477164c1
-build	vcs.time=2023-03-29T23:49:56Z
+build	vcs.revision=acf1f313927196d640f3f9b77a65715748f523b4
+build	vcs.time=2023-03-31T01:36:08Z
 build	vcs.modified=true
 
 *********************************************
-2023/03/29 23:50:10 config.go:230: Listening on port 9090
-2023/03/29 23:50:10 reflectsvc.go:85: using HTTPS
+2023/03/31 01:59:11 config.go:248: Listening on port 9090
+2023/03/31 01:59:28 reflectsvc.go:102: using HTTPS
 	Certification file is host.crt
 	Key file is host.key
+2023/03/31 02:00:22 reflectsvc.go:22: Got signal interrupt, exiting immediately

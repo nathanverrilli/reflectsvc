@@ -120,6 +120,7 @@ func (x XtractaEvents) Json() string {
 	needComma4Json := false
 	for _, fld := range x.Event.Document.FieldData.Field {
 		if FlagOmitEmpty && !misc.IsStringSet(&fld.FieldValue) {
+			xLog.Printf("omitting empty field %s (no value in data)", fld.FieldName)
 			continue
 		}
 		if needComma4Json {

@@ -6,6 +6,8 @@ import (
 	"errors"
 	httpTransport "github.com/go-kit/kit/transport/http"
 	"net/http"
+	"os"
+	"os/signal"
 	"reflectsvc/misc"
 	"time"
 )
@@ -13,12 +15,26 @@ import (
 // ErrEmpty is returned when an input string is empty.
 var ErrEmpty = errors.New("empty string")
 
+var signalChan chan os.Signal
+
+func handleSignal() {
+	sig := <-signalChan
+	xLog.Printf("Got signal %v, exiting immediately\n", sig)
+	myFatal(-2)
+}
+
 func main() {
 	var err error
 
 	initLog("reflectsvc.log")
 	defer closeLog()
 	initFlags()
+
+	signalChan = make(chan os.Signal, 1)
+	signal.Notify(signalChan, os.Interrupt)
+	signal.Notify(signalChan, os.Kill)
+	go handleSignal()
+
 	// setup for specific services
 
 	svc := simpleService{}

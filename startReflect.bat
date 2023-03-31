@@ -1,10 +1,11 @@
-@echo on
+@echo off
 
 reflectsvc ^
   --keyfile host.key ^
   --certfile host.crt ^
   --destination localhost ^
-   --debug ^
-   --verbose ^
-   --insecure ^
-   --port 9090
+  --fieldnames fldnames.txt ^
+  --debug ^
+  --verbose ^
+  --insecure ^
+  --port 9090
