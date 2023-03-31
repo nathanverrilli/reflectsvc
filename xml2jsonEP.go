@@ -8,22 +8,23 @@ import (
 	"github.com/go-kit/kit/endpoint"
 	"io"
 	"net/http"
+	"strings"
 	"time"
 )
 
-type x2j_ProxyData struct {
+type x2jProxyData struct {
 	Code   int
 	Status string
 	Body   []byte
 }
 
-func (xj x2j_ProxyData) String() string {
+func (xj x2jProxyData) String() string {
 	return fmt.Sprintf("status: [%s] status code: [%d]\n---BodyDataStart---\n%s\n---BodyDataEnd\n",
 		xj.Status, xj.Code, xj.Body)
 }
 
 // For each method, we define request and response structs
-type xml2JsonResponse x2j_ProxyData
+type xml2JsonResponse x2jProxyData
 
 type xml2JsonRequest XtractaEvents
 
@@ -52,6 +53,7 @@ func decodeXml2JsonRequest(_ context.Context, r *http.Request) (interface{}, err
 		return nil, err
 	}
 	err = xml.Unmarshal(body, &req)
+	req.Headers = r.Header
 	if nil != err {
 		xLog.Printf("xml.Unmarshal failed because %s", err.Error())
 		return nil, err
@@ -60,14 +62,15 @@ func decodeXml2JsonRequest(_ context.Context, r *http.Request) (interface{}, err
 	return req, nil
 }
 
-func x2j_proxy(jsonReader io.Reader) (*http.Response, error) {
+var standardRequestHeaders = map[string]string{
+	"Accept-Charset": "utf-8",
+	"DNT":            "1",
+}
+
+var proxiedHeaders = []string{"Authorization", "User-Agent"}
+
+func x2jProxy(header http.Header, jsonReader io.Reader) (*http.Response, error) {
 	var tr *http.Transport
-	var standardRequestHeaders = map[string]string{
-		"Accept":         "application/json",
-		"Accept-Charset": "utf-8",
-		"User-Agent":     "go",
-		"DNT":            "1",
-	}
 
 	if FlagDestInsecure {
 		tr = &http.Transport{
@@ -90,10 +93,12 @@ func x2j_proxy(jsonReader io.Reader) (*http.Response, error) {
 	for key, val := range standardRequestHeaders {
 		hReq.Header.Set(key, val)
 	}
-	for ix := range FlagHeaderKey {
-		hReq.Header.Set(FlagHeaderKey[ix], FlagHeaderValue[ix])
+	if FlagDebug {
+		logHeaders(hReq.Header)
 	}
-
+	for _, ph := range proxiedHeaders {
+		hReq.Header[ph] = header.Values(ph)
+	}
 	httpClient := &http.Client{
 		Transport: tr,
 	}
@@ -101,7 +106,23 @@ func x2j_proxy(jsonReader io.Reader) (*http.Response, error) {
 	return httpClient.Do(hReq)
 }
 
-func x2j_encodeResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
+func logHeaders(h http.Header) {
+	var sb strings.Builder
+	for headerName, headerValues := range h {
+		sb.WriteRune('\t')
+		sb.WriteString(headerName)
+		sb.WriteString(" : ")
+		for _, value := range headerValues {
+			sb.WriteRune('[')
+			sb.WriteString(value)
+			sb.WriteString("] ")
+		}
+		sb.WriteRune('\n')
+	}
+	xLog.Printf("headers for proxied request\n%s", sb.String())
+}
+
+func x2jEncodeResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
 	v, ok := response.(xml2JsonResponse)
 
 	if !ok {

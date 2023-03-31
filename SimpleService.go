@@ -2,9 +2,7 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"io"
-	"strings"
 )
 
 const SEP = "/* ************************** */"
@@ -14,7 +12,7 @@ type SimpleService interface {
 	Reverse(string) (string, error)
 	Reflect(request reflectRequest) reflectResponse
 	Convert(request ConvertRequest) (string, error)
-	Xml2Json(request xml2JsonRequest) x2j_ProxyData
+	Xml2Json(request xml2JsonRequest) x2jProxyData
 	Validate(request validateRequest) validateRequest
 }
 
@@ -25,16 +23,18 @@ func (simpleService) Validate(v validateRequest) (vr validateRequest) {
 	return v
 }
 
-func (simpleService) Xml2Json(req xml2JsonRequest) (xjProxy x2j_ProxyData) {
+func (simpleService) Xml2Json(req xml2JsonRequest) (xjProxy x2jProxyData) {
 
 	xjProxy.Code = 500
 	xjProxy.Status = "500 ERROR"
 	xjProxy.Body = nil
 
+	/**
 	if FlagDebug {
 		var sb strings.Builder
 		sb.WriteString(fmt.Sprintf("hello from xml2JSon\n\tremote endpoint: %s\n",
 			FlagDest))
+
 		if len(FlagHeaderKey) > 0 {
 			sb.WriteString("call with these configured headers:\n")
 			for ix := range FlagHeaderKey {
@@ -42,11 +42,15 @@ func (simpleService) Xml2Json(req xml2JsonRequest) (xjProxy x2j_ProxyData) {
 					ix, FlagHeaderKey[ix], FlagHeaderValue[ix]))
 			}
 		}
+
+
 		sb.WriteString(fmt.Sprintf("%s\n%s\n%s", SEP, req.Json(), SEP))
 		logPrintf(sb.String())
 	}
+	***/
+
 	buf := bytes.NewBufferString(req.Json())
-	rsp, err := x2j_proxy(buf)
+	rsp, err := x2jProxy(req.Headers, buf)
 	if nil != err {
 		logPrintf("could not proxy json request to %s\n with data\n%s\n because %s",
 			FlagDest, req.Json(), err.Error())

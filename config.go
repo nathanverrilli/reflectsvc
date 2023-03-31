@@ -57,9 +57,12 @@ var FlagCert string
 var FlagKey string
 var FlagDest string
 var FlagDestInsecure bool
+var FlagOmitEmpty bool
+
+/***
 var FlagHeaderValue []string
 var FlagHeaderKey []string
-var FlagOmitEmpty bool
+*/
 
 func initFlags() {
 	var err error
@@ -107,11 +110,13 @@ func initFlags() {
 			"becomes \"https://localhost:<port>/reflect\" where"+
 			"<port> is the port of this program.")
 
+	/* ***
 	nFlags.StringArrayVarP(&FlagHeaderKey, "header-key", "", []string{"AUTHORIZATION"},
 		"Header Key (must be in same order as value)")
 
 	nFlags.StringArrayVarP(&FlagHeaderValue, "header-value", "", []string{"bearer ****DuMmY*ToKeN****="},
 		"Header Value(must be in same order as key)")
+	*** */
 
 	nFlags.StringVarP(&FlagServiceName, "servername", "", "",
 		"Name of service/FQDN \"microservice.example.com\" <<not fully tested>> ")
@@ -172,23 +177,23 @@ func initFlags() {
 		nFlags.VisitAll(logFlag)
 		xLog.Println("\t\t/*** end program flags ***/")
 	}
-
-	if len(FlagHeaderKey) != len(FlagHeaderValue) {
-		logPrintf("count of --header-key values (%d) does not equal count of --header-value (%d)",
-			len(FlagHeaderKey), len(FlagHeaderValue))
-		myFatal()
-	}
-
-	if FlagVerbose || FlagDebug {
-		var sb strings.Builder
-		sb.WriteString(fmt.Sprintf("\n%s\n\tCommand Line Headers\n", SEP))
-		for ix := range FlagHeaderKey {
-			sb.WriteString(fmt.Sprintf("[header %3d] %s=%s\n",
-				ix, FlagHeaderKey[ix], FlagHeaderValue[ix]))
+	/*
+		if len(FlagHeaderKey) != len(FlagHeaderValue) {
+			logPrintf("count of --header-key values (%d) does not equal count of --header-value (%d)",
+				len(FlagHeaderKey), len(FlagHeaderValue))
+			myFatal()
 		}
-		logPrintf(sb.String())
-	}
 
+		if FlagVerbose || FlagDebug {
+			var sb strings.Builder
+			sb.WriteString(fmt.Sprintf("\n%s\n\tCommand Line Headers\n", SEP))
+			for ix := range FlagHeaderKey {
+				sb.WriteString(fmt.Sprintf("[header %3d] %s=%s\n",
+					ix, FlagHeaderKey[ix], FlagHeaderValue[ix]))
+			}
+			logPrintf(sb.String())
+		}
+	*/
 	if FlagDestInsecure && !FlagDebug {
 		logPrintf("--insecure cannot be used without --debug. DO NOT USE --insecure IN PRODUCTION.")
 		myFatal()

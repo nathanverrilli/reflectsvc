@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/xml"
 	"fmt"
+	"net/http"
 	"reflectsvc/misc"
 	"strings"
 )
@@ -11,6 +12,7 @@ type XtractaEvents struct {
 	XMLName xml.Name     `xml:"events"`
 	Text    string       `xml:",chardata"`
 	Event   XtractaEvent `xml:"event"`
+	Headers http.Header
 }
 
 func (x XtractaEvents) String() string {
