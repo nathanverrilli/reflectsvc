@@ -1,29 +1,29 @@
-2023/03/29 23:27:30 logger.go:138: Logfile set to H:\Projects\reflectsvc\reflectsvc.log
-2023/03/29 23:27:30 config.go:155: 
+2023/03/29 23:50:10 logger.go:138: Logfile set to H:\Projects\reflectsvc\reflectsvc.log
+2023/03/29 23:50:10 config.go:155: 
 		/*** program flags ***/
 	please note that the double backslash is an artifact to prevent Windows from corrupting the display output. The actual string only has one backslash.
 
-2023/03/29 23:27:30 logger.go:138:  flag "certfile" has value "host.crt" with default 
-2023/03/29 23:27:30 logger.go:138:  flag "debug" has value "true" with default false
-2023/03/29 23:27:30 logger.go:138:  flag "destination" has value "https://localhost:9090/reflect" with default localhost
-2023/03/29 23:27:30 logger.go:138:  flag "fieldnames" has value "fldnames.txt" with default 
-2023/03/29 23:27:30 logger.go:138:  flag "header-key" has value "[AUTHORIZATION]" with default [AUTHORIZATION]
-2023/03/29 23:27:30 logger.go:138:  flag "header-value" has value "[bearer ****DuMmY*ToKeN****=]" with default [bearer ****DuMmY*ToKeN****=]
-2023/03/29 23:27:30 logger.go:138:  flag "help" has value "false" with default false
-2023/03/29 23:27:30 logger.go:138:  flag "insecure" has value "true" with default false
-2023/03/29 23:27:30 logger.go:138:  flag "keyfile" has value "host.key" with default 
-2023/03/29 23:27:30 logger.go:138:  flag "organization" has value "P3IDTechnologies" with default P3IDTechnologies
-2023/03/29 23:27:30 logger.go:138:  flag "port" has value "9090" with default 9090
-2023/03/29 23:27:30 logger.go:138:  flag "quiet" has value "false" with default false
-2023/03/29 23:27:30 logger.go:138:  flag "servername" has value "" with default 
-2023/03/29 23:27:30 logger.go:138:  flag "verbose" has value "true" with default false
-2023/03/29 23:27:30 config.go:160: 		/*** end program flags ***/
-2023/03/29 23:27:30 logger.go:138: 
+2023/03/29 23:50:10 logger.go:138:  flag "certfile" has value "host.crt" with default 
+2023/03/29 23:50:10 logger.go:138:  flag "debug" has value "true" with default false
+2023/03/29 23:50:10 logger.go:138:  flag "destination" has value "https://localhost:9090/reflect" with default localhost
+2023/03/29 23:50:10 logger.go:138:  flag "fieldnames" has value "fldnames.txt" with default 
+2023/03/29 23:50:10 logger.go:138:  flag "header-key" has value "[AUTHORIZATION]" with default [AUTHORIZATION]
+2023/03/29 23:50:10 logger.go:138:  flag "header-value" has value "[bearer ****DuMmY*ToKeN****=]" with default [bearer ****DuMmY*ToKeN****=]
+2023/03/29 23:50:10 logger.go:138:  flag "help" has value "false" with default false
+2023/03/29 23:50:10 logger.go:138:  flag "insecure" has value "true" with default false
+2023/03/29 23:50:10 logger.go:138:  flag "keyfile" has value "host.key" with default 
+2023/03/29 23:50:10 logger.go:138:  flag "organization" has value "P3IDTechnologies" with default P3IDTechnologies
+2023/03/29 23:50:10 logger.go:138:  flag "port" has value "9090" with default 9090
+2023/03/29 23:50:10 logger.go:138:  flag "quiet" has value "false" with default false
+2023/03/29 23:50:10 logger.go:138:  flag "servername" has value "" with default 
+2023/03/29 23:50:10 logger.go:138:  flag "verbose" has value "true" with default false
+2023/03/29 23:50:10 config.go:160: 		/*** end program flags ***/
+2023/03/29 23:50:10 logger.go:138: 
 /* ************************** */
 	Command Line Headers
 [header   0] AUTHORIZATION=bearer ****DuMmY*ToKeN****=
-2023/03/29 23:27:30 config.go:204: Verbose mode active (all debug and informative messages) for @MythosSeed
-2023/03/29 23:27:30 config.go:216: 
+2023/03/29 23:50:10 config.go:204: Verbose mode active (all debug and informative messages) for @MythosSeed
+2023/03/29 23:50:10 config.go:216: 
 ***** ___1go_https_reflectsvc BuildInfo: *****
 go	go1.20.2
 path	reflectsvc
@@ -60,247 +60,12 @@ build	GOARCH=amd64
 build	GOOS=windows
 build	GOAMD64=v1
 build	vcs=git
-build	vcs.revision=38a7b9a98aecae021b34a787ada955f9818c4dc9
-build	vcs.time=2023-03-29T23:27:01Z
+build	vcs.revision=85e8d0e3706f493e464c3bbe13075a6a477164c1
+build	vcs.time=2023-03-29T23:49:56Z
 build	vcs.modified=true
 
 *********************************************
-2023/03/29 23:27:30 config.go:230: Listening on port 9090
-2023/03/29 23:27:30 reflectsvc.go:85: using HTTPS
+2023/03/29 23:50:10 config.go:230: Listening on port 9090
+2023/03/29 23:50:10 reflectsvc.go:85: using HTTPS
 	Certification file is host.crt
 	Key file is host.key
-2023/03/29 23:28:53 SimpleService.go:80: 
-/* ************************** */
-XMLSpace:    XMLName:  { events}  Text: 
-XtractaEvent Text:   Sequence 10  Generated 2023-03-06T21:48:29+00:00
-XtractaDocument Text:   Revision: 12  WorkflowID: 986033  DocumentID: 269431526
-	DocumentStatus output  NumberOfPages 4  ApiDownloadStatus:  active
-	FreeForm:   Classification basic  ClassificationStatus: 4133752
-	ClassificationDesign: undetected  DocumentURL: https://web1-org.xtracta.com/us_west_2_storage1_datasource1/1/74/2d/iq277690491-4gE4fUMW.pdf
-Image URLs:
-
-	https://web1-org.xtracta.com/us_west_2_storage1_datasource1/1/21/bf/ds269431526-iq277690491-4gE4fUMW1585-1-800.jpg
-	https://web1-org.xtracta.com/us_west_2_storage1_datasource1/1/44/d1/ds269431526-iq277690491-4gE4fUMW1585-2-800.jpg
-	https://web1-org.xtracta.com/us_west_2_storage1_datasource1/1/e1/c3/ds269431526-iq277690491-4gE4fUMW1585-3-800.jpg
-	https://web1-org.xtracta.com/us_west_2_storage1_datasource1/1/11/07/ds269431526-iq277690491-4gE4fUMW1585-4-800.jpg
-FieldData Text: 
-Field [Text:   FieldID: 39149621  FieldName: Status  FieldValue: Received   FieldConfidence: 100]
-Field [Text:   FieldID: 39149622  FieldName: Shipment Type  FieldValue: Auto   FieldConfidence: ]
-Field [Text:   FieldID: 39149623  FieldName: Transit Type  FieldValue: Interstate US   FieldConfidence: ]
-Field [Text:   FieldID: 39149624  FieldName: Transit Mode  FieldValue: 2475   FieldConfidence: ]
-Field [Text:   FieldID: 39149639  FieldName: Storage on Bill  FieldValue: no   FieldConfidence: 100]
-Field [Text:   FieldID: 39149633  FieldName: Bill Type  FieldValue: 1458   FieldConfidence: ]
-Field [Text:   FieldID: 39149637  FieldName: Auditor  FieldValue: Betty Williams   FieldConfidence: 100]
-Field [Text:   FieldID: 39149615  FieldName: Account  FieldValue: BNSF RAILWAY COMPANY   FieldConfidence: ]
-Field [Text:   FieldID: 39149616  FieldName: Division  FieldValue:    FieldConfidence: ]
-Field [Text:   FieldID: 39149617  FieldName: File Number  FieldValue: 657-3880   FieldConfidence: ]
-Field [Text:   FieldID: 39149618  FieldName: Last Name  FieldValue: Kruse   FieldConfidence: ]
-Field [Text:   FieldID: 39149619  FieldName: First name  FieldValue: Robert   FieldConfidence: ]
-Field [Text:   FieldID: 39149620  FieldName: Booking Agent  FieldValue: Ward North American   FieldConfidence: ]
-Field [Text:   FieldID: 39149625  FieldName: Load Date  FieldValue: 02/20/23   FieldConfidence: ]
-Field [Text:   FieldID: 39149626  FieldName: Origin Country  FieldValue: US   FieldConfidence: ]
-Field [Text:   FieldID: 39149627  FieldName: Origin State  FieldValue: TX   FieldConfidence: ]
-Field [Text:   FieldID: 39149628  FieldName: Origin City  FieldValue: Amarillo,   FieldConfidence: ]
-Field [Text:   FieldID: 39149629  FieldName: Destination Country  FieldValue: US   FieldConfidence: ]
-Field [Text:   FieldID: 39149630  FieldName: Destination State  FieldValue: IL   FieldConfidence: ]
-Field [Text:   FieldID: 39149631  FieldName: Destination City  FieldValue: Oak Lawn,   FieldConfidence: ]
-Field [Text:   FieldID: 39149632  FieldName: Billing SP  FieldValue: Ward North American   FieldConfidence: ]
-Field [Text:   FieldID: 39149634  FieldName: SP Bill Number  FieldValue: 103472   FieldConfidence: 77]
-Field [Text:   FieldID: 39149635  FieldName: SP Bill Date  FieldValue: 3/1/2023   FieldConfidence: 57]
-Field [Text:   FieldID: 39149636  FieldName: SP Bill Amount  FieldValue: $1,540.10   FieldConfidence: ]
-Field [Text:   FieldID: 39149638  FieldName: Currency  FieldValue: USD   FieldConfidence: 0]
-Field [Text:   FieldID: 39149640  FieldName: Bill received date  FieldValue: 3/1/2023   FieldConfidence: 0]
-Field [Text:   FieldID: 39149642  FieldName: Cost Center  FieldValue:    FieldConfidence: ]
-Field [Text:   FieldID: 39149643  FieldName: cost EE number  FieldValue:    FieldConfidence: ]
-Field [Text:   FieldID: 39149644  FieldName: Reference  FieldValue:    FieldConfidence: ]
-Field [Text:   FieldID: 39149645  FieldName: Client ID#  FieldValue: 150   FieldConfidence: ]
-Field [Text:   FieldID: 39149646  FieldName: Model CD  FieldValue: PAS   FieldConfidence: ]
-
-{
-	"received" : "Received",
-	"shipmentTypeCD" : "Auto",
-	"transitTypeCD" : "Interstate US",
-	"transitModeCD" : "2475",
-	"stgOnBill" : "no",
-	"billTypeCD" : "1458",
-	"auditor" : "Betty Williams",
-	"accountNbr" : "BNSF RAILWAY COMPANY",
-	"acctDivisionNbr" : "",
-	"fileNbr" : "657-3880",
-	"eELastName" : "Kruse",
-	"eEFirstName" : "Robert",
-	"bookingAgentCD" : "Ward North American",
-	"loadDate" : "02/20/23",
-	"originCountryCD" : "US",
-	"originStateProv" : "TX",
-	"originCity" : "Amarillo,",
-	"destCountryCD" : "US",
-	"destStateProv" : "IL",
-	"destCity" : "Oak Lawn,",
-	"billingAgentCD" : "Ward North American",
-	"sPBillNbr" : "103472",
-	"spBillDate" : "3/1/2023",
-	"sPBillNetAmt" : "$1,540.10",
-	"currencyCD" : "USD",
-	"billReceivedDate" : "3/1/2023",
-	"costCenter" : "",
-	"cost EE number" : "",
-	"Reference" : "",
-	"Client ID#" : "150",
-	"Model CD" : "PAS"
-}
-/* ************************** */
-2023/03/29 23:34:19 logger.go:138: hello from xml2JSon
-	remote endpoint: https://localhost:9090/reflect
-call with these configured headers:
-	[ 0]  [AUTHORIZATION] == [bearer ****DuMmY*ToKeN****=]
-/* ************************** */
-
-{
-	"received" : "Received",
-	"shipmentTypeCD" : "Auto",
-	"transitTypeCD" : "Interstate US",
-	"transitModeCD" : "2475",
-	"stgOnBill" : "no",
-	"billTypeCD" : "1458",
-	"auditor" : "Betty Williams",
-	"accountNbr" : "BNSF RAILWAY COMPANY",
-	"acctDivisionNbr" : "",
-	"fileNbr" : "657-3880",
-	"eELastName" : "Kruse",
-	"eEFirstName" : "Robert",
-	"bookingAgentCD" : "Ward North American",
-	"loadDate" : "02/20/23",
-	"originCountryCD" : "US",
-	"originStateProv" : "TX",
-	"originCity" : "Amarillo,",
-	"destCountryCD" : "US",
-	"destStateProv" : "IL",
-	"destCity" : "Oak Lawn,",
-	"billingAgentCD" : "Ward North American",
-	"sPBillNbr" : "103472",
-	"spBillDate" : "3/1/2023",
-	"sPBillNetAmt" : "$1,540.10",
-	"currencyCD" : "USD",
-	"billReceivedDate" : "3/1/2023",
-	"costCenter" : "",
-	"cost EE number" : "",
-	"Reference" : "",
-	"Client ID#" : "150",
-	"Model CD" : "PAS"
-}
-/* ************************** */
-2023/03/29 23:34:19 SimpleService.go:74: reflecting request:
-	/* *** */
-
-{
-	"received" : "Received",
-	"shipmentTypeCD" : "Auto",
-	"transitTypeCD" : "Interstate US",
-	"transitModeCD" : "2475",
-	"stgOnBill" : "no",
-	"billTypeCD" : "1458",
-	"auditor" : "Betty Williams",
-	"accountNbr" : "BNSF RAILWAY COMPANY",
-	"acctDivisionNbr" : "",
-	"fileNbr" : "657-3880",
-	"eELastName" : "Kruse",
-	"eEFirstName" : "Robert",
-	"bookingAgentCD" : "Ward North American",
-	"loadDate" : "02/20/23",
-	"originCountryCD" : "US",
-	"originStateProv" : "TX",
-	"originCity" : "Amarillo,",
-	"destCountryCD" : "US",
-	"destStateProv" : "IL",
-	"destCity" : "Oak Lawn,",
-	"billingAgentCD" : "Ward North American",
-	"sPBillNbr" : "103472",
-	"spBillDate" : "3/1/2023",
-	"sPBillNetAmt" : "$1,540.10",
-	"currencyCD" : "USD",
-	"billReceivedDate" : "3/1/2023",
-	"costCenter" : "",
-	"cost EE number" : "",
-	"Reference" : "",
-	"Client ID#" : "150",
-	"Model CD" : "PAS"
-}
-	/* *** */
-2023/03/29 23:34:49 logger.go:138: hello from xml2JSon
-	remote endpoint: https://localhost:9090/reflect
-call with these configured headers:
-	[ 0]  [AUTHORIZATION] == [bearer ****DuMmY*ToKeN****=]
-/* ************************** */
-
-{
-	"received" : "Received",
-	"shipmentTypeCD" : "Auto",
-	"transitTypeCD" : "Interstate US",
-	"transitModeCD" : "2475",
-	"stgOnBill" : "no",
-	"billTypeCD" : "1458",
-	"auditor" : "Betty Williams",
-	"accountNbr" : "BNSF RAILWAY COMPANY",
-	"acctDivisionNbr" : "",
-	"fileNbr" : "657-3880",
-	"eELastName" : "Kruse",
-	"eEFirstName" : "Robert",
-	"bookingAgentCD" : "Ward North American",
-	"loadDate" : "02/20/23",
-	"originCountryCD" : "US",
-	"originStateProv" : "TX",
-	"originCity" : "Amarillo,",
-	"destCountryCD" : "US",
-	"destStateProv" : "IL",
-	"destCity" : "Oak Lawn,",
-	"billingAgentCD" : "Ward North American",
-	"sPBillNbr" : "103472",
-	"spBillDate" : "3/1/2023",
-	"sPBillNetAmt" : "$1,540.10",
-	"currencyCD" : "USD",
-	"billReceivedDate" : "3/1/2023",
-	"costCenter" : "",
-	"cost EE number" : "",
-	"Reference" : "",
-	"Client ID#" : "150",
-	"Model CD" : "PAS"
-}
-/* ************************** */
-2023/03/29 23:34:49 SimpleService.go:74: reflecting request:
-	/* *** */
-
-{
-	"received" : "Received",
-	"shipmentTypeCD" : "Auto",
-	"transitTypeCD" : "Interstate US",
-	"transitModeCD" : "2475",
-	"stgOnBill" : "no",
-	"billTypeCD" : "1458",
-	"auditor" : "Betty Williams",
-	"accountNbr" : "BNSF RAILWAY COMPANY",
-	"acctDivisionNbr" : "",
-	"fileNbr" : "657-3880",
-	"eELastName" : "Kruse",
-	"eEFirstName" : "Robert",
-	"bookingAgentCD" : "Ward North American",
-	"loadDate" : "02/20/23",
-	"originCountryCD" : "US",
-	"originStateProv" : "TX",
-	"originCity" : "Amarillo,",
-	"destCountryCD" : "US",
-	"destStateProv" : "IL",
-	"destCity" : "Oak Lawn,",
-	"billingAgentCD" : "Ward North American",
-	"sPBillNbr" : "103472",
-	"spBillDate" : "3/1/2023",
-	"sPBillNetAmt" : "$1,540.10",
-	"currencyCD" : "USD",
-	"billReceivedDate" : "3/1/2023",
-	"costCenter" : "",
-	"cost EE number" : "",
-	"Reference" : "",
-	"Client ID#" : "150",
-	"Model CD" : "PAS"
-}
-	/* *** */

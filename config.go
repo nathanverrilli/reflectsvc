@@ -31,6 +31,15 @@ var nFlags *pflag.FlagSet
 
 var FlagOrganization string
 
+// FlagRemapMap is not really an argument flag, but it used similarly.
+// This is a conversion of incoming XML field names to outgoing JSON
+// field names as part of the xml2json endpoint. These to->from strings
+// are held in the file specifed by `--fieldNames <file>`. <file> should
+// be a plain unicode file. Lines beginning with `#` are ignored (comments).
+// Empty lines are ignored. Field name replacements are specified as
+// [`From XML Field Name`][`toJsonFieldName`].
+var FlagRemapMap map[string]string
+
 /* standard flags */
 
 var FlagHelp bool
@@ -41,7 +50,7 @@ var FlagDebug bool
 /* program specific flags */
 
 var FlagRemapFieldNames string
-var FlagRemapMap map[string]string
+
 var FlagServiceName string
 var FlagPort string
 var FlagCert string
@@ -50,6 +59,7 @@ var FlagDest string
 var FlagDestInsecure bool
 var FlagHeaderValue []string
 var FlagHeaderKey []string
+var FlagOmitEmpty bool
 
 func initFlags() {
 	var err error
@@ -78,6 +88,9 @@ func initFlags() {
 	hideFlags["FlagOrganization"] = "organization"
 
 	// program flags
+
+	nFlags.BoolVarP(&FlagOmitEmpty, "omitEmpty", "", false,
+		"when doing XML2Json conversions, omit fields with no value")
 
 	nFlags.StringVarP(&FlagRemapFieldNames, "fieldNames", "", "",
 		"Filename of conversion mapping, one pair per line, [oldName][newName], escape '[' and ']' by doubling them '[[' and ']]'. Case sensitive.")
@@ -286,6 +299,9 @@ func parseTokens(line string) (key string, val string, err error) {
 	var ix int
 	for ix = 1; ix < len(runes) && ']' != runes[ix]; ix++ {
 		sbKey.WriteRune(runes[ix])
+	}
+	if sbKey.Len() <= 0 {
+		return "", "", nil
 	}
 	if ix+2 >= len(runes) || runes[ix] != ']' || runes[ix+1] != '[' {
 		return "", "", err

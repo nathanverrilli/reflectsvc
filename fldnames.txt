@@ -25,3 +25,8 @@
 [SP Bill Date][spBillDate]
 [Auditor][auditor]
 [Cost Center][costCenter]
+[cost EE number][eENumber]
+[Model CD][modelCD]
+[SP Bill Amount][spBillNetAmt]
+[Client ID#][clientID]
+[SPBill Gross amount][sPBillGrossAmt]

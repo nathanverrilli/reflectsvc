@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/xml"
 	"fmt"
+	"reflectsvc/misc"
 	"strings"
 )
 
@@ -106,26 +107,23 @@ func (x XtractaField) String() string {
 		x.Text, x.FieldID, x.FieldName, x.FieldValue, x.FieldExtractionConfidence)
 }
 
+// Json() Convert XtractaEvents data to JSON data
+// --fieldNames permits remapping XML field names to new JSON field names.
+// --omitEmpty means that XML fields without field values are omitted.
 func (x XtractaEvents) Json() string {
 	var sb strings.Builder
 
-	var whiteSpace = FlagDebug || FlagVerbose
-	if whiteSpace {
-		sb.WriteRune('\n')
-	}
 	sb.WriteRune('{')
-	if whiteSpace {
-		sb.WriteRune('\n')
-	}
-	for ix, fld := range x.Event.Document.FieldData.Field {
-		if ix > 0 {
-			sb.WriteRune(',')
-			if whiteSpace {
-				sb.WriteRune('\n')
-			}
+
+	needComma4Json := false
+	for _, fld := range x.Event.Document.FieldData.Field {
+		if FlagOmitEmpty && !misc.IsStringSet(&fld.FieldValue) {
+			continue
 		}
-		if whiteSpace {
-			sb.WriteRune('\t')
+		if needComma4Json {
+			sb.WriteRune(',')
+		} else {
+			needComma4Json = true
 		}
 		sb.WriteRune('"')
 		{ // change the field name based on lookup
@@ -136,16 +134,9 @@ func (x XtractaEvents) Json() string {
 				sb.WriteString(fld.FieldName)
 			}
 		}
-		if whiteSpace {
-			sb.WriteString("\" : \"")
-		} else {
-			sb.WriteString("\":\"")
-		}
+		sb.WriteString("\":\"")
 		sb.WriteString(fld.FieldValue)
 		sb.WriteRune('"')
-	}
-	if whiteSpace {
-		sb.WriteRune('\n')
 	}
 	sb.WriteRune('}')
 	return sb.String()
