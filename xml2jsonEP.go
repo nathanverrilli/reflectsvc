@@ -67,7 +67,7 @@ var standardRequestHeaders = map[string]string{
 	"DNT":            "1",
 }
 
-var proxiedHeaders = []string{"Authorization", "User-Agent"}
+var proxiedHeaders = []string{"Authorization", "User-Agent", "Ocp-Apim-Subscription-Key"}
 
 func x2jProxy(header http.Header, jsonReader io.Reader) (*http.Response, error) {
 	var tr *http.Transport
@@ -93,12 +93,18 @@ func x2jProxy(header http.Header, jsonReader io.Reader) (*http.Response, error) 
 	for key, val := range standardRequestHeaders {
 		hReq.Header.Set(key, val)
 	}
+
+	for _, ph := range proxiedHeaders {
+		values, ok := header[ph]
+		if ok {
+			hReq.Header[ph] = values
+		}
+	}
+
 	if FlagDebug {
 		logHeaders(hReq.Header)
 	}
-	for _, ph := range proxiedHeaders {
-		hReq.Header[ph] = header.Values(ph)
-	}
+
 	httpClient := &http.Client{
 		Transport: tr,
 	}
