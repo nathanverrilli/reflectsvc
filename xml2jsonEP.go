@@ -85,7 +85,7 @@ func x2jProxy(header http.Header, jsonReader io.Reader) (*http.Response, error) 
 
 	hReq, err := http.NewRequestWithContext(ctx, http.MethodPost, FlagDest, jsonReader)
 	if nil != err {
-		logPrintf("huh? Could not create an httpRequest because %s", err.Error())
+		xLog.Printf("huh? Could not create an httpRequest because %s", err.Error())
 		return nil, err
 	}
 	hReq.Header.Set("Content-Type", "application/json")

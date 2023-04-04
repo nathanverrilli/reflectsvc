@@ -52,7 +52,7 @@ func (simpleService) Xml2Json(req xml2JsonRequest) (xjProxy x2jProxyData) {
 	buf := bytes.NewBufferString(req.Json())
 	rsp, err := x2jProxy(req.Headers, buf)
 	if nil != err {
-		logPrintf("could not proxy json request to %s\n with data\n%s\n because %s",
+		xLog.Printf("could not proxy json request to %s\n with data\n%s\n because %s",
 			FlagDest, req.Json(), err.Error())
 		if nil != rsp {
 			xLog.Printf("response: %v", rsp)
