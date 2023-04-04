@@ -55,14 +55,14 @@ func (simpleService) Xml2Json(req xml2JsonRequest) (xjProxy x2jProxyData) {
 		logPrintf("could not proxy json request to %s\n with data\n%s\n because %s",
 			FlagDest, req.Json(), err.Error())
 		if nil != rsp {
-			logPrintf("response: %v", rsp)
+			xLog.Printf("response: %v", rsp)
 		}
 		xjProxy.Code = rsp.StatusCode
 		xjProxy.Status = rsp.Status
 	}
 	xjProxy.Body, err = io.ReadAll(rsp.Body)
 	if nil != err {
-		logPrintf("json request to %s with data\n%s\n"+
+		xLog.Printf("json request to %s with data\n%s\n"+
 			"\tcould not read response body because %s",
 			FlagDest, req.Json(), err.Error())
 		xjProxy.Status = "failure"
@@ -70,6 +70,11 @@ func (simpleService) Xml2Json(req xml2JsonRequest) (xjProxy x2jProxyData) {
 	}
 	xjProxy.Status = rsp.Status
 	xjProxy.Code = rsp.StatusCode
+
+	if FlagDebug || FlagVerbose {
+		xLog.Printf("\n%s\n%s\n%s", SEP, string(xjProxy.Body), SEP)
+	}
+
 	return xjProxy
 }
 

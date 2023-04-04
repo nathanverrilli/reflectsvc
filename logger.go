@@ -11,16 +11,28 @@ import (
 	"runtime"
 	"strings"
 	"sync"
+	"time"
 )
 
 var xLogFile *os.File
 var xLogBuffer *bufio.Writer
 var xLog log.Logger
 
+// clmx -- log close mutex
+// flmx -- log flush mutex
+
+func flushLogInterval(interval time.Duration) {
+	for {
+		time.Sleep(interval)
+		flushLog()
+	}
+}
+
 // flushLog just flushes the log to disk
 var flmx sync.Mutex
 
 func flushLog() {
+
 	flmx.Lock()
 	defer flmx.Unlock()
 	if nil != xLogBuffer {
@@ -38,8 +50,8 @@ var clmx sync.Mutex
 // preserving the most likely error of
 // interest)
 func closeLog() {
+
 	clmx.Lock()
-	lpmx.Lock()
 	var err01, err02 error
 	if nil != xLogBuffer {
 		flushLog()
@@ -49,8 +61,8 @@ func closeLog() {
 		err01 = xLogFile.Close()
 		xLogFile = nil
 	}
-	lpmx.Unlock()
 	clmx.Unlock()
+
 	err := misc.ConcatenateErrors(err01, err02)
 	if nil != err {
 		safeLogPrintf(err.Error())
@@ -78,11 +90,13 @@ func initLog(lfName string) {
 
 	logPath, err := filepath.Abs(xLogFile.Name())
 	if nil != err {
-		logPrintf("huh? could not resolve logfilename %s because %s",
+		safeLogPrintf("huh? could not resolve logfilename %s because %s",
 			xLogFile.Name(), err.Error())
 		myFatal()
 	}
-	logPrintf("Logfile set to %s", logPath)
+	safeLogPrintf("Logfile set to %s", logPath)
+
+	go flushLogInterval(30 * time.Second)
 }
 
 // myFatal is meant to close the program, and close the
@@ -107,11 +121,11 @@ func myFatal(rcList ...int) {
 		_, srcFile, srcLine, ok := runtime.Caller(1)
 		if ok {
 			srcFile = filepath.Base(srcFile)
-			logPrintf("\n\t\t/*** myFatal called ***/\n"+
+			safeLogPrintf("\n\t\t/*** myFatal called ***/\n"+
 				"\tfrom file:line %12s:%04d\n"+
 				"\t\t/*** myFatal ended ***/", srcFile, srcLine)
 		} else {
-			logPrintf("\n\t\t/*** myFatal called ***/\n" +
+			safeLogPrintf("\n\t\t/*** myFatal called ***/\n" +
 				"\tbut could not get stack information for caller\n" +
 				"\t\t/*** myFatal ended ***/")
 		}
@@ -120,20 +134,15 @@ func myFatal(rcList ...int) {
 	os.Exit(rc)
 }
 
-var lpmx sync.Mutex
-
-func logPrintf(format string, a ...any) {
-	lpmx.Lock()
-	defer lpmx.Unlock()
-	safeLogPrintf(format, a...)
-}
-
 // safeLogPrintf may be called in lieu of xLog.Printf() if there
 // is a possibility the log may not be open. If the log is
 // available, well and good. Otherwise, print the message to
 // STDERR.
 func safeLogPrintf(format string, a ...any) {
-
+	clmx.Lock()
+	defer clmx.Unlock()
+	flmx.Unlock()
+	defer flmx.Unlock()
 	if nil != xLogBuffer && nil != xLogFile {
 		xLog.Printf(format, a...)
 	} else {
