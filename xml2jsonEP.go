@@ -137,7 +137,7 @@ func logHeaders(h http.Header) {
 func x2jEncodeResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
 	v, ok := response.(xml2JsonResponse)
 
-	if !ok {
+	if !ok || nil == v.Body || len(v.Body) <= 0 {
 		s := fmt.Sprintf("{\"error\":\"%s\"}", v.Status)
 		w.WriteHeader(http.StatusInternalServerError)
 		_, _ = w.Write([]byte(s))

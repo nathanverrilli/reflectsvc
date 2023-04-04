@@ -163,7 +163,7 @@ func initFlags() {
 		err = nFlags.Set("destination",
 			"https://localhost:"+FlagPort+"/reflect")
 		if nil != err {
-			logPrintf("Could not reset command line option \"destination\" to \"%s\" because %s",
+			xLog.Printf("Could not reset command line option \"destination\" to \"%s\" because %s",
 				"https://localhost:"+FlagPort+"/reflect", err.Error())
 			myFatal()
 		}
@@ -195,7 +195,7 @@ func initFlags() {
 		}
 	*/
 	if FlagDestInsecure && !FlagDebug {
-		logPrintf("--insecure cannot be used without --debug. DO NOT USE --insecure IN PRODUCTION.")
+		xLog.Printf("--insecure cannot be used without --debug. DO NOT USE --insecure IN PRODUCTION.")
 		myFatal()
 	}
 
@@ -321,7 +321,7 @@ func parseTokens(line string) (key string, val string, err error) {
 }
 
 func logFlag(flag *pflag.Flag) {
-	logPrintf(" flag \"%s\" has value \"%s\" with default %s",
+	xLog.Printf(" flag \"%s\" has value \"%s\" with default %s",
 		flag.Name, misc.WinSep(flag.Value.String()), misc.WinSep(flag.DefValue))
 }
 
@@ -329,7 +329,7 @@ func logFlag(flag *pflag.Flag) {
 func UsageMessage() {
 	src, err := efs.ReadFile("Resources/USAGE.MD")
 	if nil != err {
-		logPrintf("Could not open embedded resource USAGE.MD because %s", err.Error())
+		xLog.Printf("Could not open embedded resource USAGE.MD because %s", err.Error())
 		myFatal()
 	}
 	result := markdown.Render(string(src), 80, 5)

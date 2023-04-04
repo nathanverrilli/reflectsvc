@@ -18,9 +18,6 @@ var xLogFile *os.File
 var xLogBuffer *bufio.Writer
 var xLog log.Logger
 
-// clmx -- log close mutex
-// flmx -- log flush mutex
-
 func flushLogInterval(interval time.Duration) {
 	for {
 		time.Sleep(interval)
@@ -29,16 +26,13 @@ func flushLogInterval(interval time.Duration) {
 }
 
 // flushLog just flushes the log to disk
-var flmx sync.Mutex
-
 func flushLog() {
-
-	flmx.Lock()
-	defer flmx.Unlock()
+	clmx.Lock()
+	defer clmx.Lock()
 	if nil != xLogBuffer {
 		err := xLogBuffer.Flush()
 		if nil != err {
-			safeLogPrintf("huh? could not flush xLogBuffer because %s", err.Error())
+			_, _ = fmt.Fprintf(os.Stdout, "huh? could not flush xLogBuffer because %s", err.Error())
 		}
 	}
 }
@@ -50,7 +44,6 @@ var clmx sync.Mutex
 // preserving the most likely error of
 // interest)
 func closeLog() {
-
 	clmx.Lock()
 	var err01, err02 error
 	if nil != xLogBuffer {
@@ -141,8 +134,6 @@ func myFatal(rcList ...int) {
 func safeLogPrintf(format string, a ...any) {
 	clmx.Lock()
 	defer clmx.Unlock()
-	flmx.Unlock()
-	defer flmx.Unlock()
 	if nil != xLogBuffer && nil != xLogFile {
 		xLog.Printf(format, a...)
 	} else {

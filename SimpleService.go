@@ -56,9 +56,12 @@ func (simpleService) Xml2Json(req xml2JsonRequest) (xjProxy x2jProxyData) {
 			FlagDest, req.Json(), err.Error())
 		if nil != rsp {
 			xLog.Printf("response: %v", rsp)
+			xjProxy.Code = rsp.StatusCode
+			xjProxy.Status = rsp.Status
+		} else {
+			xjProxy.Status = "No response from remote server"
+			return xjProxy
 		}
-		xjProxy.Code = rsp.StatusCode
-		xjProxy.Status = rsp.Status
 	}
 	xjProxy.Body, err = io.ReadAll(rsp.Body)
 	if nil != err {
