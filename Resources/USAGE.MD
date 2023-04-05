@@ -118,24 +118,25 @@ This flag affects the `/xml2json` endpoint.
 
 The `/xml2json` endpoint can of incoming XML field names to outgoing JSON
 field names as part of the xml2json endpoint. These to / from strings
-are held in the file specifed by `--fieldNames <file>`. <file> should
-be a plain unicode file. Lines beginning with `#` are ignored as 
-comments, and all comments must begin on a new line.
-Empty lines are ignored. Field name replacements are specified as:  
-&nbsp;&nbsp;&nbsp;&nbsp;&lsqb;`From XML Field Name`&rsqb;&lsqb;`toJsonFieldName`&rsqb;.  
-Within the square brackets, both case and spaces are significant.
-No space is permitted between the two tokens.
+are held in the file specified by `--fieldNames <file>`. <file> should
+be a plain unicode file with fields separated by semicolons. The format
+is:  
+`XMLName`;`JsonName`;`FieldType`;`OmitEmpty`  
+and white space is significant.
+
+#### `XMLName`
+The name of the field in the received XML.
+#### `JsonName`
+The name that field should have in the outgoing JSON.
+#### `FieldType`
+Must have the value `string`, `integer`, `number`, or `boolean`, 
+and the value will be transmitted as that JSON type.
+#### `OmitEmpty`
+This field has the value of either `true` or `false`. If `true`, 
+and the field&rsquo;s value is absent (the null string `""`), then
+the field is omitted entirely from the outgoing JSON.
 
 This flag affects the `/xml2json`, `/convert`, and the
 `/parsifal` endpoints.
 
-### --omitEmpty
-
-When converting XML to JSON and sending it, if an 
-XML field has a name but no value (or an empty value)
-then omit the empty field in the JSON output. Omitted
-JSON values are logged.
-
-This flag affects the `/xml2json`, `/convert`, and the
-`/parsifal` endpoints.
 

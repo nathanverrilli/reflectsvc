@@ -4,7 +4,7 @@ reflectsvc ^
   --keyfile host.key ^
   --certfile host.crt ^
   --destination localhost ^
-  --fieldnames fldnames.txt ^
+  --fieldnames fieldnames.csv ^
   --debug ^
   --verbose ^
   --insecure ^

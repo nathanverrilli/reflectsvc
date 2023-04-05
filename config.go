@@ -1,9 +1,7 @@
 package main
 
 import (
-	"bufio"
 	"embed"
-	"errors"
 	"fmt"
 	markdown "github.com/MichaelMure/go-term-markdown"
 	"github.com/spf13/pflag"
@@ -31,15 +29,6 @@ var nFlags *pflag.FlagSet
 
 var FlagOrganization string
 
-// FlagRemapMap is not really an argument flag, but it used similarly.
-// This is a conversion of incoming XML field names to outgoing JSON
-// field names as part of the xml2json endpoint. These to->from strings
-// are held in the file specifed by `--fieldNames <file>`. <file> should
-// be a plain unicode file. Lines beginning with `#` are ignored (comments).
-// Empty lines are ignored. Field name replacements are specified as
-// [`From XML Field Name`][`toJsonFieldName`].
-var FlagRemapMap map[string]string
-
 /* standard flags */
 
 var FlagHelp bool
@@ -57,7 +46,6 @@ var FlagCert string
 var FlagKey string
 var FlagDest string
 var FlagDestInsecure bool
-var FlagOmitEmpty bool
 
 /***
 var FlagHeaderValue []string
@@ -91,9 +79,6 @@ func initFlags() {
 	hideFlags["FlagOrganization"] = "organization"
 
 	// program flags
-
-	nFlags.BoolVarP(&FlagOmitEmpty, "omitEmpty", "", false,
-		"when doing XML2Json conversions, omit fields with no value")
 
 	nFlags.StringVarP(&FlagRemapFieldNames, "fieldNames", "", "",
 		"Filename of conversion mapping, one pair per line, [oldName][newName], escape '[' and ']' by doubling them '[[' and ']]'. Case sensitive.")
@@ -249,80 +234,22 @@ func initFlags() {
 	}
 
 	if misc.IsStringSet(&FlagRemapFieldNames) {
-		FlagRemapMap = loadRemapMap(FlagRemapFieldNames)
+		FlagRemapMap = loadFieldTranslations(FlagRemapFieldNames)
 	} else {
-		FlagRemapMap = make(map[string]string, 0)
+		FlagRemapMap = make(map[string]remapField, 0)
 	}
 
-}
-
-func loadRemapMap(fn string) map[string]string {
-	remap := make(map[string]string, 64)
-
-	f, err := os.Open(fn)
-	if nil != err {
-		xLog.Printf("Could not open field name conversion file because %s", err.Error())
-		myFatal()
-	}
-	defer misc.DeferError(f.Close)
-	scanner := bufio.NewScanner(f)
-	for scanner.Scan() {
-		line := strings.TrimSpace(scanner.Text())
-		if "" == line {
-			continue
-		}
-		key, val, err := parseTokens(line)
-		if nil != err {
-			xLog.Printf("Could not parse line because %s", err.Error())
-			continue
-		}
-		if misc.IsStringSet(&key) && misc.IsStringSet(&val) {
-			remap[key] = val
-		}
-	}
-	return remap
-}
-
-func parseTokens(line string) (key string, val string, err error) {
-	var sbKey, sbVal strings.Builder
-	runes := []rune(line)
-	err = errors.New("token remap line has bad format: { " + line + " }")
-
-	if len(runes) <= 0 {
-		return "", "", nil
-	}
-
-	// start a comment, or begin reading key token
-	switch runes[0] {
-	case '[':
-		break
-	case '#': // comment
-		return "", "", nil
-	default:
-		return "", "", err
-	}
-	var ix int
-	for ix = 1; ix < len(runes) && ']' != runes[ix]; ix++ {
-		sbKey.WriteRune(runes[ix])
-	}
-	if sbKey.Len() <= 0 {
-		return "", "", nil
-	}
-	if ix+2 >= len(runes) || runes[ix] != ']' || runes[ix+1] != '[' {
-		return "", "", err
-	}
-	for ix += 2; ix < len(runes) && ']' != runes[ix]; ix++ {
-		sbVal.WriteRune(runes[ix])
-	}
-	if ']' != runes[ix] || (len(runes)-1) != ix {
-		return "", "", err
-	}
-	return sbKey.String(), sbVal.String(), nil
 }
 
 func logFlag(flag *pflag.Flag) {
-	xLog.Printf(" flag \"%s\" has value \"%s\" with default %s",
-		flag.Name, misc.WinSep(flag.Value.String()), misc.WinSep(flag.DefValue))
+	var sb strings.Builder
+	sb.WriteString(" flag ")
+	sb.WriteString(flag.Name)
+	sb.WriteString(" has value ")
+	sb.Write([]byte(flag.Value.String()))
+	sb.WriteString(" with default ")
+	sb.Write([]byte(flag.DefValue))
+	xLog.Print(sb.String())
 }
 
 // UsageMessage - describe capabilities and extended usage notes

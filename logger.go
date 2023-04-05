@@ -28,7 +28,7 @@ func flushLogInterval(interval time.Duration) {
 // flushLog just flushes the log to disk
 func flushLog() {
 	clmx.Lock()
-	defer clmx.Lock()
+	defer clmx.Unlock()
 	if nil != xLogBuffer {
 		err := xLogBuffer.Flush()
 		if nil != err {
@@ -60,7 +60,6 @@ func closeLog() {
 	if nil != err {
 		safeLogPrintf(err.Error())
 	}
-
 }
 
 // initLog starts up a logging service to logfile and

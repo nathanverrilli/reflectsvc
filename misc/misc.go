@@ -12,7 +12,7 @@ import (
 )
 
 // DATE_POG  timestamp for filenames unique to the second
-const DATE_POG = "20060102150405"
+// const DATE_POG = "20060102150405"
 
 var emptyString = ""
 
@@ -56,11 +56,6 @@ func IsStringSet(s *string) (isSet bool) {
 		return true
 	}
 	return false
-}
-
-// WinSep -- replaces windows separator with a new separator
-func WinSep(path string) (cleanPath string) {
-	return strings.Replace(path, "\\", "\\\\", -1)
 }
 
 // Ternary -- convert a true/false condition into the appropriate value

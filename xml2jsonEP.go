@@ -108,12 +108,6 @@ func x2jProxy(header http.Header, jsonReader io.Reader) (*http.Response, error) 
 	httpClient := &http.Client{
 		Transport: tr,
 	}
-	xLog.Printf("trying to stop in 7ms ... ")
-	flushLog()
-	go func() {
-		time.Sleep(7 * time.Millisecond)
-		cancelFunc()
-	}()
 
 	return httpClient.Do(hReq)
 }

@@ -1,0 +1,32 @@
+Account;accountNbr;string;false
+Status;received;string;false
+Division;acctDivisionNbr;string;false
+Bill received date;billReceivedDate;string;false
+File Number;fileNbr;string;false
+Last Name;eELastName;string;false
+First name;eEFirstName;string;false
+Billing SP;billingAgentCD;string;false
+Booking Agent;bookingAgentCD;string;false
+Shipment Type;shipmentTypeCD;string;false
+Transit Type;transitTypeCD;string;false
+Transit Mode;transitModeCD;string;false
+Load Date;loadDate;string;false
+Origin City;originCity;string;false
+Origin State;originStateProv;string;false
+Origin Country;originCountryCD;string;false
+Destination City;destCity;string;false
+Destination State;destStateProv;string;false
+Destination Country;destCountryCD;string;false
+Bill Type;billTypeCD;string;false
+SP Bill Number;sPBillNbr;string;false
+SP Bill Amount;sPBillNetAmt;string;false
+Currency;currencyCD;string;false
+Storage on Bill;stgOnBill;string;false
+SP Bill Date;spBillDate;string;false
+Auditor;auditor;decimal;false
+Cost Center;costCenter;string;false
+cost EE number;eENumber;string;false
+Model CD;modelCD;string;false
+SP Bill Amount;spBillNetAmt;string;false
+Client ID#;clientID;number;false
+SPBill Gross amount;sPBillGrossAmt;number;false

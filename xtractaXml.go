@@ -6,7 +6,11 @@ import (
 	"net/http"
 	"reflectsvc/misc"
 	"strings"
+	"time"
 )
+
+const XmlDateLayout = "_2/1/2006"
+const JsonDateLayout = "2006-02-01"
 
 type XtractaEvents struct {
 	XMLName xml.Name     `xml:"events"`
@@ -118,28 +122,54 @@ func (x XtractaEvents) Json() string {
 	sb.WriteRune('{')
 
 	needComma4Json := false
+	emptyString := ""
 	for _, fld := range x.Event.Document.FieldData.Field {
-		if FlagOmitEmpty && !misc.IsStringSet(&fld.FieldValue) {
-			xLog.Printf("omitting empty field %s (no value in data)", fld.FieldName)
-			continue
-		}
 		if needComma4Json {
 			sb.WriteRune(',')
-		} else {
-			needComma4Json = true
 		}
-		sb.WriteRune('"')
-		{ // change the field name based on lookup
-			cfn, ok := FlagRemapMap[fld.FieldName]
-			if ok {
-				sb.WriteString(cfn)
+
+		val := &emptyString
+		rm, ok := FlagRemapMap[fld.FieldName]
+		if !ok {
+			if !misc.IsStringSet(&fld.FieldValue) {
+				val = &fld.FieldName
+			}
+			sb.WriteString(fmt.Sprintf("\"%s\":\"%s\"", rm.JsonName, *val))
+		} else {
+			if !misc.IsStringSet(&fld.FieldValue) {
+				if rm.OmitEmpty {
+					continue
+				}
 			} else {
-				sb.WriteString(fld.FieldName)
+				val = &fld.FieldValue
+			}
+			switch rm.FieldType {
+			case JsonString:
+				sb.WriteString(fmt.Sprintf("\"%s\":\"%s\"", rm.JsonName, *val))
+			case JsonInteger, JsonNumeric:
+				sb.WriteString(fmt.Sprintf("\"%s\":%s", rm.JsonName, *val))
+			case JsonBoolean:
+				booleanVal := false
+				if "true" == strings.ToLower(fld.FieldValue) {
+					booleanVal = true
+				}
+				sb.WriteString(fmt.Sprintf("\"%s\":%t", rm.JsonName, booleanVal))
+			case JsonDate:
+				dt, err := time.Parse(XmlDateLayout, fld.FieldValue)
+				if nil != err {
+					xLog.Printf("Date string [%s] not recognized because %s",
+						fld.FieldName, err.Error())
+					sb.WriteString(fmt.Sprintf("\"%s\":\"\"", rm.JsonName))
+				} else {
+					sb.WriteString(fmt.Sprintf("\"%s\":\"%s\"", rm.JsonName,
+						dt.Format(JsonDateLayout)))
+				}
+			default:
+				xLog.Printf("Huh? remap FieldType has unrecognized value %d -- skipping this record", int(rm.FieldType))
+				continue
 			}
 		}
-		sb.WriteString("\":\"")
-		sb.WriteString(fld.FieldValue)
-		sb.WriteRune('"')
+		needComma4Json = true
 	}
 	sb.WriteRune('}')
 	return sb.String()
