@@ -18,10 +18,24 @@ var xLogFile *os.File
 var xLogBuffer *bufio.Writer
 var xLog log.Logger
 
-func flushLogInterval(interval time.Duration) {
+func flushLogInterval(seconds int) {
+	var ix = 0
+
 	for {
-		time.Sleep(interval)
-		flushLog()
+		if nil == xLogBuffer {
+			break
+		}
+		ix = (ix + 1) % seconds
+		time.Sleep(time.Second)
+		//if FlagDebug {
+		//	safeLogPrintf("\ttick %d\n", ix)
+		//}
+		if 0 == ix {
+			//if FlagDebug {
+			//	safeLogPrintf("\tFLUSH!\n")
+			//}
+			flushLog()
+		}
 	}
 }
 
@@ -88,7 +102,7 @@ func initLog(lfName string) {
 	}
 	safeLogPrintf("Logfile set to %s", logPath)
 
-	go flushLogInterval(30 * time.Second)
+	go flushLogInterval(10)
 }
 
 // myFatal is meant to close the program, and close the

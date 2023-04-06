@@ -1,6 +1,4 @@
-curl --insecure ^
+curl --verbose --insecure ^
  --header "Content-Type: application/xml" ^
  --data-binary @body.xml ^
- --request POST ^
- --verbose ^
- https://localhost:9090/convert
+ --url https://localhost:9090/reflect

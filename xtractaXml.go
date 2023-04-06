@@ -116,19 +116,24 @@ func (x XtractaField) String() string {
 // Json() Convert XtractaEvents data to JSON data
 // --fieldNames permits remapping XML field names to new JSON field names.
 // --omitEmpty means that XML fields without field values are omitted.
-func (x XtractaEvents) Json() string {
-	var sb strings.Builder
+var EMPTYSTRING = ""
 
+func (x XtractaEvents) Json() string {
+	var cap = 1024
+	var sb strings.Builder
+	sb.Grow(cap)
 	sb.WriteRune('{')
 
-	needComma4Json := false
-	emptyString := ""
-	for _, fld := range x.Event.Document.FieldData.Field {
-		if needComma4Json {
-			sb.WriteRune(',')
-		}
+	sb.WriteString("\"documentUrl\":\"")
+	if misc.IsStringSet(&x.Event.Document.DocumentURL) {
+		sb.WriteString(x.Event.Document.DocumentURL)
+	}
+	sb.WriteRune('"')
 
-		val := &emptyString
+	for _, fld := range x.Event.Document.FieldData.Field {
+		// need this comma *every time* because 'documentUrl' field is *always* present
+		sb.WriteRune(',')
+		val := &EMPTYSTRING
 		rm, ok := FlagRemapMap[fld.FieldName]
 		if !ok {
 			if !misc.IsStringSet(&fld.FieldValue) {
@@ -169,8 +174,14 @@ func (x XtractaEvents) Json() string {
 				continue
 			}
 		}
-		needComma4Json = true
 	}
 	sb.WriteRune('}')
+
+	if FlagDebug {
+		xLog.Printf("xml data is %d bytes (capacity %d)\n", sb.Len(), sb.Cap())
+	}
+	if sb.Len() >= cap {
+		cap = sb.Len() + 512
+	}
 	return sb.String()
 }

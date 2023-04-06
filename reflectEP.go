@@ -1,10 +1,13 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"github.com/go-kit/kit/endpoint"
 	"io"
 	"net/http"
+	"os"
+	"reflectsvc/misc"
 )
 
 // For each method, we define request and response structs
@@ -23,6 +26,15 @@ func makeReflectEndpoint(svc SimpleService) endpoint.Endpoint {
 
 func decodeReflectRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	var v reflectRequest
+
+	if FlagDebug {
+		body, _ := io.ReadAll(r.Body)
+		xf, _ := os.OpenFile("lastRequestDebug.txt", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+		defer misc.DeferError(xf.Close)
+		xf.Write(body)
+		r.Body.Close()
+		r.Body = io.NopCloser(bytes.NewBuffer(body))
+	}
 
 	block, err := io.ReadAll(r.Body)
 	if nil == err {

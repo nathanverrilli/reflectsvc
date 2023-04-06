@@ -1,23 +1,23 @@
-2023/04/04 22:50:30 logger.go:137: Logfile set to H:\Projects\reflectsvc\reflectsvc.log
-2023/04/04 22:50:30 config.go:158: 
+2023/04/06 02:13:31 logger.go:151: Logfile set to H:\Projects\reflectsvc\reflectsvc.log
+2023/04/06 02:13:31 config.go:164: 
 		/*** program flags ***/
 	please note that the double backslash is an artifact to prevent Windows from corrupting the display output. The actual string only has one backslash.
 
-2023/04/04 22:50:30 config.go:245:  flag "certfile" has value "host.crt" with default 
-2023/04/04 22:50:30 config.go:245:  flag "debug" has value "true" with default false
-2023/04/04 22:50:30 config.go:245:  flag "destination" has value "https://localhost:9090/reflect" with default localhost
-2023/04/04 22:50:30 config.go:245:  flag "fieldnames" has value "fieldnames.csv" with default 
-2023/04/04 22:50:30 config.go:245:  flag "help" has value "false" with default false
-2023/04/04 22:50:30 config.go:245:  flag "insecure" has value "true" with default false
-2023/04/04 22:50:30 config.go:245:  flag "keyfile" has value "host.key" with default 
-2023/04/04 22:50:30 config.go:245:  flag "organization" has value "P3IDTechnologies" with default P3IDTechnologies
-2023/04/04 22:50:30 config.go:245:  flag "port" has value "9090" with default 9090
-2023/04/04 22:50:30 config.go:245:  flag "quiet" has value "false" with default false
-2023/04/04 22:50:30 config.go:245:  flag "servername" has value "" with default 
-2023/04/04 22:50:30 config.go:245:  flag "verbose" has value "true" with default false
-2023/04/04 22:50:30 config.go:163: 		/*** end program flags ***/
-2023/04/04 22:50:30 config.go:207: Verbose mode active (all debug and informative messages) for @MythosSeed
-2023/04/04 22:50:30 config.go:219: 
+2023/04/06 02:13:31 config.go:258:  flag certfile has value host.crt with default 
+2023/04/06 02:13:31 config.go:258:  flag debug has value true with default false
+2023/04/06 02:13:31 config.go:258:  flag destination has value https://localhost:9090/reflect with default localhost
+2023/04/06 02:13:31 config.go:258:  flag fieldnames has value fieldnames.csv with default 
+2023/04/06 02:13:31 config.go:258:  flag help has value false with default false
+2023/04/06 02:13:31 config.go:258:  flag insecure has value true with default false
+2023/04/06 02:13:31 config.go:258:  flag keyfile has value host.key with default 
+2023/04/06 02:13:31 config.go:258:  flag organization has value P3IDTechnologies with default P3IDTechnologies
+2023/04/06 02:13:31 config.go:258:  flag port has value 9090 with default 9090
+2023/04/06 02:13:31 config.go:258:  flag quiet has value false with default false
+2023/04/06 02:13:31 config.go:258:  flag servername has value  with default 
+2023/04/06 02:13:31 config.go:258:  flag verbose has value true with default false
+2023/04/06 02:13:31 config.go:169: 		/*** end program flags ***/
+2023/04/06 02:13:31 config.go:213: Verbose mode active (all debug and informative messages) for @MythosSeed
+2023/04/06 02:13:31 config.go:225: 
 ***** ___go_https_reflectsvc BuildInfo: *****
 go	go1.20.2
 path	reflectsvc
@@ -26,23 +26,23 @@ dep	github.com/MichaelMure/go-term-markdown	v0.1.4	h1:Ir3kBXDUtOX7dEv0EaQV8CNPpH
 dep	github.com/MichaelMure/go-term-text	v0.3.1	h1:Kw9kZanyZWiCHOYu9v/8pWEgDQ6UVN9/ix2Vd2zzWf0=
 dep	github.com/alecthomas/chroma	v0.10.0	h1:7XDcGkCQopCNKjZHfYrNLraA+M7e0fMiJ/Mfikbfjek=
 dep	github.com/disintegration/imaging	v1.6.2	h1:w1LecBlG2Lnp8B3jk5zSuNqd7b4DXhcjwek1ei82L+c=
-dep	github.com/dlclark/regexp2	v1.8.1	h1:6Lcdwya6GjPUNsBct8Lg/yRPwMhABj269AAzdGSiR+0=
+dep	github.com/dlclark/regexp2	v1.9.0	h1:pTK/l/3qYIKaRXuHnEnIf7Y5NxfRPfpb7dis6/gdlVI=
 dep	github.com/eliukblau/pixterm/pkg/ansimage	v0.0.0-20191210081756-9fb6cf8c2f75	h1:vbix8DDQ/rfatfFr/8cf/sJfIL69i4BcZfjrVOxsMqk=
 dep	github.com/fatih/color	v1.15.0	h1:kOqh6YHBtK8aywxGerMG2Eq3H6Qgoqeo13Bk2Mv/nBs=
 dep	github.com/go-kit/kit	v0.12.0	h1:e4o3o3IsBfAKQh5Qbbiqyfu97Ku7jrO/JbohvztANh4=
 dep	github.com/go-kit/log	v0.2.1	h1:MRVx0/zhvdseW+Gza6N9rVzU/IVzaeE1SFI4raAhmBU=
 dep	github.com/go-logfmt/logfmt	v0.6.0	h1:wGYYu3uicYdqXVgoYbvnkrPVXkuLM1p1ifugDMEdRi4=
-dep	github.com/gomarkdown/markdown	v0.0.0-20230313173142-2ced44d5b584	h1:XaUmlCIi5hEY5GPUV6oXc5eytg9+FBH9/9fOKblHWEU=
+dep	github.com/gomarkdown/markdown	v0.0.0-20230322041520-c84983bdbf2a	h1:AWZzzFrqyjYlRloN6edwTLTUbKxf5flLXNuTBDm3Ews=
 dep	github.com/kyokomi/emoji/v2	v2.2.12	h1:sSVA5nH9ebR3Zji1o31wu3yOwD1zKXQA2z0zUyeit60=
 dep	github.com/lucasb-eyer/go-colorful	v1.2.0	h1:1nnpGOrhyZZuNyfu1QjKiUICQ74+3FNCN69Aj6K7nkY=
 dep	github.com/mattn/go-colorable	v0.1.13	h1:fFA4WZxdEF4tXPZVKMLwD8oUnCTTo08duU7wxecdEvA=
-dep	github.com/mattn/go-isatty	v0.0.17	h1:BTarxUcIeDqL27Mc+vyvdWYSL28zpIhv3RoTdsLMPng=
+dep	github.com/mattn/go-isatty	v0.0.18	h1:DOKFKCQ7FNG2L1rbrmstDN4QVRdS89Nkh85u68Uwp98=
 dep	github.com/mattn/go-runewidth	v0.0.14	h1:+xnbZSEeDbOIg5/mE6JF0w6n9duR1l3/WmbinWVwUuU=
 dep	github.com/rivo/uniseg	v0.4.4	h1:8TfxU8dW6PdqD27gjM8MVNuicgxIjxpm4K7x4jp8sis=
 dep	github.com/spf13/pflag	v1.0.5	h1:iy+VFUOCP1a+8yFto/drg2CJ5u0yRoB7fZw3DKv/JXA=
 dep	golang.org/x/image	v0.6.0	h1:bR8b5okrPI3g/gyZakLZHeWxAR8Dn5CyxXv1hLH5g/4=
 dep	golang.org/x/net	v0.8.0	h1:Zrh2ngAOFYneWTAIAPethzeaQLuHwhuBkuV6ZiRnUaQ=
-dep	golang.org/x/sys	v0.6.0	h1:MVltZSvRTcU2ljQOhs94SXPftV6DCNnZViHeQps87pQ=
+dep	golang.org/x/sys	v0.7.0	h1:3jlCCIQZPdOYu1h8BkNvLz8Kgwtae2cagcG/VamtZRU=
 build	-buildmode=exe
 build	-compiler=gc
 build	CGO_ENABLED=1
@@ -54,12 +54,27 @@ build	GOARCH=amd64
 build	GOOS=windows
 build	GOAMD64=v1
 build	vcs=git
-build	vcs.revision=0eb3a8b551ee71de543b3a8db4df8f7ffe6964b7
-build	vcs.time=2023-04-04T00:37:35Z
+build	vcs.revision=f600095d218b35206b2c43c75db47d50347f2715
+build	vcs.time=2023-04-05T15:05:55Z
 build	vcs.modified=true
 
 ********************************************
-2023/04/04 22:50:30 config.go:233: Listening on port 9090
-2023/04/04 22:50:30 reflectsvc.go:101: using HTTPS
+2023/04/06 02:13:31 config.go:239: Listening on port 9090
+2023/04/06 02:13:31 reflectsvc.go:101: using HTTPS
 	Certification file is host.crt
 	Key file is host.key
+2023/04/06 02:13:43 xtractaXml.go:181: xml data is 817 bytes (capacity 1024)
+2023/04/06 02:13:43 xml2jsonEP.go:128: headers for proxied request
+	Accept : [application/json] 
+	Accept-Charset : [utf-8] 
+	Dnt : [1] 
+	User-Agent : [curl/7.83.1] 
+	Content-Type : [application/json] 
+2023/04/06 02:13:43 SimpleService.go:69: reflecting request:
+	/* *** */
+{"documentUrl":"https://web1-org.xtracta.com/us_west_2_storage1_datasource1/1/74/2d/iq277690491-4gE4fUMW.pdf","received":"Received","shipmentTypeCD":"Auto","transitTypeCD":"Interstate US","transitModeCD":"2475","stgOnBill":"no","billTypeCD":"1458","auditor":321,"accountNbr":"BNSF RAILWAY COMPANY","acctDivisionNbr":"","fileNbr":"657-3880","eELastName":"Kruse","eEFirstName":"Robert","bookingAgentCD":"Ward North American","loadDate":"02/20/23","originCountryCD":"US","originStateProv":"TX","originCity":"Amarillo,","destCountryCD":"US","destStateProv":"IL","destCity":"Oak Lawn,","billingAgentCD":"Ward North American","sPBillNbr":"103472","spBillDate":"3/1/2023","spBillNetAmt":"$1,540.10","currencyCD":"USD","billReceivedDate":"3/1/2023","costCenter":"","eENumber":"","":"Reference","clientID":150,"modelCD":"PAS"}
+	/* *** */
+2023/04/06 02:13:43 SimpleService.go:61: 
+/* ************************** */
+{"documentUrl":"https://web1-org.xtracta.com/us_west_2_storage1_datasource1/1/74/2d/iq277690491-4gE4fUMW.pdf","received":"Received","shipmentTypeCD":"Auto","transitTypeCD":"Interstate US","transitModeCD":"2475","stgOnBill":"no","billTypeCD":"1458","auditor":321,"accountNbr":"BNSF RAILWAY COMPANY","acctDivisionNbr":"","fileNbr":"657-3880","eELastName":"Kruse","eEFirstName":"Robert","bookingAgentCD":"Ward North American","loadDate":"02/20/23","originCountryCD":"US","originStateProv":"TX","originCity":"Amarillo,","destCountryCD":"US","destStateProv":"IL","destCity":"Oak Lawn,","billingAgentCD":"Ward North American","sPBillNbr":"103472","spBillDate":"3/1/2023","spBillNetAmt":"$1,540.10","currencyCD":"USD","billReceivedDate":"3/1/2023","costCenter":"","eENumber":"","":"Reference","clientID":150,"modelCD":"PAS"}
+/* ************************** */

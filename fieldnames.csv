@@ -1,32 +1,32 @@
-Account;accountNbr;string;false
-Status;received;string;false
-Division;acctDivisionNbr;string;false
-Bill received date;billReceivedDate;string;false
-File Number;fileNbr;string;false
-Last Name;eELastName;string;false
-First name;eEFirstName;string;false
-Billing SP;billingAgentCD;string;false
-Booking Agent;bookingAgentCD;string;false
-Shipment Type;shipmentTypeCD;string;false
-Transit Type;transitTypeCD;string;false
-Transit Mode;transitModeCD;string;false
-Load Date;loadDate;string;false
-Origin City;originCity;string;false
-Origin State;originStateProv;string;false
-Origin Country;originCountryCD;string;false
-Destination City;destCity;string;false
-Destination State;destStateProv;string;false
-Destination Country;destCountryCD;string;false
-Bill Type;billTypeCD;string;false
-SP Bill Number;sPBillNbr;string;false
-SP Bill Amount;sPBillNetAmt;string;false
-Currency;currencyCD;string;false
-Storage on Bill;stgOnBill;string;false
-SP Bill Date;spBillDate;string;false
-Auditor;auditor;decimal;false
-Cost Center;costCenter;string;false
-cost EE number;eENumber;string;false
-Model CD;modelCD;string;false
-SP Bill Amount;spBillNetAmt;string;false
-Client ID#;clientID;number;false
-SPBill Gross amount;sPBillGrossAmt;number;false
+Account;accountNbr;string;true
+Status;received;string;true
+Division;acctDivisionNbr;string;true
+Bill received date;billReceivedDate;string;true
+File Number;fileNbr;string;true
+Last Name;eELastName;string;true
+First name;eEFirstName;string;true
+Billing SP;billingAgentCD;string;true
+Booking Agent;bookingAgentCD;string;true
+Shipment Type;shipmentTypeCD;string;true
+Transit Type;transitTypeCD;string;true
+Transit Mode;transitModeCD;string;true
+Load Date;loadDate;string;true
+Origin City;originCity;string;true
+Origin State;originStateProv;string;true
+Origin Country;originCountryCD;string;true
+Destination City;destCity;string;true
+Destination State;destStateProv;string;true
+Destination Country;destCountryCD;string;true
+Bill Type;billTypeCD;string;true
+SP Bill Number;sPBillNbr;string;true
+SP Bill Amount;sPBillNetAmt;string;true
+Currency;currencyCD;string;true
+Storage on Bill;stgOnBill;string;true
+SP Bill Date;spBillDate;string;true
+Auditor;auditor;decimal;true
+Cost Center;costCenter;string;true
+cost EE number;eENumber;string;true
+Model CD;modelCD;string;true
+SP Bill Amount;spBillNetAmt;string;true
+Client ID#;clientID;number;true
+SPBill Gross amount;sPBillGrossAmt;number;true

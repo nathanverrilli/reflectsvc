@@ -32,6 +32,7 @@ func makeReverseEndpoint(svc SimpleService) endpoint.Endpoint {
 func decodeReverseRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	defer misc.DeferError(xLogBuffer.Flush)
 	var request reverseRequest
+
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if nil != err {
 		xLog.Printf("NewDecoder failed because %s", err.Error())

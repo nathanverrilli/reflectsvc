@@ -145,8 +145,14 @@ func initFlags() {
 	}
 
 	if FlagDest == "localhost" {
+		var hmode string
+		if misc.IsStringSet(&FlagCert) {
+			hmode = "https"
+		} else {
+			hmode = "http"
+		}
 		err = nFlags.Set("destination",
-			"https://localhost:"+FlagPort+"/reflect")
+			hmode+"://localhost:"+FlagPort+"/reflect")
 		if nil != err {
 			xLog.Printf("Could not reset command line option \"destination\" to \"%s\" because %s",
 				"https://localhost:"+FlagPort+"/reflect", err.Error())

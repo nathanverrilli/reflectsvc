@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"io"
+	"reflectsvc/misc"
 )
 
 const SEP = "/* ************************** */"
@@ -29,28 +30,9 @@ func (simpleService) Xml2Json(req xml2JsonRequest) (xjProxy x2jProxyData) {
 	xjProxy.Status = "500 ERROR"
 	xjProxy.Body = nil
 
-	/**
-	if FlagDebug {
-		var sb strings.Builder
-		sb.WriteString(fmt.Sprintf("hello from xml2JSon\n\tremote endpoint: %s\n",
-			FlagDest))
-
-		if len(FlagHeaderKey) > 0 {
-			sb.WriteString("call with these configured headers:\n")
-			for ix := range FlagHeaderKey {
-				sb.WriteString(fmt.Sprintf("\t[%2d]  [%s] == [%s]\n",
-					ix, FlagHeaderKey[ix], FlagHeaderValue[ix]))
-			}
-		}
-
-
-		sb.WriteString(fmt.Sprintf("%s\n%s\n%s", SEP, req.Json(), SEP))
-		logPrintf(sb.String())
-	}
-	***/
-
 	buf := bytes.NewBufferString(req.Json())
 	rsp, err := x2jProxy(req.Headers, buf)
+
 	if nil != err {
 		xLog.Printf("could not proxy json request to %s\n with data\n%s\n because %s",
 			FlagDest, req.Json(), err.Error())
@@ -63,6 +45,7 @@ func (simpleService) Xml2Json(req xml2JsonRequest) (xjProxy x2jProxyData) {
 			return xjProxy
 		}
 	}
+	defer misc.DeferError(rsp.Body.Close)
 	xjProxy.Body, err = io.ReadAll(rsp.Body)
 	if nil != err {
 		xLog.Printf("json request to %s with data\n%s\n"+
