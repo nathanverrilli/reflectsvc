@@ -119,9 +119,9 @@ func (x XtractaField) String() string {
 var EMPTYSTRING = ""
 
 func (x XtractaEvents) Json() string {
-	var cap = 1024
+	var sbCap = 1024
 	var sb strings.Builder
-	sb.Grow(cap)
+	sb.Grow(sbCap)
 	sb.WriteRune('{')
 
 	sb.WriteString("\"documentUrl\":\"")
@@ -180,8 +180,8 @@ func (x XtractaEvents) Json() string {
 	if FlagDebug {
 		xLog.Printf("xml data is %d bytes (capacity %d)\n", sb.Len(), sb.Cap())
 	}
-	if sb.Len() >= cap {
-		cap = sb.Len() + 512
+	if sb.Len() >= sbCap {
+		sbCap = sb.Len() + 512
 	}
 	return sb.String()
 }
