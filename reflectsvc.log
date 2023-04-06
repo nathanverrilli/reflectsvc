@@ -1,23 +1,23 @@
-2023/04/06 03:18:30 logger.go:150: Logfile set to H:\Projects\reflectsvc\reflectsvc.log
-2023/04/06 03:18:30 config.go:164: 
+2023/04/06 03:27:40 logger.go:150: Logfile set to H:\Projects\reflectsvc\reflectsvc.log
+2023/04/06 03:27:40 config.go:164: 
 		/*** program flags ***/
 	please note that the double backslash is an artifact to prevent Windows from corrupting the display output. The actual string only has one backslash.
 
-2023/04/06 03:18:30 config.go:258:  flag certfile has value  with default 
-2023/04/06 03:18:30 config.go:258:  flag debug has value true with default false
-2023/04/06 03:18:30 config.go:258:  flag destination has value http://localhost:9090/reflect with default localhost
-2023/04/06 03:18:30 config.go:258:  flag fieldnames has value fieldnames.csv with default 
-2023/04/06 03:18:30 config.go:258:  flag help has value false with default false
-2023/04/06 03:18:30 config.go:258:  flag insecure has value true with default false
-2023/04/06 03:18:30 config.go:258:  flag keyfile has value  with default 
-2023/04/06 03:18:30 config.go:258:  flag organization has value P3IDTechnologies with default P3IDTechnologies
-2023/04/06 03:18:30 config.go:258:  flag port has value 9090 with default 9090
-2023/04/06 03:18:30 config.go:258:  flag quiet has value false with default false
-2023/04/06 03:18:30 config.go:258:  flag servername has value  with default 
-2023/04/06 03:18:30 config.go:258:  flag verbose has value true with default false
-2023/04/06 03:18:30 config.go:169: 		/*** end program flags ***/
-2023/04/06 03:18:30 config.go:213: Verbose mode active (all debug and informative messages) for @MythosSeed
-2023/04/06 03:18:30 config.go:225: 
+2023/04/06 03:27:40 config.go:258:  flag certfile has value  with default 
+2023/04/06 03:27:40 config.go:258:  flag debug has value true with default false
+2023/04/06 03:27:40 config.go:258:  flag destination has value http://localhost:9090/reflect with default localhost
+2023/04/06 03:27:40 config.go:258:  flag fieldnames has value fieldnames.csv with default 
+2023/04/06 03:27:40 config.go:258:  flag help has value false with default false
+2023/04/06 03:27:40 config.go:258:  flag insecure has value true with default false
+2023/04/06 03:27:40 config.go:258:  flag keyfile has value  with default 
+2023/04/06 03:27:40 config.go:258:  flag organization has value P3IDTechnologies with default P3IDTechnologies
+2023/04/06 03:27:40 config.go:258:  flag port has value 9090 with default 9090
+2023/04/06 03:27:40 config.go:258:  flag quiet has value false with default false
+2023/04/06 03:27:40 config.go:258:  flag servername has value  with default 
+2023/04/06 03:27:40 config.go:258:  flag verbose has value true with default false
+2023/04/06 03:27:40 config.go:169: 		/*** end program flags ***/
+2023/04/06 03:27:40 config.go:213: Verbose mode active (all debug and informative messages) for @MythosSeed
+2023/04/06 03:27:40 config.go:225: 
 ***** reflectsvc BuildInfo: *****
 go	go1.20.2
 path	reflectsvc
@@ -54,45 +54,65 @@ build	GOARCH=amd64
 build	GOOS=windows
 build	GOAMD64=v1
 build	vcs=git
-build	vcs.revision=315afe7b68aa8595156c808df57f7a9fbe5f3bf9
-build	vcs.time=2023-04-06T02:49:59Z
+build	vcs.revision=70cf785692262bab1820f23f01744af0a41162a9
+build	vcs.time=2023-04-06T03:27:04Z
 build	vcs.modified=true
 
 ********************************
-2023/04/06 03:18:30 config.go:239: Listening on port 9090
-2023/04/06 03:18:30 fieldnames.go:56: successfully opened field translation file %!s(MISSING)
-2023/04/06 03:18:30 fieldnames.go:106: REMAP VALUES
-2023/04/06 03:18:30 fieldnames.go:108:   0 Destination Country: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:   1 Transit Mode: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:   2 Origin Country: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:   3 Destination State: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:   4 Client ID#: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:   5 Booking Agent: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:   6 Destination City: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:   7 Billing SP: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:   8 Load Date: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:   9 Model CD: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  10 Division: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  11 First name: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  12 Last Name: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  13 SP Bill Number: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  14 Currency: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  15 Account: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  16 SP Bill Amount: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  17 SPBill Gross amount: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  18 Cost Center: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  19 Status: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  20 Shipment Type: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  21 Storage on Bill: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  22 Bill received date: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  23 Bill Type: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  24 Transit Type: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  25 File Number: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  26 Auditor: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  27 Origin State: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  28 cost EE number: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  29 Origin City: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 fieldnames.go:108:  30 SP Bill Date: %!s(func() string=0x966b00)
-2023/04/06 03:18:30 reflectsvc.go:94: reverting to HTTP
+2023/04/06 03:27:40 config.go:239: Listening on port 9090
+2023/04/06 03:27:40 fieldnames.go:56: successfully opened field translation file %!s(MISSING)
+2023/04/06 03:27:40 fieldnames.go:106: REMAP VALUES
+2023/04/06 03:27:40 fieldnames.go:108:   0 Destination Country: destCountryCD   Destination Country   0   true
+2023/04/06 03:27:40 fieldnames.go:108:   1 SP Bill Number: sPBillNbr   SP Bill Number   0   true
+2023/04/06 03:27:40 fieldnames.go:108:   2 Model CD: modelCD   Model CD   0   true
+2023/04/06 03:27:40 fieldnames.go:108:   3 Billing SP: billingAgentCD   Billing SP   0   true
+2023/04/06 03:27:40 fieldnames.go:108:   4 Origin State: originStateProv   Origin State   0   true
+2023/04/06 03:27:40 fieldnames.go:108:   5 Auditor: auditor   Auditor   1   true
+2023/04/06 03:27:40 fieldnames.go:108:   6 First name: eEFirstName   First name   0   true
+2023/04/06 03:27:40 fieldnames.go:108:   7 SP Bill Amount: spBillNetAmt   SP Bill Amount   0   true
+2023/04/06 03:27:40 fieldnames.go:108:   8 Storage on Bill: stgOnBill   Storage on Bill   0   true
+2023/04/06 03:27:40 fieldnames.go:108:   9 Transit Mode: transitModeCD   Transit Mode   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  10 Destination City: destCity   Destination City   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  11 SP Bill Date: spBillDate   SP Bill Date   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  12 Origin City: originCity   Origin City   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  13 Destination State: destStateProv   Destination State   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  14 Bill received date: billReceivedDate   Bill received date   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  15 cost EE number: eENumber   cost EE number   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  16 Division: acctDivisionNbr   Division   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  17 Client ID#: clientID   Client ID#   2   true
+2023/04/06 03:27:40 fieldnames.go:108:  18 Origin Country: originCountryCD   Origin Country   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  19 Last Name: eELastName   Last Name   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  20 Transit Type: transitTypeCD   Transit Type   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  21 Bill Type: billTypeCD   Bill Type   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  22 Booking Agent: bookingAgentCD   Booking Agent   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  23 SPBill Gross amount: sPBillGrossAmt   SPBill Gross amount   2   true
+2023/04/06 03:27:40 fieldnames.go:108:  24 Account: accountNbr   Account   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  25 Status: received   Status   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  26 Cost Center: costCenter   Cost Center   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  27 File Number: fileNbr   File Number   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  28 Shipment Type: shipmentTypeCD   Shipment Type   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  29 Load Date: loadDate   Load Date   0   true
+2023/04/06 03:27:40 fieldnames.go:108:  30 Currency: currencyCD   Currency   0   true
+2023/04/06 03:27:40 reflectsvc.go:94: reverting to HTTP
 	Certification file is missing (use --certfile to set)
 	Key file is missing (use --keyfile to set)
+2023/04/06 03:28:11 xtractaXml.go:180: xml data is 765 bytes (capacity 1024)
+2023/04/06 03:28:11 xml2jsonEP.go:128: headers for proxied request
+	Content-Type : [application/json] 
+	Accept : [application/json] 
+	Accept-Charset : [utf-8] 
+	Dnt : [1] 
+	User-Agent : [curl/7.83.1] 
+2023/04/06 03:28:11 SimpleService.go:69: reflecting request:
+	/* *** */
+{"documentUrl":"https://web1-org.xtracta.com/us_west_2_storage1_datasource1/1/74/2d/iq277690491-4gE4fUMW.pdf,"received":"Received","shipmentTypeCD":"Auto","transitTypeCD":"Interstate US","transitModeCD":"2475","stgOnBill":"no","billTypeCD":"1458","auditor":321,"accountNbr":"BNSF RAILWAY COMPANY","fileNbr":"657-3880","eELastName":"Kruse","eEFirstName":"Robert","bookingAgentCD":"Ward North American","loadDate":"02/20/23","originCountryCD":"US","originStateProv":"TX","originCity":"Amarillo,","destCountryCD":"US","destStateProv":"IL","destCity":"Oak Lawn,","billingAgentCD":"Ward North American","sPBillNbr":"103472","spBillDate":"3/1/2023","spBillNetAmt":"$1,540.10","currencyCD":"USD","billReceivedDate":"3/1/2023","Reference":"","clientID":150,"modelCD":"PAS"}
+	/* *** */
+2023/04/06 03:28:11 SimpleService.go:61: 
+/* ************************** */
+{"documentUrl":"https://web1-org.xtracta.com/us_west_2_storage1_datasource1/1/74/2d/iq277690491-4gE4fUMW.pdf,"received":"Received","shipmentTypeCD":"Auto","transitTypeCD":"Interstate US","transitModeCD":"2475","stgOnBill":"no","billTypeCD":"1458","auditor":321,"accountNbr":"BNSF RAILWAY COMPANY","fileNbr":"657-3880","eELastName":"Kruse","eEFirstName":"Robert","bookingAgentCD":"Ward North American","loadDate":"02/20/23","originCountryCD":"US","originStateProv":"TX","originCity":"Amarillo,","destCountryCD":"US","destStateProv":"IL","destCity":"Oak Lawn,","billingAgentCD":"Ward North American","sPBillNbr":"103472","spBillDate":"3/1/2023","spBillNetAmt":"$1,540.10","currencyCD":"USD","billReceivedDate":"3/1/2023","Reference":"","clientID":150,"modelCD":"PAS"}
+/* ************************** */
+2023/04/06 03:28:34 reflectsvc.go:22: Got signal interrupt, exiting immediately
+2023/04/06 03:28:34 logger.go:150: 
+		/*** myFatal called ***/
+	from file:line reflectsvc.go:0023
+		/*** myFatal ended ***/
