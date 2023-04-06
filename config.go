@@ -47,8 +47,10 @@ var FlagKey string
 var FlagDest string
 var FlagDestInsecure bool
 
+/*
 var FlagHeaderValue []string
 var FlagHeaderKey []string
+*/
 
 func initFlags() {
 	var err error
@@ -93,11 +95,13 @@ func initFlags() {
 			"becomes \"https://localhost:<port>/reflect\" where"+
 			"<port> is the port of this program.")
 
-	nFlags.StringArrayVarP(&FlagHeaderKey, "header-key", "", []string{"AUTHORIZATION"},
-		"Header Key (must be in same order as value)")
+	/*
+		nFlags.StringArrayVarP(&FlagHeaderKey, "header-key", "", []string{"AUTHORIZATION"},
+			"Header Key (must be in same order as value)")
 
-	nFlags.StringArrayVarP(&FlagHeaderValue, "header-value", "", []string{"bearer ****DuMmY*ToKeN****="},
-		"Header Value(must be in same order as key)")
+		nFlags.StringArrayVarP(&FlagHeaderValue, "header-value", "", []string{"bearer ****DuMmY*ToKeN****="},
+			"Header Value(must be in same order as key)")
+	*/
 
 	nFlags.StringVarP(&FlagServiceName, "servername", "", "",
 		"Name of service/FQDN \"microservice.example.com\" <<not fully tested>> ")

@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"encoding/csv"
+	"fmt"
 	"io"
 	"os"
 	"reflectsvc/misc"
@@ -24,7 +25,12 @@ type remapField struct {
 	XMLName   string
 	FieldType JsonFieldType
 	OmitEmpty bool
-	MustBe    []string
+	// MustBe    []string
+}
+
+func (r *remapField) String() string {
+	return fmt.Sprintf("%s   %s   %v   %t",
+		r.JsonName, r.XMLName, r.FieldType, r.OmitEmpty)
 }
 
 // FlagRemapMap is not really an argument flag, but it used similarly.
@@ -46,6 +52,8 @@ func loadFieldTranslations(fn string) (remap map[string]remapField) {
 		xLog.Printf("could not open field translation file %s because %s",
 			fn, err.Error())
 		return remap
+	} else if FlagDebug {
+		xLog.Printf("successfully opened field translation file %s")
 	}
 	defer misc.DeferError(f.Close)
 	rdr := csv.NewReader(bufio.NewReader(f))
@@ -93,6 +101,13 @@ func loadFieldTranslations(fn string) (remap map[string]remapField) {
 	if nil != err && io.EOF != err {
 		xLog.Printf("got non-EOF error while parsing field translation file: %s", err.Error())
 	}
-
+	if FlagDebug {
+		ix := 0
+		xLog.Printf("REMAP VALUES")
+		for key, val := range remap {
+			xLog.Printf("%3d %s: %s", ix, key, val.String())
+			ix++
+		}
+	}
 	return remap
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"github.com/go-kit/kit/endpoint"
 	"io"
 	"net/http"
@@ -24,12 +25,16 @@ func makeReflectEndpoint(svc SimpleService) endpoint.Endpoint {
 	}
 }
 
+var request_ix = 0
+
 func decodeReflectRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	var v reflectRequest
 
 	if FlagDebug {
 		body, _ := io.ReadAll(r.Body)
-		xf, _ := os.OpenFile("lastRequestDebug.txt", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+		xf, _ := os.OpenFile(fmt.Sprintf("reqdbg%03d.log", request_ix),
+			os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+		request_ix++
 		defer misc.DeferError(xf.Close)
 		_, _ = xf.Write(body)
 		_ = r.Body.Close()

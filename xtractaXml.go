@@ -135,10 +135,10 @@ func (x XtractaEvents) Json() string {
 		val := &EMPTYSTRING
 		rm, ok := FlagRemapMap[fld.FieldName]
 		if !ok {
-			if !misc.IsStringSet(&fld.FieldValue) {
-				val = &fld.FieldName
+			if misc.IsStringSet(&fld.FieldValue) {
+				val = &fld.FieldValue
 			}
-			sb.WriteString(fmt.Sprintf(",\"%s\":\"%s\"", rm.JsonName, *val))
+			sb.WriteString(fmt.Sprintf(",\"%s\":\"%s\"", fld.FieldName, *val))
 		} else {
 			if !misc.IsStringSet(&fld.FieldValue) {
 				if rm.OmitEmpty {
