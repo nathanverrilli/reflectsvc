@@ -128,18 +128,17 @@ func (x XtractaEvents) Json() string {
 	if misc.IsStringSet(&x.Event.Document.DocumentURL) {
 		sb.WriteString(x.Event.Document.DocumentURL)
 	}
-	sb.WriteRune('"')
 
 	for _, fld := range x.Event.Document.FieldData.Field {
-		// need this comma *every time* because 'documentUrl' field is *always* present
-		sb.WriteRune(',')
+
+		// sb.WriteRune(',')
 		val := &EMPTYSTRING
 		rm, ok := FlagRemapMap[fld.FieldName]
 		if !ok {
 			if !misc.IsStringSet(&fld.FieldValue) {
 				val = &fld.FieldName
 			}
-			sb.WriteString(fmt.Sprintf("\"%s\":\"%s\"", rm.JsonName, *val))
+			sb.WriteString(fmt.Sprintf(",\"%s\":\"%s\"", rm.JsonName, *val))
 		} else {
 			if !misc.IsStringSet(&fld.FieldValue) {
 				if rm.OmitEmpty {
@@ -150,23 +149,23 @@ func (x XtractaEvents) Json() string {
 			}
 			switch rm.FieldType {
 			case JsonString:
-				sb.WriteString(fmt.Sprintf("\"%s\":\"%s\"", rm.JsonName, *val))
+				sb.WriteString(fmt.Sprintf(",\"%s\":\"%s\"", rm.JsonName, *val))
 			case JsonInteger, JsonNumeric:
-				sb.WriteString(fmt.Sprintf("\"%s\":%s", rm.JsonName, *val))
+				sb.WriteString(fmt.Sprintf(",\"%s\":%s", rm.JsonName, *val))
 			case JsonBoolean:
 				booleanVal := false
 				if "true" == strings.ToLower(fld.FieldValue) {
 					booleanVal = true
 				}
-				sb.WriteString(fmt.Sprintf("\"%s\":%t", rm.JsonName, booleanVal))
+				sb.WriteString(fmt.Sprintf(",\"%s\":%t", rm.JsonName, booleanVal))
 			case JsonDate:
 				dt, err := time.Parse(XmlDateLayout, fld.FieldValue)
 				if nil != err {
 					xLog.Printf("Date string [%s] not recognized because %s",
 						fld.FieldName, err.Error())
-					sb.WriteString(fmt.Sprintf("\"%s\":\"\"", rm.JsonName))
+					sb.WriteString(fmt.Sprintf(",\"%s\":\"\"", rm.JsonName))
 				} else {
-					sb.WriteString(fmt.Sprintf("\"%s\":\"%s\"", rm.JsonName,
+					sb.WriteString(fmt.Sprintf(",\"%s\":\"%s\"", rm.JsonName,
 						dt.Format(JsonDateLayout)))
 				}
 			default:

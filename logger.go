@@ -10,7 +10,6 @@ import (
 	"reflectsvc/misc"
 	"runtime"
 	"strings"
-	"sync"
 	"time"
 )
 
@@ -41,8 +40,8 @@ func flushLogInterval(seconds int) {
 
 // flushLog just flushes the log to disk
 func flushLog() {
-	clmx.Lock()
-	defer clmx.Unlock()
+	//clmx.Lock()
+	//defer clmx.Unlock()
 	if nil != xLogBuffer {
 		err := xLogBuffer.Flush()
 		if nil != err {
@@ -51,14 +50,14 @@ func flushLog() {
 	}
 }
 
-var clmx sync.Mutex
+//var clmx sync.Mutex
 
 // closeLog shuts the logging service down
 // cleanly, flushing buffers (and thus
 // preserving the most likely error of
 // interest)
 func closeLog() {
-	clmx.Lock()
+	//clmx.Lock()
 	var err01, err02 error
 	if nil != xLogBuffer {
 		flushLog()
@@ -68,7 +67,7 @@ func closeLog() {
 		err01 = xLogFile.Close()
 		xLogFile = nil
 	}
-	clmx.Unlock()
+	//clmx.Unlock()
 
 	err := misc.ConcatenateErrors(err01, err02)
 	if nil != err {
@@ -145,8 +144,8 @@ func myFatal(rcList ...int) {
 // available, well and good. Otherwise, print the message to
 // STDERR.
 func safeLogPrintf(format string, a ...any) {
-	clmx.Lock()
-	defer clmx.Unlock()
+	//clmx.Lock()
+	//defer clmx.Unlock()
 	if nil != xLogBuffer && nil != xLogFile {
 		xLog.Printf(format, a...)
 	} else {

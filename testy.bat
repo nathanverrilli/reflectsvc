@@ -4,4 +4,4 @@ curl --verbose --insecure ^
  --header "Accept: application/json" ^
  --data-binary @body.xml ^
  --verbose ^
- https://localhost:9090/xml2json
+ http://localhost:9090/xml2json
