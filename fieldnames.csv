@@ -19,7 +19,7 @@ Destination State;destStateProv;string;true
 Destination Country;destCountryCD;string;true
 Bill Type;billTypeCD;string;true
 SP Bill Number;sPBillNbr;string;true
-SP Bill Amount;sPBillNetAmt;string;true
+SP Bill Amount;sPBillNetAmt;number;true
 Currency;currencyCD;string;true
 Storage on Bill;stgOnBill;string;true
 SP Bill Date;spBillDate;string;true

@@ -252,7 +252,7 @@ func logFlag(flag *pflag.Flag) {
 	sb.WriteString("] with default [")
 	sb.Write([]byte(flag.DefValue))
 	sb.WriteString("]\n")
-	xLog.Writer().Write([]byte(sb.String()))
+	_, _ = xLog.Writer().Write([]byte(sb.String()))
 }
 
 // UsageMessage - describe capabilities and extended usage notes

@@ -58,7 +58,7 @@ func loadFieldTranslations(fn string) (remap map[string]remapField) {
 	defer misc.DeferError(f.Close)
 	rdr := csv.NewReader(bufio.NewReader(f))
 	rdr.Comma = ';'
-	rdr.Comment = '#'
+	rdr.Comment = '`'
 	rdr.ReuseRecord = true
 
 	var record []string

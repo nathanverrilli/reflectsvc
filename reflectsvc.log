@@ -1,5 +1,5 @@
-2023/04/06 18:14:09 logger.go:150: Logfile set to H:\Projects\reflectsvc\reflectsvc.log
-2023/04/06 18:14:09 config.go:159: 		/*** start program flags ***/
+2023/04/06 19:21:38 logger.go:150: Logfile set to H:\Projects\reflectsvc\reflectsvc.log
+2023/04/06 19:21:38 config.go:159: 		/*** start program flags ***/
 
  flag certfile has value [] with default []
  flag debug has value [true] with default [false]
@@ -13,9 +13,9 @@
  flag quiet has value [false] with default [false]
  flag servername has value [] with default []
  flag verbose has value [true] with default [false]
-2023/04/06 18:14:09 config.go:161: 		/***   end program flags ***/
-2023/04/06 18:14:09 config.go:205: Verbose mode active (all debug and informative messages) for @MythosSeed
-2023/04/06 18:14:09 config.go:217: 
+2023/04/06 19:21:38 config.go:161: 		/***   end program flags ***/
+2023/04/06 19:21:38 config.go:205: Verbose mode active (all debug and informative messages) for @MythosSeed
+2023/04/06 19:21:38 config.go:217: 
 ***** ___go_https_reflectsvc BuildInfo: *****
 go	go1.20.2
 path	reflectsvc
@@ -35,50 +35,45 @@ build	GOARCH=amd64
 build	GOOS=windows
 build	GOAMD64=v1
 build	vcs=git
-build	vcs.revision=c2c85e8514a3cd5476e09a4dffacb44a30c6a0d0
-build	vcs.time=2023-04-06T03:32:38Z
+build	vcs.revision=60eac46bf543228e5197705c777e72ef15ccaab8
+build	vcs.time=2023-04-06T19:16:39Z
 build	vcs.modified=true
 
 ********************************************
-2023/04/06 18:14:09 config.go:231: Listening on port 9090
-2023/04/06 18:14:09 fieldnames.go:56: successfully opened field translation file %!s(MISSING)
-2023/04/06 18:14:09 fieldnames.go:106: REMAP VALUES
-2023/04/06 18:14:09 fieldnames.go:108:   0 Bill Type: billTypeCD   Bill Type   0   true
-2023/04/06 18:14:09 fieldnames.go:108:   1 Billing SP: billingAgentCD   Billing SP   0   true
-2023/04/06 18:14:09 fieldnames.go:108:   2 Booking Agent: bookingAgentCD   Booking Agent   0   true
-2023/04/06 18:14:09 fieldnames.go:108:   3 Shipment Type: shipmentTypeCD   Shipment Type   0   true
-2023/04/06 18:14:09 fieldnames.go:108:   4 Origin Country: originCountryCD   Origin Country   0   true
-2023/04/06 18:14:09 fieldnames.go:108:   5 Storage on Bill: stgOnBill   Storage on Bill   0   true
-2023/04/06 18:14:09 fieldnames.go:108:   6 Destination State: destStateProv   Destination State   0   true
-2023/04/06 18:14:09 fieldnames.go:108:   7 First name: eEFirstName   First name   0   true
-2023/04/06 18:14:09 fieldnames.go:108:   8 Model CD: modelCD   Model CD   0   true
-2023/04/06 18:14:09 fieldnames.go:108:   9 Origin City: originCity   Origin City   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  10 Auditor: auditor   Auditor   1   true
-2023/04/06 18:14:09 fieldnames.go:108:  11 Division: acctDivisionNbr   Division   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  12 Origin State: originStateProv   Origin State   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  13 SPBill Gross amount: sPBillGrossAmt   SPBill Gross amount   2   true
-2023/04/06 18:14:09 fieldnames.go:108:  14 Status: received   Status   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  15 Bill received date: billReceivedDate   Bill received date   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  16 Transit Mode: transitModeCD   Transit Mode   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  17 Currency: currencyCD   Currency   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  18 Transit Type: transitTypeCD   Transit Type   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  19 Cost Center: costCenter   Cost Center   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  20 Destination Country: destCountryCD   Destination Country   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  21 SP Bill Number: sPBillNbr   SP Bill Number   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  22 SP Bill Amount: spBillNetAmt   SP Bill Amount   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  23 Account: accountNbr   Account   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  24 Destination City: destCity   Destination City   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  25 cost EE number: eENumber   cost EE number   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  26 File Number: fileNbr   File Number   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  27 Last Name: eELastName   Last Name   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  28 Load Date: loadDate   Load Date   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  29 SP Bill Date: spBillDate   SP Bill Date   0   true
-2023/04/06 18:14:09 fieldnames.go:108:  30 Client ID#: clientID   Client ID#   2   true
-2023/04/06 18:14:09 reflectsvc.go:94: reverting to HTTP
+2023/04/06 19:21:38 config.go:231: Listening on port 9090
+2023/04/06 19:21:38 fieldnames.go:56: successfully opened field translation file fieldnames.csv
+2023/04/06 19:21:38 fieldnames.go:106: REMAP VALUES
+2023/04/06 19:21:38 fieldnames.go:108:   0 cost EE number: eENumber   cost EE number   0   true
+2023/04/06 19:21:38 fieldnames.go:108:   1 Last Name: eELastName   Last Name   0   true
+2023/04/06 19:21:38 fieldnames.go:108:   2 Shipment Type: shipmentTypeCD   Shipment Type   0   true
+2023/04/06 19:21:38 fieldnames.go:108:   3 Origin City: originCity   Origin City   0   true
+2023/04/06 19:21:38 fieldnames.go:108:   4 Origin Country: originCountryCD   Origin Country   0   true
+2023/04/06 19:21:38 fieldnames.go:108:   5 Destination City: destCity   Destination City   0   true
+2023/04/06 19:21:38 fieldnames.go:108:   6 Destination State: destStateProv   Destination State   0   true
+2023/04/06 19:21:38 fieldnames.go:108:   7 Storage on Bill: stgOnBill   Storage on Bill   0   true
+2023/04/06 19:21:38 fieldnames.go:108:   8 First name: eEFirstName   First name   0   true
+2023/04/06 19:21:38 fieldnames.go:108:   9 SP Bill Number: sPBillNbr   SP Bill Number   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  10 SP Bill Amount: spBillNetAmt   SP Bill Amount   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  11 Origin State: originStateProv   Origin State   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  12 Client ID#: clientID   Client ID#   2   true
+2023/04/06 19:21:38 fieldnames.go:108:  13 Billing SP: billingAgentCD   Billing SP   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  14 Booking Agent: bookingAgentCD   Booking Agent   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  15 Transit Type: transitTypeCD   Transit Type   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  16 Transit Mode: transitModeCD   Transit Mode   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  17 Destination Country: destCountryCD   Destination Country   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  18 SP Bill Date: spBillDate   SP Bill Date   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  19 File Number: fileNbr   File Number   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  20 Account: accountNbr   Account   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  21 Status: received   Status   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  22 Load Date: loadDate   Load Date   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  23 Currency: currencyCD   Currency   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  24 Bill received date: billReceivedDate   Bill received date   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  25 Auditor: auditor   Auditor   1   true
+2023/04/06 19:21:38 fieldnames.go:108:  26 SPBill Gross amount: sPBillGrossAmt   SPBill Gross amount   2   true
+2023/04/06 19:21:38 fieldnames.go:108:  27 Division: acctDivisionNbr   Division   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  28 Bill Type: billTypeCD   Bill Type   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  29 Cost Center: costCenter   Cost Center   0   true
+2023/04/06 19:21:38 fieldnames.go:108:  30 Model CD: modelCD   Model CD   0   true
+2023/04/06 19:21:38 reflectsvc.go:94: reverting to HTTP
 	Certification file is missing (use --certfile to set)
 	Key file is missing (use --keyfile to set)
-2023/04/06 18:14:30 reflectsvc.go:22: Got signal interrupt, exiting immediately
-2023/04/06 18:14:30 logger.go:150: 
-		/*** myFatal called ***/
-	from file:line reflectsvc.go:0023
-		/*** myFatal ended ***/
