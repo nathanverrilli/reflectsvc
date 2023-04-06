@@ -125,7 +125,7 @@ func (x XtractaEvents) Json() string {
 	sb.WriteRune('{')
 
 	{ // insert documentUrl param
-		sb.WriteString("\"documentUrl\":\"")
+		sb.WriteString("\"documentLink\":\"")
 		if misc.IsStringSet(&x.Event.Document.DocumentURL) {
 			sb.WriteString(x.Event.Document.DocumentURL)
 		}

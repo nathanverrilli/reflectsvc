@@ -45,7 +45,9 @@ func makeXml2JsonEndpoint(svc SimpleService) endpoint.Endpoint {
 }
 
 func decodeXml2JsonRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	defer flushLog()
+	if FlagDebug {
+		xLog.Printf("enter decodeXml2JsonRequest")
+	}
 	var req xml2JsonRequest
 	body, err := io.ReadAll(r.Body)
 	if nil != err {
@@ -129,6 +131,9 @@ func logHeaders(h http.Header) {
 }
 
 func x2jEncodeResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
+	if FlagDebug {
+		xLog.Printf("enter x2jEncodeResponse")
+	}
 	v, ok := response.(xml2JsonResponse)
 
 	if !ok || nil == v.Body || len(v.Body) <= 0 {

@@ -22,11 +22,11 @@ SP Bill Number;sPBillNbr;string;true
 SP Bill Amount;sPBillNetAmt;number;true
 Currency;currencyCD;string;true
 Storage on Bill;stgOnBill;string;true
-SP Bill Date;spBillDate;string;true
+SPBillDate;spBillDate;string;true
 Auditor;auditor;decimal;true
 Cost Center;costCenter;string;true
 cost EE number;eENumber;string;true
 Model CD;modelCD;string;true
-SP Bill Amount;spBillNetAmt;string;true
-Client ID#;clientID;number;true
+SP Bill Amount;sPBillNetAmt;string;true
+ClientID;clientID;number;true
 SPBill Gross amount;sPBillGrossAmt;number;true
