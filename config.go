@@ -1,9 +1,7 @@
 package main
 
 import (
-	"embed"
 	"fmt"
-	markdown "github.com/MichaelMure/go-term-markdown"
 	"github.com/spf13/pflag"
 	"os"
 	"path/filepath"
@@ -12,9 +10,6 @@ import (
 	"strconv"
 	"strings"
 )
-
-//go:embed all:Resources
-var efs embed.FS
 
 // wordSepNormalizeFunc all options are lowercase, so
 // ... lowercase they shall be
@@ -161,12 +156,9 @@ func initFlags() {
 	}
 
 	if FlagDebug && FlagVerbose {
-		xLog.Println("\n\t\t/*** program flags ***/\n" +
-			"\tplease note that the double backslash is " +
-			"an artifact to prevent Windows from corrupting the " +
-			"display output. The actual string only has one backslash.\n")
+		xLog.Println("\t\t/*** start program flags ***/\n")
 		nFlags.VisitAll(logFlag)
-		xLog.Println("\t\t/*** end program flags ***/")
+		xLog.Println("\t\t/***   end program flags ***/")
 	}
 	/*
 		if len(FlagHeaderKey) != len(FlagHeaderValue) {
@@ -247,25 +239,23 @@ func initFlags() {
 
 }
 
+// logFlag -- This writes out to the logger the value of a
+// particular flag. Called indirectly. `Write()` is used
+// directly to prevent wierd interactions with backslash
+// in filenames
 func logFlag(flag *pflag.Flag) {
 	var sb strings.Builder
 	sb.WriteString(" flag ")
 	sb.WriteString(flag.Name)
-	sb.WriteString(" has value ")
+	sb.WriteString(" has value [")
 	sb.Write([]byte(flag.Value.String()))
-	sb.WriteString(" with default ")
+	sb.WriteString("] with default [")
 	sb.Write([]byte(flag.DefValue))
-	xLog.Print(sb.String())
+	sb.WriteString("]\n")
+	xLog.Writer().Write([]byte(sb.String()))
 }
 
 // UsageMessage - describe capabilities and extended usage notes
 func UsageMessage() {
-	src, err := efs.ReadFile("Resources/USAGE.MD")
-	if nil != err {
-		xLog.Printf("Could not open embedded resource USAGE.MD because %s", err.Error())
-		myFatal()
-	}
-	result := markdown.Render(string(src), 80, 5)
-	s2 := string(result)
-	fmt.Println(s2)
+	xLog.Printf("Please see README.MD for usage information")
 }

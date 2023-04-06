@@ -124,14 +124,16 @@ func (x XtractaEvents) Json() string {
 	sb.Grow(sbCap)
 	sb.WriteRune('{')
 
-	sb.WriteString("\"documentUrl\":\"")
-	if misc.IsStringSet(&x.Event.Document.DocumentURL) {
-		sb.WriteString(x.Event.Document.DocumentURL)
+	{ // insert documentUrl param
+		sb.WriteString("\"documentUrl\":\"")
+		if misc.IsStringSet(&x.Event.Document.DocumentURL) {
+			sb.WriteString(x.Event.Document.DocumentURL)
+		}
 	}
+	sb.WriteRune('"')
 
 	for _, fld := range x.Event.Document.FieldData.Field {
 
-		// sb.WriteRune(',')
 		val := &EMPTYSTRING
 		rm, ok := FlagRemapMap[fld.FieldName]
 		if !ok {

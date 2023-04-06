@@ -53,7 +53,7 @@ func loadFieldTranslations(fn string) (remap map[string]remapField) {
 			fn, err.Error())
 		return remap
 	} else if FlagDebug {
-		xLog.Printf("successfully opened field translation file %s")
+		xLog.Printf("successfully opened field translation file %s", fn)
 	}
 	defer misc.DeferError(f.Close)
 	rdr := csv.NewReader(bufio.NewReader(f))
