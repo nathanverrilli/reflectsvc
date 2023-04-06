@@ -32,7 +32,7 @@ func decodeReflectRequest(_ context.Context, r *http.Request) (interface{}, erro
 		xf, _ := os.OpenFile("lastRequestDebug.txt", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 		defer misc.DeferError(xf.Close)
 		xf.Write(body)
-		r.Body.Close()
+		_ = r.Body.Close()
 		r.Body = io.NopCloser(bytes.NewBuffer(body))
 	}
 
