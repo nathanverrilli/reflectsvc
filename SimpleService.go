@@ -26,7 +26,7 @@ func (simpleService) Validate(v validateRequest) (vr validateRequest) {
 
 func (simpleService) Xml2Json(req xml2JsonRequest) (xjProxy x2jProxyData) {
 	if FlagDebug {
-		xLog.Printf("enter Xml2Json")
+		xLog.Printf("enter Xml2Json send request %s", req.MagicInternalGuid)
 	}
 	xjProxy.Code = 500
 	xjProxy.Status = "500 ERROR"

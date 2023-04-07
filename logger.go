@@ -26,9 +26,9 @@ func flushLogInterval(seconds int) {
 		}
 		ix = (ix + 1) % seconds
 		time.Sleep(time.Second)
-		if FlagDebug {
-			safeLogPrintf("\ttick %d\n", ix)
-		}
+		//if FlagDebug {
+		//	safeLogPrintf("\ttick %d\n", ix)
+		//}
 		if 0 == ix {
 			//if FlagDebug {
 			//	safeLogPrintf("\tFLUSH!\n")

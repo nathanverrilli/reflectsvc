@@ -13,10 +13,11 @@ const XmlDateLayout = "_2/1/2006"
 const JsonDateLayout = "2006-02-01"
 
 type XtractaEvents struct {
-	XMLName xml.Name     `xml:"events"`
-	Text    string       `xml:",chardata"`
-	Event   XtractaEvent `xml:"event"`
-	Headers http.Header
+	MagicInternalGuid string
+	XMLName           xml.Name     `xml:"events"`
+	Text              string       `xml:",chardata"`
+	Event             XtractaEvent `xml:"event"`
+	Headers           http.Header
 }
 
 func (x XtractaEvents) String() string {
@@ -140,7 +141,12 @@ func (x XtractaEvents) Json() string {
 			if misc.IsStringSet(&fld.FieldValue) {
 				val = &fld.FieldValue
 			}
-			sb.WriteString(fmt.Sprintf(",\"%s\":\"%s\"", fld.FieldName, *val))
+			data := fmt.Sprintf(",\"%s\":\"%s\"", fld.FieldName, *val)
+			sb.WriteString(data)
+			if FlagDebug {
+				xLog.Printf("found an untranslated name/value pair [\"%s\":\"%s\"] - saving as string\n",
+					fld.FieldName, *val)
+			}
 		} else {
 			if !misc.IsStringSet(&fld.FieldValue) {
 				if rm.OmitEmpty {

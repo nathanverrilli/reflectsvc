@@ -1,14 +1,19 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"crypto/tls"
 	"encoding/xml"
 	"fmt"
 	"github.com/go-kit/kit/endpoint"
+	"github.com/google/uuid"
 	"io"
 	"net/http"
+	"os"
+	"reflectsvc/misc"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -44,17 +49,42 @@ func makeXml2JsonEndpoint(svc SimpleService) endpoint.Endpoint {
 	}
 }
 
+var xmlDebugCount = 0
+var decodeSync sync.Mutex
+
 func decodeXml2JsonRequest(_ context.Context, r *http.Request) (interface{}, error) {
-	if FlagDebug {
-		xLog.Printf("enter decodeXml2JsonRequest")
-	}
 	var req xml2JsonRequest
+
+	if FlagDebug {
+
+		guid, _ := uuid.NewUUID()
+		req.MagicInternalGuid = guid.String()
+		body, _ := io.ReadAll(r.Body)
+		_ = r.Body.Close()
+		decodeSync.Lock()
+		fn := fmt.Sprintf("%s_xmldbg%03d.log",
+			time.Now().UTC().Format(misc.DATE_POG),
+			xmlDebugCount)
+		xmlDebugCount++
+		decodeSync.Unlock()
+		xLog.Printf("enter decodeXml2JsonRequest -- %s -- saving request as %s",
+			guid, fn)
+		xf, _ := os.OpenFile(fn, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+		defer misc.DeferError(xf.Close)
+		_, _ = fmt.Fprintf(xf, "request %s\n\t\tHEADERS\n", fn)
+		_, _ = xf.Write(debugMapStringArrayString(r.Header))
+		_, _ = fmt.Fprintf(xf, "\n\t\tBODY\n")
+		_, _ = xf.Write(body)
+		r.Body = io.NopCloser(bytes.NewBuffer(body))
+	}
+
 	body, err := io.ReadAll(r.Body)
 	if nil != err {
 		xLog.Printf("io.ReadAll failed on decodeXml2JsonRequest because %s", err.Error())
 		return nil, err
 	}
 	err = xml.Unmarshal(body, &req)
+
 	req.Headers = r.Header
 	if nil != err {
 		xLog.Printf("xml.Unmarshal failed because %s", err.Error())
@@ -131,19 +161,69 @@ func logHeaders(h http.Header) {
 }
 
 func x2jEncodeResponse(_ context.Context, w http.ResponseWriter, response interface{}) error {
+	var responseBody string
 	if FlagDebug {
 		xLog.Printf("enter x2jEncodeResponse")
 	}
 	v, ok := response.(xml2JsonResponse)
 
 	if !ok || nil == v.Body || len(v.Body) <= 0 {
-		s := fmt.Sprintf("{\"error\":\"%s\"}", v.Status)
+		responseBody = fmt.Sprintf("{\"error\":\"%s\"}", v.Status)
 		w.WriteHeader(http.StatusInternalServerError)
-		_, _ = w.Write([]byte(s))
-
+		_, err := w.Write([]byte(responseBody))
+		if nil != err {
+			xLog.Printf("could not write header to response because %s", err.Error())
+			return err
+		}
 	} else {
 		w.WriteHeader(v.Code)
-		_, _ = w.Write(v.Body)
+		//_. err := w.Write(v.Body)
+		responseBody = "{\"success\":true}"
+		_, err := w.Write([]byte(responseBody))
+		if nil != err {
+			xLog.Printf("could not write header to response because %s", err.Error())
+			return err
+		}
+	}
+	if FlagDebug {
+
+		fn := fmt.Sprintf("%s_xmlrspdbg%03d.log",
+			time.Now().UTC().Format(misc.DATE_POG),
+			xmlDebugCount)
+		xf, _ := os.OpenFile(fn, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+		_, _ = fmt.Fprintf(xf, "request %s\n", fn)
+		_, _ = xf.Write(debugMapStringArrayString(w.Header()))
+		_, _ = xf.WriteString("\n")
+		_, _ = xf.Write([]byte(responseBody))
+		_, _ = xf.WriteString("\n")
+		_ = xf.Close()
+
+		xLog.Printf("exiting x2jEncodeResponse")
 	}
 	return nil
+}
+
+func debugMapStringArrayString(m map[string][]string) []byte {
+	var sb strings.Builder
+
+	if len(m) <= 0 {
+		return []byte("\n no headers \n")
+	}
+
+	for key, val := range m {
+		sb.WriteString(key)
+		sb.WriteString(" [")
+		first := true
+		for _, val2 := range val {
+			if first {
+				sb.WriteRune(' ')
+				first = false
+			} else {
+				sb.WriteString(" | ")
+			}
+			sb.WriteString(val2)
+		}
+		sb.WriteString(" ]\n")
+	}
+	return []byte(sb.String())
 }

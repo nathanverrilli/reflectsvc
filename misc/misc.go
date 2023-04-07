@@ -12,7 +12,7 @@ import (
 )
 
 // DATE_POG  timestamp for filenames unique to the second
-// const DATE_POG = "20060102150405"
+const DATE_POG = "20060102150405"
 
 var emptyString = ""
 

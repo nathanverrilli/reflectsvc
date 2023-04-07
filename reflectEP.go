@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"os"
 	"reflectsvc/misc"
+	"sync"
+	"time"
 )
 
 // For each method, we define request and response structs
@@ -25,26 +27,34 @@ func makeReflectEndpoint(svc SimpleService) endpoint.Endpoint {
 	}
 }
 
-var request_ix = 0
+var reflectDebugCount = 0
+var reflectSync sync.Mutex
 
 func decodeReflectRequest(_ context.Context, r *http.Request) (interface{}, error) {
 	var v reflectRequest
 
 	if FlagDebug {
 		body, _ := io.ReadAll(r.Body)
-		xf, _ := os.OpenFile(fmt.Sprintf("reqdbg%03d.log", request_ix),
-			os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
-		request_ix++
-		defer misc.DeferError(xf.Close)
-		_, _ = xf.Write(body)
 		_ = r.Body.Close()
+		reflectSync.Lock()
+		fn := fmt.Sprintf("%s_rfldbg%03d.log",
+			time.Now().UTC().Format(misc.DATE_POG),
+			reflectDebugCount)
+		reflectDebugCount++
+		reflectSync.Unlock()
+		xLog.Printf("enter decodeReflectRequest -- saving request as %s\n", fn)
+		xf, _ := os.OpenFile(fn, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+		_, _ = xf.Write(body)
+		_ = xf.Close()
 		r.Body = io.NopCloser(bytes.NewBuffer(body))
 	}
 
 	block, err := io.ReadAll(r.Body)
+
 	if nil == err {
 		v.Body = block
 	}
+	_ = r.Body.Close()
 	return v, err
 }
 
