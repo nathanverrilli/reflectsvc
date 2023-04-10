@@ -19,20 +19,16 @@ var xLog log.Logger
 
 func flushLogInterval(seconds int) {
 	var ix = 0
-
 	for {
 		if nil == xLogBuffer {
 			break
 		}
 		ix = (ix + 1) % seconds
 		time.Sleep(time.Second)
-		//if FlagDebug {
-		//	safeLogPrintf("\ttick %d\n", ix)
-		//}
 		if 0 == ix {
-			//if FlagDebug {
-			//	safeLogPrintf("\tFLUSH!\n")
-			//}
+			if FlagTick {
+				_, _ = fmt.Fprintf(os.Stdout, "\t tick %02d\n", ix)
+			}
 			flushLog()
 		}
 	}
@@ -88,7 +84,7 @@ func initLog(lfName string) {
 	}
 
 	xLogBuffer = bufio.NewWriter(xLogFile)
-	logWriters = append(logWriters, os.Stderr)
+	logWriters = append(logWriters, os.Stdout)
 	logWriters = append(logWriters, xLogBuffer)
 	xLog.SetFlags(log.Ldate | log.Ltime | log.LUTC | log.Lshortfile)
 	xLog.SetOutput(io.MultiWriter(logWriters...))

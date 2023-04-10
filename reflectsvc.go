@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	httpTransport "github.com/go-kit/kit/transport/http"
+	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -34,6 +35,27 @@ func main() {
 	signal.Notify(signalChan, os.Interrupt)
 	signal.Notify(signalChan, os.Kill)
 	go handleSignal()
+
+	if FlagDebug || FlagVerbose {
+	}
+	ifaces, err := net.Interfaces()
+	// handle err
+	for _, i := range ifaces {
+		addrs, err := i.Addrs()
+		if nil == err {
+			for _, addr := range addrs {
+				var ip net.IP
+				switch v := addr.(type) {
+				case *net.IPNet:
+					ip = v.IP
+				case *net.IPAddr:
+					ip = v.IP
+				}
+				// process IP address
+				xLog.Printf("found ip address %s\n", ip.String())
+			}
+		}
+	}
 
 	// setup for specific services
 

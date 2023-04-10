@@ -35,7 +35,7 @@ func decodeReverseRequest(_ context.Context, r *http.Request) (interface{}, erro
 
 	err := json.NewDecoder(r.Body).Decode(&request)
 	if nil != err {
-		xLog.Printf("NewDecoder failed because %s", err.Error())
+		xLog.Printf("NewDecoder failed on account of %s", err.Error())
 	}
 	return request, nil
 }

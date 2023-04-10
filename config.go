@@ -41,6 +41,7 @@ var FlagCert string
 var FlagKey string
 var FlagDest string
 var FlagDestInsecure bool
+var FlagTick bool
 
 /*
 var FlagHeaderValue []string
@@ -74,6 +75,8 @@ func initFlags() {
 	hideFlags["FlagOrganization"] = "organization"
 
 	// program flags
+
+	nFlags.BoolVarP(&FlagTick, "tick", "", false, "enable a console tick every few seconds")
 
 	nFlags.StringVarP(&FlagRemapFieldNames, "fieldNames", "", "",
 		"Filename of conversion mapping, one pair per line, [oldName][newName], escape '[' and ']' by doubling them '[[' and ']]'. Case sensitive.")
@@ -161,27 +164,27 @@ func initFlags() {
 		xLog.Println("\t\t/***   end program flags ***/")
 	}
 	/*
-		if len(FlagHeaderKey) != len(FlagHeaderValue) {
-			logPrintf("count of --header-key values (%d) does not equal count of --header-value (%d)",
-				len(FlagHeaderKey), len(FlagHeaderValue))
+			if len(FlagHeaderKey) != len(FlagHeaderValue) {
+				logPrintf("count of --header-key values (%d) does not equal count of --header-value (%d)",
+					len(FlagHeaderKey), len(FlagHeaderValue))
+				myFatal()
+			}
+
+			if FlagVerbose || FlagDebug {
+				var sb strings.Builder
+				sb.WriteString(fmt.Sprintf("\n%s\n\tCommand Line Headers\n", SEP))
+				for ix := range FlagHeaderKey {
+					sb.WriteString(fmt.Sprintf("[header %3d] %s=%s\n",
+						ix, FlagHeaderKey[ix], FlagHeaderValue[ix]))
+				}
+				logPrintf(sb.String())
+			}
+
+		if FlagDestInsecure && !FlagDebug {
+			xLog.Printf("--insecure cannot be used without --debug. DO NOT USE --insecure IN PRODUCTION.")
 			myFatal()
 		}
-
-		if FlagVerbose || FlagDebug {
-			var sb strings.Builder
-			sb.WriteString(fmt.Sprintf("\n%s\n\tCommand Line Headers\n", SEP))
-			for ix := range FlagHeaderKey {
-				sb.WriteString(fmt.Sprintf("[header %3d] %s=%s\n",
-					ix, FlagHeaderKey[ix], FlagHeaderValue[ix]))
-			}
-			logPrintf(sb.String())
-		}
 	*/
-	if FlagDestInsecure && !FlagDebug {
-		xLog.Printf("--insecure cannot be used without --debug. DO NOT USE --insecure IN PRODUCTION.")
-		myFatal()
-	}
-
 	// next simplest
 	if FlagHelp {
 		var err1, err2 error

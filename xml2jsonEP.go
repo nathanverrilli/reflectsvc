@@ -7,11 +7,12 @@ import (
 	"encoding/xml"
 	"fmt"
 	"github.com/go-kit/kit/endpoint"
-	"github.com/google/uuid"
 	"io"
+	"math/rand"
 	"net/http"
 	"os"
 	"reflectsvc/misc"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -56,12 +57,11 @@ func decodeXml2JsonRequest(_ context.Context, r *http.Request) (interface{}, err
 	var req xml2JsonRequest
 
 	if FlagDebug {
-
-		guid, _ := uuid.NewUUID()
-		req.MagicInternalGuid = guid.String()
 		body, _ := io.ReadAll(r.Body)
 		_ = r.Body.Close()
 		decodeSync.Lock()
+		guid := strconv.FormatInt(rand.Int63(), 36)
+		req.MagicInternalGuid = guid
 		fn := fmt.Sprintf("%s_xmldbg%03d.log",
 			time.Now().UTC().Format(misc.DATE_POG),
 			xmlDebugCount)

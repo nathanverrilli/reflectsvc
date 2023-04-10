@@ -1,5 +1,5 @@
-2023/04/07 18:10:46 logger.go:150: Logfile set to H:\Projects\reflectsvc\reflectsvc.log
-2023/04/07 18:10:46 config.go:159: 		/*** start program flags ***/
+2023/04/10 22:49:31 logger.go:146: Logfile set to H:\Projects\reflectsvc\reflectsvc.log
+2023/04/10 22:49:31 config.go:162: 		/*** start program flags ***/
 
  flag certfile has value [] with default []
  flag debug has value [true] with default [false]
@@ -12,10 +12,11 @@
  flag port has value [9090] with default [9090]
  flag quiet has value [false] with default [false]
  flag servername has value [] with default []
+ flag tick has value [false] with default [false]
  flag verbose has value [true] with default [false]
-2023/04/07 18:10:46 config.go:161: 		/***   end program flags ***/
-2023/04/07 18:10:46 config.go:205: Verbose mode active (all debug and informative messages) for @MythosSeed
-2023/04/07 18:10:46 config.go:217: 
+2023/04/10 22:49:31 config.go:164: 		/***   end program flags ***/
+2023/04/10 22:49:31 config.go:208: Verbose mode active (all debug and informative messages) for @MythosSeed
+2023/04/10 22:49:31 config.go:220: 
 ***** ___go_https_reflectsvc BuildInfo: *****
 go	go1.20.2
 path	reflectsvc
@@ -23,7 +24,6 @@ mod	reflectsvc	(devel)
 dep	github.com/go-kit/kit	v0.12.0	h1:e4o3o3IsBfAKQh5Qbbiqyfu97Ku7jrO/JbohvztANh4=
 dep	github.com/go-kit/log	v0.2.1	h1:MRVx0/zhvdseW+Gza6N9rVzU/IVzaeE1SFI4raAhmBU=
 dep	github.com/go-logfmt/logfmt	v0.6.0	h1:wGYYu3uicYdqXVgoYbvnkrPVXkuLM1p1ifugDMEdRi4=
-dep	github.com/google/uuid	v1.3.0	h1:t6JiXgmwXMjEs8VusXIJk2BXHsn+wx8BZdTaoZ5fu7I=
 dep	github.com/spf13/pflag	v1.0.5	h1:iy+VFUOCP1a+8yFto/drg2CJ5u0yRoB7fZw3DKv/JXA=
 build	-buildmode=exe
 build	-compiler=gc
@@ -36,73 +36,68 @@ build	GOARCH=amd64
 build	GOOS=windows
 build	GOAMD64=v1
 build	vcs=git
-build	vcs.revision=8232a6119de067be8e99cae7929be14f9bf4ff17
-build	vcs.time=2023-04-06T19:52:42Z
+build	vcs.revision=211e2257fba5c3413dd3080b55f1c5369bf68012
+build	vcs.time=2023-04-07T18:30:59Z
 build	vcs.modified=true
 
 ********************************************
-2023/04/07 18:10:46 config.go:231: Listening on port 9090
-2023/04/07 18:10:46 fieldnames.go:56: successfully opened field translation file fieldnames.csv
-2023/04/07 18:10:46 fieldnames.go:106: REMAP VALUES
-2023/04/07 18:10:46 fieldnames.go:108:   0 Destination State: destStateProv   Destination State   0   true
-2023/04/07 18:10:46 fieldnames.go:108:   1 SP Bill Amount: sPBillNetAmt   SP Bill Amount   0   true
-2023/04/07 18:10:46 fieldnames.go:108:   2 SP Bill Date: sPBillDate   SP Bill Date   0   true
-2023/04/07 18:10:46 fieldnames.go:108:   3 Auditor: auditor   Auditor   1   true
-2023/04/07 18:10:46 fieldnames.go:108:   4 Model CD: modelCD   Model CD   0   true
-2023/04/07 18:10:46 fieldnames.go:108:   5 File Number: fileNbr   File Number   0   true
-2023/04/07 18:10:46 fieldnames.go:108:   6 Transit Mode: transitModeCD   Transit Mode   0   true
-2023/04/07 18:10:46 fieldnames.go:108:   7 Origin City: originCity   Origin City   0   true
-2023/04/07 18:10:46 fieldnames.go:108:   8 Destination City: destCity   Destination City   0   true
-2023/04/07 18:10:46 fieldnames.go:108:   9 Booking Agent: bookingAgentCD   Booking Agent   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  10 SP Bill Number: sPBillNbr   SP Bill Number   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  11 Transit Type: transitTypeCD   Transit Type   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  12 Load Date: loadDate   Load Date   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  13 Cost Center: costCenter   Cost Center   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  14 Bill received date: billReceivedDate   Bill received date   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  15 Billing SP: billingAgentCD   Billing SP   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  16 Status: received   Status   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  17 Currency: currencyCD   Currency   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  18 Division: acctDivisionNbr   Division   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  19 Origin Country: originCountryCD   Origin Country   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  20 Last Name: eELastName   Last Name   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  21 ClientID: clientID   ClientID   2   true
-2023/04/07 18:10:46 fieldnames.go:108:  22 Origin State: originStateProv   Origin State   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  23 Destination Country: destCountryCD   Destination Country   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  24 Storage on Bill: stgOnBill   Storage on Bill   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  25 sPBillNetAmt: sPBillNetAmt   sPBillNetAmt   2   true
-2023/04/07 18:10:46 fieldnames.go:108:  26 cost EE number: eENumber   cost EE number   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  27 Account: accountNbr   Account   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  28 First name: eEFirstName   First name   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  29 Shipment Type: shipmentTypeCD   Shipment Type   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  30 Bill Type: billTypeCD   Bill Type   0   true
-2023/04/07 18:10:46 fieldnames.go:108:  31 SPBill Gross amount: sPBillGrossAmt   SPBill Gross amount   2   true
-2023/04/07 18:10:46 reflectsvc.go:94: reverting to HTTP
+2023/04/10 22:49:31 config.go:234: Listening on port 9090
+2023/04/10 22:49:31 fieldnames.go:56: successfully opened field translation file fieldnames.csv
+2023/04/10 22:49:31 fieldnames.go:106: REMAP VALUES
+2023/04/10 22:49:31 fieldnames.go:108:   0 Origin City: originCity   Origin City   0   true
+2023/04/10 22:49:31 fieldnames.go:108:   1 Bill received date: billReceivedDate   Bill received date   0   true
+2023/04/10 22:49:31 fieldnames.go:108:   2 Last Name: eELastName   Last Name   0   true
+2023/04/10 22:49:31 fieldnames.go:108:   3 Currency: currencyCD   Currency   0   true
+2023/04/10 22:49:31 fieldnames.go:108:   4 Storage on Bill: stgOnBill   Storage on Bill   0   true
+2023/04/10 22:49:31 fieldnames.go:108:   5 Load Date: loadDate   Load Date   0   true
+2023/04/10 22:49:31 fieldnames.go:108:   6 Origin State: originStateProv   Origin State   0   true
+2023/04/10 22:49:31 fieldnames.go:108:   7 Destination Country: destCountryCD   Destination Country   0   true
+2023/04/10 22:49:31 fieldnames.go:108:   8 Status: received   Status   0   true
+2023/04/10 22:49:31 fieldnames.go:108:   9 Destination State: destStateProv   Destination State   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  10 Transit Type: transitTypeCD   Transit Type   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  11 SP Bill Amount: sPBillNetAmt   SP Bill Amount   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  12 cost EE number: eENumber   cost EE number   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  13 SP Bill Date: sPBillDate   SP Bill Date   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  14 Model CD: modelCD   Model CD   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  15 Division: acctDivisionNbr   Division   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  16 First name: eEFirstName   First name   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  17 Booking Agent: bookingAgentCD   Booking Agent   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  18 Origin Country: originCountryCD   Origin Country   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  19 Destination City: destCity   Destination City   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  20 Account: accountNbr   Account   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  21 Billing SP: billingAgentCD   Billing SP   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  22 Shipment Type: shipmentTypeCD   Shipment Type   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  23 ClientID: clientID   ClientID   2   true
+2023/04/10 22:49:31 fieldnames.go:108:  24 SPBill Gross amount: sPBillGrossAmt   SPBill Gross amount   2   true
+2023/04/10 22:49:31 fieldnames.go:108:  25 File Number: fileNbr   File Number   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  26 Bill Type: billTypeCD   Bill Type   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  27 Auditor: auditor   Auditor   1   true
+2023/04/10 22:49:31 fieldnames.go:108:  28 Transit Mode: transitModeCD   Transit Mode   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  29 SP Bill Number: sPBillNbr   SP Bill Number   0   true
+2023/04/10 22:49:31 fieldnames.go:108:  30 sPBillNetAmt: sPBillNetAmt   sPBillNetAmt   2   true
+2023/04/10 22:49:31 fieldnames.go:108:  31 Cost Center: costCenter   Cost Center   0   true
+2023/04/10 22:49:31 reflectsvc.go:55: found ip address fe80::413b:ba6a:5eb:1c00
+2023/04/10 22:49:31 reflectsvc.go:55: found ip address 100.66.233.159
+2023/04/10 22:49:31 reflectsvc.go:55: found ip address fe80::84b8:aae7:d5d2:b0f9
+2023/04/10 22:49:31 reflectsvc.go:55: found ip address 169.254.21.219
+2023/04/10 22:49:31 reflectsvc.go:55: found ip address 2601:646:9a80:9520::ce40
+2023/04/10 22:49:31 reflectsvc.go:55: found ip address 2601:646:9a80:9520:90f7:f2d:338b:78fd
+2023/04/10 22:49:31 reflectsvc.go:55: found ip address 2601:646:9a80:9520:e1ca:48d5:b7ff:7f0c
+2023/04/10 22:49:31 reflectsvc.go:55: found ip address fe80::48d0:ff0d:3f6d:ae2f
+2023/04/10 22:49:31 reflectsvc.go:55: found ip address 192.168.1.12
+2023/04/10 22:49:31 reflectsvc.go:55: found ip address ::1
+2023/04/10 22:49:31 reflectsvc.go:55: found ip address 127.0.0.1
+2023/04/10 22:49:31 reflectsvc.go:55: found ip address fe80::eaad:d12b:9861:6341
+2023/04/10 22:49:31 reflectsvc.go:55: found ip address 172.26.32.1
+2023/04/10 22:49:31 reflectsvc.go:55: found ip address fe80::d952:5b5c:cd06:e906
+2023/04/10 22:49:31 reflectsvc.go:55: found ip address 172.17.112.1
+2023/04/10 22:49:31 reflectsvc.go:116: reverting to HTTP
 	Certification file is missing (use --certfile to set)
 	Key file is missing (use --keyfile to set)
-2023/04/07 18:10:54 xml2jsonEP.go:65: enter decodeXml2JsonRequest -- 89b6be36-d56f-11ed-a41f-00ff8fb5aaef -- saving request as 20230407181054_xmldbg000.log
-2023/04/07 18:10:54 SimpleService.go:29: enter Xml2Json send request 89b6be36-d56f-11ed-a41f-00ff8fb5aaef
-2023/04/07 18:10:54 xtractaXml.go:147: found an untranslated name/value pair ["Reference":""] - saving as string
-2023/04/07 18:10:54 xtractaXml.go:147: found an untranslated name/value pair ["Client ID#":"150"] - saving as string
-2023/04/07 18:10:54 xtractaXml.go:188: xml data is 771 bytes (capacity 1024)
-2023/04/07 18:10:54 xml2jsonEP.go:155: headers for proxied request
-	Accept : [application/json] 
-	Accept-Charset : [utf-8] 
-	Dnt : [1] 
-	User-Agent : [curl/7.83.1] 
-	Content-Type : [application/json] 
-2023/04/07 18:10:54 reflectEP.go:41: enter decodeReflectRequest -- saving request as 20230407181054_rfldbg000.log
-2023/04/07 18:10:54 SimpleService.go:71: reflecting request:
-	/* *** */
-{"documentLink":"https://web1-org.xtracta.com/us_west_2_storage1_datasource1/1/74/2d/iq277690491-4gE4fUMW.pdf","received":"Received","shipmentTypeCD":"Auto","transitTypeCD":"Interstate US","transitModeCD":"2475","stgOnBill":"no","billTypeCD":"1458","auditor":321,"accountNbr":"BNSF RAILWAY COMPANY","fileNbr":"657-3880","eELastName":"Kruse","eEFirstName":"Robert","bookingAgentCD":"Ward North American","loadDate":"02/20/23","originCountryCD":"US","originStateProv":"TX","originCity":"Amarillo,","destCountryCD":"US","destStateProv":"IL","destCity":"Oak Lawn,","billingAgentCD":"Ward North American","sPBillNbr":"103472","sPBillDate":"3/1/2023","sPBillNetAmt":"$1,540.10","currencyCD":"USD","billReceivedDate":"3/1/2023","Reference":"","Client ID#":"150","modelCD":"PAS"}
-	/* *** */
-2023/04/07 18:10:54 SimpleService.go:63: 
-/* ************************** */
-{"documentLink":"https://web1-org.xtracta.com/us_west_2_storage1_datasource1/1/74/2d/iq277690491-4gE4fUMW.pdf","received":"Received","shipmentTypeCD":"Auto","transitTypeCD":"Interstate US","transitModeCD":"2475","stgOnBill":"no","billTypeCD":"1458","auditor":321,"accountNbr":"BNSF RAILWAY COMPANY","fileNbr":"657-3880","eELastName":"Kruse","eEFirstName":"Robert","bookingAgentCD":"Ward North American","loadDate":"02/20/23","originCountryCD":"US","originStateProv":"TX","originCity":"Amarillo,","destCountryCD":"US","destStateProv":"IL","destCity":"Oak Lawn,","billingAgentCD":"Ward North American","sPBillNbr":"103472","sPBillDate":"3/1/2023","sPBillNetAmt":"$1,540.10","currencyCD":"USD","billReceivedDate":"3/1/2023","Reference":"","Client ID#":"150","modelCD":"PAS"}
-/* ************************** */
-2023/04/07 18:10:54 xml2jsonEP.go:161: enter x2jEncodeResponse
-2023/04/07 18:10:54 xml2jsonEP.go:196: exiting x2jEncodeResponse
-2023/04/07 18:11:41 reflectsvc.go:22: Got signal interrupt, exiting immediately
-2023/04/07 18:11:41 logger.go:150: 
+2023/04/10 22:49:41 SimpleService.go:89: reversed a string drawkcaB to Backward
+2023/04/10 22:49:49 SimpleService.go:89: reversed a string drawkcaB to Backward
+2023/04/10 22:50:27 reflectsvc.go:23: Got signal interrupt, exiting immediately
+2023/04/10 22:50:27 logger.go:146: 
 		/*** myFatal called ***/
-	from file:line reflectsvc.go:0023
+	from file:line reflectsvc.go:0024
 		/*** myFatal ended ***/
