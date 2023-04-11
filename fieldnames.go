@@ -96,7 +96,13 @@ func loadFieldTranslations(fn string) (remap map[string]remapField) {
 			xLog.Printf("Huh? Found a non-true / non-false type for OmitEmpty "+
 				" %s in the field translation file (treating it as false", record[2])
 		}
-		remap[rm.XMLName] = rm
+		_, ok := remap[rm.XMLName]
+		if !ok {
+			remap[rm.XMLName] = rm
+		} else {
+			xLog.Printf("Detected duplicate name in field name translation file %s: duplicate values for %s", fn, rm.XMLName)
+			myFatal()
+		}
 	}
 	if nil != err && io.EOF != err {
 		xLog.Printf("got non-EOF error while parsing field translation file: %s", err.Error())
