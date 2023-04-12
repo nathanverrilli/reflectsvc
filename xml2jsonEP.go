@@ -101,6 +101,8 @@ var standardRequestHeaders = map[string]string{
 
 var proxiedHeaders = []string{"Authorization", "User-Agent", "Ocp-Apim-Subscription-Key"}
 
+var p3idSequence = int64(0)
+
 func x2jProxy(header http.Header, jsonReader io.Reader) (*http.Response, error) {
 	var tr *http.Transport
 
@@ -120,6 +122,13 @@ func x2jProxy(header http.Header, jsonReader io.Reader) (*http.Response, error) 
 		xLog.Printf("huh? Could not create an httpRequest because %s", err.Error())
 		return nil, err
 	}
+
+	hReq.Header.Set("P3id-Sequence",
+		strconv.FormatInt(time.Now().Unix(), 36)+
+			"-"+
+			strconv.FormatInt(p3idSequence, 10))
+	p3idSequence++
+
 	hReq.Header.Set("Content-Type", "application/json")
 	hReq.Header.Set("Accept", "application/json")
 	for key, val := range standardRequestHeaders {
