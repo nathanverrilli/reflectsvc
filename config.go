@@ -42,6 +42,7 @@ var FlagKey string
 var FlagDest string
 var FlagDestInsecure bool
 var FlagTick bool
+var FlagProxySuccess bool
 
 /*
 var FlagHeaderValue []string
@@ -75,6 +76,9 @@ func initFlags() {
 	hideFlags["FlagOrganization"] = "organization"
 
 	// program flags
+
+	nFlags.BoolVarP(&FlagProxySuccess, "proxy-success", "", false,
+		"force all proxied xm2json requests to return an explicit success 200 status")
 
 	nFlags.BoolVarP(&FlagTick, "tick", "", false, "enable a console tick every few seconds")
 

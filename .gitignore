@@ -6,3 +6,5 @@
 /USAGE.MD
 /host.crt
 /output/*.png
+/fieldnames.csv.old
+/reflectsvc.log

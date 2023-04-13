@@ -139,4 +139,7 @@ the field is omitted entirely from the outgoing JSON.
 This flag affects the `/xml2json`, `/convert`, and the
 `/parsifal` endpoints.
 
+### `--proxy-success`
+All requests proxied through the `/xml2json` endpoint will 
+return an explict `200` (`StatusOK`) response.
 

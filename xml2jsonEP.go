@@ -103,6 +103,8 @@ var proxiedHeaders = []string{"Authorization", "User-Agent", "Ocp-Apim-Subscript
 
 var p3idSequence = int64(0)
 
+const P3IDSEQUENCEHEADER = "P3id-Sequence"
+
 func x2jProxy(header http.Header, jsonReader io.Reader) (*http.Response, error) {
 	var tr *http.Transport
 
@@ -123,11 +125,17 @@ func x2jProxy(header http.Header, jsonReader io.Reader) (*http.Response, error) 
 		return nil, err
 	}
 
-	hReq.Header.Set("P3id-Sequence",
-		strconv.FormatInt(time.Now().Unix(), 36)+
-			"-"+
-			strconv.FormatInt(p3idSequence, 10))
-	p3idSequence++
+	{
+		var sb strings.Builder
+		sb.WriteString(strconv.FormatInt(time.Now().Unix(), 36))
+		sb.WriteRune('-')
+		sb.WriteString(strconv.FormatInt(p3idSequence, 10))
+		hReq.Header.Set(P3IDSEQUENCEHEADER, sb.String())
+		p3idSequence++
+		if FlagDebug {
+			xLog.Printf("setting header %s as %s \n", P3IDSEQUENCEHEADER, sb.String())
+		}
+	}
 
 	hReq.Header.Set("Content-Type", "application/json")
 	hReq.Header.Set("Accept", "application/json")
@@ -176,16 +184,24 @@ func x2jEncodeResponse(_ context.Context, w http.ResponseWriter, response interf
 	}
 	v, ok := response.(xml2JsonResponse)
 
+	if FlagProxySuccess {
+		w.WriteHeader(http.StatusOK)
+	}
+
 	if !ok || nil == v.Body || len(v.Body) <= 0 {
 		responseBody = fmt.Sprintf("{\"error\":\"%s\"}", v.Status)
-		w.WriteHeader(http.StatusInternalServerError)
+		if !FlagProxySuccess {
+			w.WriteHeader(http.StatusInternalServerError)
+		}
 		_, err := w.Write([]byte(responseBody))
 		if nil != err {
 			xLog.Printf("could not write header to response because %s", err.Error())
 			return err
 		}
 	} else {
-		w.WriteHeader(v.Code)
+		if !FlagProxySuccess {
+			w.WriteHeader(v.Code)
+		}
 		//_. err := w.Write(v.Body)
 		responseBody = "{\"success\":true}"
 		_, err := w.Write([]byte(responseBody))
@@ -194,6 +210,7 @@ func x2jEncodeResponse(_ context.Context, w http.ResponseWriter, response interf
 			return err
 		}
 	}
+
 	if FlagDebug {
 
 		fn := fmt.Sprintf("%s_xmlrspdbg%03d.log",
