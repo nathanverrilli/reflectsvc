@@ -32,8 +32,7 @@ func main() {
 	initFlags()
 
 	signalChan = make(chan os.Signal, 1)
-	signal.Notify(signalChan, os.Interrupt)
-	signal.Notify(signalChan, os.Kill)
+	signal.Notify(signalChan, os.Interrupt, os.Kill)
 	go handleSignal()
 
 	if FlagDebug || FlagVerbose {

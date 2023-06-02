@@ -124,6 +124,10 @@ is:
 `XMLName`;`JsonName`;`FieldType`;`OmitEmpty`  
 and white space is significant.
 
+
+The `--fieldNames` flag  affects the `/xml2json`, `/convert`, and the
+`/parsifal` endpoints.
+
 #### `XMLName`
 The name of the field in the received XML.
 #### `JsonName`
@@ -136,8 +140,6 @@ This field has the value of either `true` or `false`. If `true`,
 and the field&rsquo;s value is absent (the null string `""`), then
 the field is omitted entirely from the outgoing JSON.
 
-This flag affects the `/xml2json`, `/convert`, and the
-`/parsifal` endpoints.
 
 ### `--proxy-success`
 All requests proxied through the `/xml2json` endpoint will 
