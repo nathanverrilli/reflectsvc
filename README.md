@@ -55,7 +55,7 @@ would do), and sends it to the endpoint configured with
 part of the proxy.
 #### Forwarded Headers
 1. Authorization
-1. Accepts
+2. Accepts
 
 #### Returned Headers
 
@@ -107,18 +107,18 @@ affects writes to `STDERR`.
 ### --destination *`endpoint`*
 The /xml2json endpoint will send the
 converted JSON information on to the specified destination,
-which must be complete.  'localhost' is a **special** value
+which must be complete.  `localhost` is a **special** value
 that sends the data to the service's `/reflect` endpoint with
-the port, so with the default `--port 9090` is the equivalent
+the port, so with the default `--port 9090`, specifying `localhost` is the equivalent
 of specifying `--destination https://localhost:9090/reflect`.
 
-This flag affects the `/xml2json` endpoint.
+This flag affects the `/xml2json` endpoint, and is useful primarily for testing and debugging.
 
 ### --fieldNames *`filename`*
 
 The `/xml2json` endpoint can of incoming XML field names to outgoing JSON
 field names as part of the xml2json endpoint. These to / from strings
-are held in the file specified by `--fieldNames <file>`. <file> should
+are held in the file specified by `--fieldNames <file>`. `<file>` should
 be a plain unicode file with fields separated by semicolons. The format
 is:  
 `XMLName`;`JsonName`;`FieldType`;`OmitEmpty`  
@@ -141,5 +141,5 @@ This flag affects the `/xml2json`, `/convert`, and the
 
 ### `--proxy-success`
 All requests proxied through the `/xml2json` endpoint will 
-return an explict `200` (`StatusOK`) response.
+return an explicit `200` (`StatusOK`) response.
 
