@@ -44,10 +44,8 @@ var FlagDestInsecure bool
 var FlagTick bool
 var FlagProxySuccess bool
 
-/*
-var FlagHeaderValue []string
-var FlagHeaderKey []string
-*/
+//var FlagHeaderValue []string
+//var FlagHeaderKey []string
 
 func initFlags() {
 	var err error
@@ -200,6 +198,7 @@ func initFlags() {
 				misc.ConcatenateErrors(err1, err2).Error())
 		}
 		UsageMessage()
+		_, _ = fmt.Fprintf(os.Stdout, "\t please see USAGE.MD for ")
 		myFatal(0)
 	}
 

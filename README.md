@@ -30,10 +30,10 @@ for examination.
 --request POST 
 http://localhost:9090/reflect`
 
-### /convert && /parsifal
+### /convert && /parsifal (*deprecated*)
 These endpoints take XML data, show the XML data, and then
 the results of converting the XML fields to JSON. 
-The `/xml2json` endpoint does the conversion, and sends
+The `/xml2json` endpoint does the conversion, and send
 the data to the `--destination` endpoint.
 
 **Please note that `/parsifal` endpoint is deprecated.
@@ -54,8 +54,10 @@ would do), and sends it to the endpoint configured with
 `--destination` as a proxy. It forwards some headers as
 part of the proxy.
 #### Forwarded Headers
+The following headers are explicitly forwarded if present in the incoming request to the `xml2json` endpoint.
+1. Accepts
 1. Authorization
-2. Accepts
+1. Ocp-Apim-Subscription-Key
 
 #### Returned Headers
 

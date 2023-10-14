@@ -99,7 +99,7 @@ var standardRequestHeaders = map[string]string{
 	"DNT":            "1",
 }
 
-var proxiedHeaders = []string{"Authorization", "User-Agent", "Ocp-Apim-Subscription-Key"}
+var proxiedHeaders = [...]string{"Authorization", "User-Agent", "Ocp-Apim-Subscription-Key"}
 
 var p3idSequence = int64(0)
 
