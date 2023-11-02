@@ -26,7 +26,6 @@ func handleSignal() {
 
 func main() {
 	var err error
-
 	initLog("reflectsvc.log")
 	defer closeLog()
 	initFlags()
@@ -36,26 +35,29 @@ func main() {
 	go handleSignal()
 
 	if FlagDebug || FlagVerbose {
-	}
-	ifaces, err := net.Interfaces()
-	// handle err
-	for _, i := range ifaces {
-		addrs, err := i.Addrs()
-		if nil == err {
-			for _, addr := range addrs {
-				var ip net.IP
-				switch v := addr.(type) {
-				case *net.IPNet:
-					ip = v.IP
-				case *net.IPAddr:
-					ip = v.IP
+		ifaces, err := net.Interfaces()
+		if err != nil {
+			xLog.Printf("error getting interfaces because %s", err.Error())
+			myFatal()
+		}
+		// handle err
+		for _, i := range ifaces {
+			addrs, err := i.Addrs()
+			if nil == err {
+				for _, addr := range addrs {
+					var ip net.IP
+					switch v := addr.(type) {
+					case *net.IPNet:
+						ip = v.IP
+					case *net.IPAddr:
+						ip = v.IP
+					}
+					// process IP address
+					xLog.Printf("found ip address %s\n", ip.String())
 				}
-				// process IP address
-				xLog.Printf("found ip address %s\n", ip.String())
 			}
 		}
 	}
-
 	// setup for specific services
 
 	svc := simpleService{}
@@ -116,13 +118,11 @@ func main() {
 			misc.Ternary(misc.IsStringSet(&FlagCert), FlagCert, "missing (use --certfile to set)"),
 			misc.Ternary(misc.IsStringSet(&FlagKey), FlagKey, "missing (use --keyfile to set)"))
 		flushLog()
-		// err = http.ListenAndServe(service, nil)
 		err = srv.ListenAndServe()
 	} else {
 		xLog.Printf("using HTTPS\n\tCertification file is %s\n\tKey file is %s",
 			FlagCert, FlagKey)
 		flushLog()
-		//err = http.ListenAndServeTLS(service, FlagCert, FlagKey, nil)
 		err = srv.ListenAndServeTLS(FlagCert, FlagKey)
 	}
 

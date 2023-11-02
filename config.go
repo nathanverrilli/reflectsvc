@@ -240,7 +240,7 @@ func initFlags() {
 	if misc.IsStringSet(&FlagRemapFieldNames) {
 		FlagRemapMap = loadFieldTranslations(FlagRemapFieldNames)
 	} else {
-		FlagRemapMap = make(map[string]remapField, 0)
+		FlagRemapMap = make(map[string]remapField)
 	}
 
 }
