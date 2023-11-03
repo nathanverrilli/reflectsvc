@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"reflectsvc/misc"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -117,13 +118,13 @@ func (x XtractaField) String() string {
 // Json() Convert XtractaEvents data to JSON data
 // --fieldNames permits remapping XML field names to new JSON field names.
 // --omitEmpty means that XML fields without field values are omitted.
-var EMPTYSTRING = ""
 
 func (x XtractaEvents) Json() string {
 	var sbCap = 1024
 	var sb strings.Builder
 	sb.Grow(sbCap)
 	sb.WriteRune('{')
+	var EMPTYSTRING = ""
 
 	{ // insert documentUrl param
 		sb.WriteString("\"documentLink\":\"")
@@ -159,17 +160,26 @@ func (x XtractaEvents) Json() string {
 			case JsonString:
 				sb.WriteString(fmt.Sprintf(",\"%s\":\"%s\"", rm.JsonName, *val))
 			case JsonInteger, JsonNumeric:
-				sb.WriteString(fmt.Sprintf(",\"%s\":%s", rm.JsonName, *val))
+				num, err := strconv.ParseFloat(*val, 64)
+				if nil != err {
+					xLog.Printf("huh? Field %s is supposed be numeric, but was %s\n",
+						rm.JsonName, *val)
+				}
+				sb.WriteString(fmt.Sprintf(",\"%s\":%f", rm.JsonName, num))
 			case JsonBoolean:
 				booleanVal := false
-				if "true" == strings.ToLower(fld.FieldValue) {
+				truthStatus := strings.ToLower(fld.FieldValue)
+				if "true" == truthStatus {
 					booleanVal = true
+				} else if "false" != truthStatus {
+					xLog.Printf("huh? Field %s is supposed to be boolean, but has value %s\n",
+						rm.JsonName, fld.FieldValue)
 				}
 				sb.WriteString(fmt.Sprintf(",\"%s\":%t", rm.JsonName, booleanVal))
 			case JsonDate:
 				dt, err := time.Parse(XmlDateLayout, fld.FieldValue)
 				if nil != err {
-					xLog.Printf("Date string [%s] not recognized because %s",
+					xLog.Printf("huh? Date string [%s] not recognized because %s",
 						fld.FieldName, err.Error())
 					sb.WriteString(fmt.Sprintf(",\"%s\":\"\"", rm.JsonName))
 				} else {
@@ -177,7 +187,9 @@ func (x XtractaEvents) Json() string {
 						dt.Format(JsonDateLayout)))
 				}
 			default:
-				xLog.Printf("Huh? remap FieldType has unrecognized value %d -- skipping this record", int(rm.FieldType))
+				xLog.Printf("Huh? remap FieldType has unrecognized value %d for "+
+					"FieldName %s (value %s) -- skipping this record",
+					int(rm.FieldType), fld.FieldName, fld.FieldValue)
 				continue
 			}
 		}
