@@ -57,20 +57,25 @@ func decodeXml2JsonRequest(_ context.Context, r *http.Request) (interface{}, err
 	var req xml2JsonRequest
 
 	if FlagDebug {
+		var fn, guid string
 		body, _ := io.ReadAll(r.Body)
 		_ = r.Body.Close()
-		decodeSync.Lock()
-		guid := strconv.FormatInt(rand.Int63(), 36)
-		req.MagicInternalGuid = guid
-		fn := fmt.Sprintf("%s_xmldbg%03d.log",
-			time.Now().UTC().Format(misc.DATE_POG),
-			xmlDebugCount)
-		xmlDebugCount++
-		decodeSync.Unlock()
+		{
+			decodeSync.Lock()
+			guid = strconv.FormatInt(rand.Int63(), 36)
+			req.MagicInternalGuid = guid
+			fn = fmt.Sprintf("%s_xmldbg%03d.log",
+				time.Now().UTC().Format(misc.DATE_POG),
+				xmlDebugCount)
+			xmlDebugCount++
+			decodeSync.Unlock()
+		}
+
 		xLog.Printf("enter decodeXml2JsonRequest -- %s -- saving request as %s",
 			guid, fn)
 		xf, _ := os.OpenFile(fn, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 		defer misc.DeferError(xf.Close)
+		_, _ = fmt.Fprintf(xf, "path [%s]\n", r.URL.String())
 		_, _ = fmt.Fprintf(xf, "request %s\n\t\tHEADERS\n", fn)
 		_, _ = xf.Write(debugMapStringArrayString(r.Header))
 		_, _ = fmt.Fprintf(xf, "\n\t\tBODY\n")
@@ -182,6 +187,7 @@ func x2jEncodeResponse(_ context.Context, w http.ResponseWriter, response interf
 	if FlagDebug {
 		xLog.Printf("enter x2jEncodeResponse")
 	}
+
 	v, ok := response.(xml2JsonResponse)
 
 	if FlagProxySuccess {

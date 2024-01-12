@@ -13,6 +13,12 @@ a valid certificate file and private key file; otherwise it
 reverts to `HTTP`.
 
 ## Endpoints and function
+
+### /success
+Return a standard 200 success message and log the incoming request
+####
+This service is for testing and recording backend data.
+
 ### /reverse
 This is a trivial string reversal service, to test
 that the server is up and running. 

@@ -62,6 +62,11 @@ func main() {
 
 	svc := simpleService{}
 
+	successHandler := httpTransport.NewServer(
+		makeSuccessEndpoint(svc),
+		decodeSuccessRequest,
+		encodeSuccessResponse)
+
 	validateHandler := httpTransport.NewServer(
 		makeValidateEndpoint(svc),
 		decodeValidateRequest,
@@ -87,6 +92,7 @@ func main() {
 		decodeXml2JsonRequest,
 		x2jEncodeResponse)
 
+	http.Handle("/success", successHandler)
 	http.Handle("/reverse", reverseHandler)
 	http.Handle("/parsifal", convertHandler)
 	http.Handle("/convert", convertHandler)
