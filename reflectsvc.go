@@ -100,7 +100,7 @@ func main() {
 	http.Handle("/validate", validateHandler)
 	http.Handle("/xml2json", xml2JsonHandler)
 
-	service := ":" + FlagPort
+	service := "127.0.0.1:" + FlagPort
 
 	srv := http.Server{
 		Addr:                         service,

@@ -160,7 +160,7 @@ func initFlags() {
 		}
 	}
 
-	if FlagDebug && FlagVerbose {
+	if FlagDebug || FlagVerbose {
 		xLog.Println("\t\t/*** start program flags ***/\n")
 		nFlags.VisitAll(logFlag)
 		xLog.Println("\t\t/***   end program flags ***/")
