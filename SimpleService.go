@@ -21,9 +21,11 @@ type SimpleService interface {
 // simpleService is a concrete implementation of SimpleService
 type simpleService struct{}
 
+/*
 func (simpleService) Success(s string) string {
 	return " "
 }
+*/
 
 func (simpleService) Validate(v validateRequest) (vr validateRequest) {
 	return v
