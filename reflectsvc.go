@@ -92,7 +92,7 @@ func main() {
 		decodeXml2JsonRequest,
 		x2jEncodeResponse)
 
-	http.Handle("/success", successHandler)
+	http.Handle("/success/", successHandler)
 	http.Handle("/reverse", reverseHandler)
 	http.Handle("/parsifal", convertHandler)
 	http.Handle("/convert", convertHandler)

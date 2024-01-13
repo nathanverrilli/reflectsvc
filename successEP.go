@@ -17,9 +17,20 @@ import (
 	"time"
 )
 
+/*
+	{
+	    "data": {
+	        "result": "ACCEPTED",
+	        "evse_id": "USCPIE6579991*1",
+	        "location_id": "USCPIL6579991"
+	    },
+	    "status_code": 1000,
+	    "timestamp": "2024-01-12T23:06:27Z"
+	}
+*/
 type successResponse struct {
 	StatusCode int                 `json:"status_code"`
-	Timestamp  time.Time           `json:"timestamp"`
+	Timestamp  string              `json:"timestamp"`
 	Data       successResponseData `'json:"data"`
 }
 
@@ -28,22 +39,38 @@ type successResponseData struct {
 }
 
 type successRequest struct {
-	Data       successRequestData `json:"data"`
-	StatusCode int                `json:"status_code"`
-	Timestamp  time.Time          `json:"timestamp"`
-	Header     http.Header
+	Data       successRequestData `json:"data,omitempty"`
+	StatusCode int                `json:"status_code,omitempty"`
+	Timestamp  time.Time          `json:"timestamp,omitempty"`
+	// Header     http.Header        `json:"headers,omitempty"`
 }
 
 type successRequestData struct {
-	Result     string `json:"result"`
-	EvseID     string `json:"evse_id"`
-	LocationID string `json:"location_id"`
+	Result     string `json:"result,omitempty"`
+	EvseID     string `json:"evse_id,omitempty"`
+	LocationID string `json:"location_id,omitempty"`
 }
 
+/*
+{
+  "data": {
+    "result": "ACCEPTED",
+    "evse_id": "USCPIE6579991*1",
+    "location_id": "USCPIL6579991"
+  },
+  "status_code": 1000,
+  "timestamp": "2024-01-12T23:06:27Z"
+}
+
+*/
+
+const CPTIME = "2006-0102T150405Z"
+
 func makeSuccessResponse() (r successResponse) {
+
 	return successResponse{
 		StatusCode: 1000,
-		Timestamp:  time.Now().UTC(),
+		Timestamp:  time.Now().UTC().Format(CPTIME),
 		Data: successResponseData{
 			Result: "success",
 		},
@@ -55,7 +82,7 @@ func makeSuccessRequest() (r successRequest) {
 		Data:       successRequestData{EvseID: "USCPIL1", Result: "success", LocationID: "USCPIL2"},
 		StatusCode: 1000,
 		Timestamp:  time.Now().UTC(),
-		Header:     nil,
+		// Header:     nil,
 	}
 }
 
@@ -109,7 +136,7 @@ func decodeSuccessRequest(_ context.Context, r *http.Request) (interface{}, erro
 				hostname = "===X=Forwarded-Host-Header-Absent==="
 			}
 		}
-		_, _ = fmt.Fprintf(xf, "path [%s%s]\n", hostname, r.URL.String())
+		_, _ = fmt.Fprintf(xf, "host{path} [%s{%s}]\n", hostname, r.URL.String())
 		_, _ = fmt.Fprintf(xf, "request %s\n\t\tHEADERS\n", fn)
 		_, _ = xf.Write(debugMapStringArrayString(r.Header))
 		_, _ = fmt.Fprintf(xf, "\n\t\tBODY\n")
@@ -126,11 +153,12 @@ func decodeSuccessRequest(_ context.Context, r *http.Request) (interface{}, erro
 	err = xml.Unmarshal(body, &req)
 
 	if nil != err {
-		xLog.Printf("xml.Unmarshal failed because %s", err.Error())
+		xLog.Printf("xml.Unmarshal failed because %s\nbody[ %s ]", err.Error(),
+			string(body))
 		// return nil, err
 		req = makeSuccessRequest()
 		req.Data.Result = string(body)
 	}
-	req.Header = r.Header
+	// req.Header = r.Header
 	return req, nil
 }
